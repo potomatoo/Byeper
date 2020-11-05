@@ -150,7 +150,7 @@ dmypy.json
 .prof
 
 # End of https://www.toptal.com/developers/gitignore/api/django
-vscode/
-idea/
+vscode
+idea
 my_settings.py
 migrations/

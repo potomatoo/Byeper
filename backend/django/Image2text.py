@@ -1,6 +1,5 @@
 from google.cloud import vision
-import os, cv2, io
-import re
+import os, cv2, io, re
 
 def image_processing(path):
     # /var/file/VIDEO_ID
@@ -41,7 +40,5 @@ def image_processing(path):
     os.remove(tmp_image)
     return sentence
 
-PATH = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
-result = image_processing(PATH)
-
-print(result)
+# PATH = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
+# result = image_processing(PATH)

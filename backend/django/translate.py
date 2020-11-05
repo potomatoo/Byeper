@@ -1,6 +1,3 @@
-import google.cloud.translate_v2 as translate
-import os
-
 def register_env():
     os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
     #print(os.environ['GOOGLE_APPLICATION_CREDENTIALS'])

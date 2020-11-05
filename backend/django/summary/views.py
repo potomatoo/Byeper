@@ -1,7 +1,4 @@
 from django.shortcuts import render, get_object_or_404
-# from django.views.decorators.http import require_GET
-# from django.http.response import JsonResponse, HttpResponse
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
@@ -9,16 +6,16 @@ from .models import Video
 from .serializers import VideoSerializer
 from .models import Problem
 from .serializers import ProblemSerializer
-# Create your views here.
 
-import google.cloud.vision
 import google.cloud.translate_v2 as translate
 import cv2, os, io, re
 import numpy as np
 import pafy, json
 
+from Image2text import image_processing
 from question_generator import generateQuestions
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
+translate_client = translate.Client()
 
 
 save_frames = []
@@ -141,9 +138,6 @@ def extract_image(request):
             serializer.save()
         return Response(200)
 
-from Image2text import image_processing
-from translate import kor2eng, eng2kor
-from question_generator import generateQuestions
 
 @api_view(['GET', 'POST'])
 def problem_create_list(request, video_pk):
@@ -156,11 +150,11 @@ def problem_create_list(request, video_pk):
     elif request.method == 'POST':
         path = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
         result = image_processing(path)  # image --> text
-        ENG = kor2eng(result)  # kor-sentence --> eng-sentence
-        questions_list = generateQuestions(ENG)
-        
+        ENG = translate_client.translate(result, target_language='en')['translatedText']
 
-        serializer = ProblemSerializer(data = request.data)
+        questions_list = generateQuestions(ENG, 10)
+
+        serializer = ProblemSerializer(data=questions_list)
         if serializer.is_valid(raise_exception=True):
             serializer.save(video_id=video.id)
         return Response(200)

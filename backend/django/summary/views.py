@@ -7,6 +7,8 @@ from rest_framework.decorators import api_view
 
 from .models import Video
 from .serializers import VideoSerializer
+from .models import Problem
+from .serializers import ProblemSerializer
 # Create your views here.
 
 # from . import question_generatorTEST
@@ -124,11 +126,7 @@ def extract_from_youtube_url(youtube_url, n):
     with open("{}.json".format(id), "w") as json_file:
         json.dump(info_dict, json_file)
 
-<<<<<<< HEAD
     return len(save_frames)
-=======
-    return save_frames
->>>>>>> 43a51e4e969d04e3a94987d5ff2bb1409492c622
 
 
 @api_view(['POST'])
@@ -147,6 +145,10 @@ def extract_image(request):
 def create_problem_or_show_list(request, video_pk):
     video = get_object_or_404(request, pk = video_pk)
     if request.method == 'GET':
-        pass
+        problems = Problem.objects.all()
+        serializer = ProblemSerializer(problems, many=True)
+        return Response(serializer.data)
     elif request.method == 'POST':
-        pass
+        serializer = ProblemSerializer(data = request.data)
+        if serializer.is_valid(raise_exception=True):
+            serializer.save(video_pk = video.id)

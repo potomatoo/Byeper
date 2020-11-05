@@ -36,13 +36,13 @@ def imwrite(filename, img, params=None):
 
 def save(frame, image, title):
     sec = frame // 30
-    imwrite("/var/files/{}/{}.jpg".format(title, sec), image)
+    imwrite("image/{}/{}.jpg".format(title, sec), image)
 
 def divide_and_conquer(vidcap, left, right, left_image, right_image):
     global save_frames
     if right - left < 20:
         #저장
-        diff = np.subtract(mid_image, right_image, dtype=np.int16)
+        diff = np.subtract(left_image, right_image, dtype=np.int16)
         diff = np.abs(diff)
         diff = np.sum(diff>10)
         save_frames.append([right, diff])
@@ -97,8 +97,8 @@ def extract_from_youtube_url(youtube_url, n):
     best = video.getbest()
     id = youtube_url[32:]
     
-    if not(os.path.isdir('/var/files/{}'.format(id))):
-        os.makedirs(os.path.join('/var/files/{}'.format(id)))
+    if not(os.path.isdir('image/{}'.format(id))):
+        os.makedirs(os.path.join('image/{}'.format(id)))
 
     vidcap = cv2.VideoCapture(best.url)
     vidcap.set(3, 400)
@@ -112,8 +112,8 @@ def extract_from_youtube_url(youtube_url, n):
     end_image = cv2.resize(end_image, (400, 225))
     end_image = cv2.cvtColor(end_image, cv2.COLOR_BGR2GRAY)
 
-    save_frames = [0]
-    divide_and_conquer(vidcap, 0, end, start_image, end_image, id)
+    save_frames = [[0, 99999]]
+    divide_and_conquer(vidcap, 0, end, start_image, end_image)
     
     info_dict = {}
     for i, save_frame in enumerate(save_frames):
@@ -121,11 +121,14 @@ def extract_from_youtube_url(youtube_url, n):
         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
         _, image = vidcap.read()
         save(frame, image, id)
-        info_dict[i] = {'time': frame // 30, 
-                        'diff': diff}
+        info_dict[int(i)] = {'time': int(frame // 30), 
+                        'diff': int(diff)}
     with open("{}.json".format(id), "w") as json_file:
         json.dump(info_dict, json_file)
+<<<<<<< HEAD
 
+=======
+>>>>>>> bbe537e3630c9944a990584260c4ff0bacad0635
     return len(save_frames)
 
 
@@ -133,12 +136,12 @@ def extract_from_youtube_url(youtube_url, n):
 def extract_image(request):
     if request.method == 'POST':
         data = request.data
-        video_max_img = extract_from_videoid(id)
+        video_max_img = extract_from_videoid(data['video_id'])
         data['video_max_img'] = video_max_img
         serializer = VideoSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        return Response(serializer.data)
+        return Response(200)
 
 
 @api_view(['GET', 'POST'])

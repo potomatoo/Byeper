@@ -1,4 +1,2 @@
-from question_generator import generateQuestions
-text = 'nice to meeet you'
-t = generateQuestions(text, 10)
-print(t)
+a = [{1:'1231', 221:'2'}]
+print(dict(a))

@@ -14,7 +14,7 @@ import pafy, json
 
 from Image2text import image_processing
 from question_generator import generateQuestions
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
 translate_client = translate.Client()
 
 
@@ -148,13 +148,14 @@ def problem_create_list(request, video_pk):
         return Response(serializer.data)
 
     elif request.method == 'POST':
-        path = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
+        path = os.path.join('C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\tmp', request.data['video'])
         result = image_processing(path)  # image --> text
         ENG = translate_client.translate(result, target_language='en')['translatedText']
 
         questions_list = generateQuestions(ENG, 10)
-
-        serializer = ProblemSerializer(data=questions_list)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save(video_id=video.id)
+        for qna in questions_list:
+            qna['video'] = video.id
+            serializer = ProblemSerializer(data=qna)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(video_id=video.id)
         return Response(200)

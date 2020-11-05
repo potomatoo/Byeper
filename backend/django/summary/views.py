@@ -83,16 +83,16 @@ def get_time(sec):
     return hour, minute, sec
 
 def extract_from_videoid(id):
-    extract_from_youtube_url('https://www.youtube.com/watch?v=' + id, 0)
+    return extract_from_youtube_url('https://www.youtube.com/watch?v=' + id, 0)
 
 def extract_from_youtube_url(youtube_url, n):
     global save_frames
     if n == 5: 
-        raise ValueError('url이 잘못되었습니다.')
+        return False
     try:
         video = pafy.new(youtube_url)
     except:
-        extract_from_youtube_url(youtube_url, n+1)
+        return extract_from_youtube_url(youtube_url, n+1)
     best = video.getbest()
     id = youtube_url[32:]
     
@@ -125,19 +125,16 @@ def extract_from_youtube_url(youtube_url, n):
     with open("{}.json".format(id), "w") as json_file:
         json.dump(info_dict, json_file)
 
-
-    return save_frames
+    return len(save_frames)
 
 
 @api_view(['POST'])
 def extract_image(request):
-    if request.method == 'GET':
-        video = Video.objects.all()
-        serializer = VideoSerializer(video, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        serializer = VideoSerializer(data=request.data)
+    if request.method == 'POST':
+        data = request.data
+        video_max_img = extract_from_videoid(id)
+        data['video_max_img'] = video_max_img
+        serializer = VideoSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(serializer.data)

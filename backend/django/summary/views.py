@@ -9,7 +9,6 @@ from .models import Video
 from .serializers import VideoSerializer
 # Create your views here.
 
-import json
 # from . import question_generatorTEST
 import cv2
 import numpy as np
@@ -125,7 +124,11 @@ def extract_from_youtube_url(youtube_url, n):
     with open("{}.json".format(id), "w") as json_file:
         json.dump(info_dict, json_file)
 
+<<<<<<< HEAD
     return len(save_frames)
+=======
+    return save_frames
+>>>>>>> 43a51e4e969d04e3a94987d5ff2bb1409492c622
 
 
 @api_view(['POST'])
@@ -140,22 +143,10 @@ def extract_image(request):
         return Response(serializer.data)
 
 
-
-# @api_view(['GET', 'POST'])
-# def music_create_list(request, artist_pk):
-#     question = get_object_or_404(Questionanswer, pk=artist_pk)
-
-#     if request.method == 'GET':
-#         musics = Music.objects.all()
-#         serializer = MusicSerializer(musics, many=True)
-#         return Response(serializer.data)
-#     elif request.method == 'POST':
-#         # MusicSerializer fields => title
-#         serializer = MusicSerializer(data=request.data)
-#         if serializer.is_valid(raise_exception=True): # artist_id 검증 안해서
-#             serializer.save(artist_id=artist.id)
-#             # music = forms.save(commit=False)
-#             # music.artist = artist
-#             # music.save()
-#             # 3줄이 위의 하나로
-#         return Response(serializer.data)
+@api_view(['GET', 'POST'])
+def create_problem_or_show_list(request, video_pk):
+    video = get_object_or_404(request, pk = video_pk)
+    if request.method == 'GET':
+        pass
+    elif request.method == 'POST':
+        pass

@@ -153,3 +153,4 @@ dmypy.json
 vscode/
 idea/
 my_settings.py
+migrations/

@@ -11,14 +11,11 @@ from .models import Problem
 from .serializers import ProblemSerializer
 # Create your views here.
 
-# from . import question_generatorTEST
 import google.cloud.vision
 import google.cloud.translate_v2 as translate
 import cv2, os, io, re
 import numpy as np
 import pafy, json
-
-
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -149,7 +146,7 @@ def problem_create_list(request, video_pk):
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
-        print(os.getcwd())
+        
         serializer = ProblemSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(video_id=video.id)

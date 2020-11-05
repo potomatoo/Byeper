@@ -17,6 +17,10 @@ import cv2, os, io, re
 import numpy as np
 import pafy, json
 
+from question_generator import generateQuestions
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
+
+
 save_frames = []
 def imwrite(filename, img, params=None): 
     try: 
@@ -137,6 +141,9 @@ def extract_image(request):
             serializer.save()
         return Response(200)
 
+from Image2text import image_processing
+from translate import kor2eng, eng2kor
+from question_generator import generateQuestions
 
 @api_view(['GET', 'POST'])
 def problem_create_list(request, video_pk):
@@ -145,8 +152,14 @@ def problem_create_list(request, video_pk):
         problems = Problem.objects.all()
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
+
     elif request.method == 'POST':
+        path = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
+        result = image_processing(path)  # image --> text
+        ENG = kor2eng(result)  # kor-sentence --> eng-sentence
+        questions_list = generateQuestions(ENG)
         
+
         serializer = ProblemSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
             serializer.save(video_id=video.id)

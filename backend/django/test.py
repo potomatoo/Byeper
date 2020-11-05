@@ -1,4 +1,4 @@
-import question_generator
+from question_generator import generateQuestions
 text = 'nice to meeet you'
-t = question_generator(text)
+t = generateQuestions(text, 10)
 print(t)

@@ -27,7 +27,11 @@ def save(frame, image, title):
     # imwrite("images/{}/{:0>2}h {:0>2}m {:0>2}s.jpg".format(title, h, m, s), image)
     imwrite("images/{}/{}.jpg".format(title, sec), image)
 
+<<<<<<< HEAD
+def divide_and_conquer(vidcap, left, right, left_image, right_image, title):
+=======
 def binary_search(vidcap, left, right, left_image, right_image, title):
+>>>>>>> 3c5f89694848ded937d61819116a7c14466cf902
     global save_frames
     if right - left < 20:
         #저장
@@ -50,6 +54,18 @@ def binary_search(vidcap, left, right, left_image, right_image, title):
         return
     if diff_sum_left > 2000 and diff_sum_right > 2000:
         if right - left < 600:
+<<<<<<< HEAD
+            divide_and_conquer(vidcap, mid, right, mid_image, right_image, title)
+        else:
+            divide_and_conquer(vidcap, left, mid, left_image, mid_image, title)
+            divide_and_conquer(vidcap, mid, right, mid_image, right_image, title)
+        return
+    if diff_sum_left > 2000:
+        divide_and_conquer(vidcap, left, mid, left_image, mid_image, title)
+        return
+    if diff_sum_right > 2000:
+        divide_and_conquer(vidcap, mid, right, mid_image, right_image, title)
+=======
             binary_search(vidcap, mid, right, mid_image, right_image, title)
         else:
             binary_search(vidcap, left, mid, left_image, mid_image, title)
@@ -60,6 +76,7 @@ def binary_search(vidcap, left, right, left_image, right_image, title):
         return
     if diff_sum_right > 2000:
         binary_search(vidcap, mid, right, mid_image, right_image, title)
+>>>>>>> 3c5f89694848ded937d61819116a7c14466cf902
         return
 
 def get_time(sec):
@@ -127,7 +144,11 @@ def extract_from_youtube_url(youtube_url, n):
     end_image = cv2.cvtColor(end_image, cv2.COLOR_BGR2GRAY)
 
     save_frames = [0]
+<<<<<<< HEAD
+    divide_and_conquer(vidcap, 0, end, start_image, end_image, title)
+=======
     binary_search(vidcap, 0, end, start_image, end_image, title)
+>>>>>>> 3c5f89694848ded937d61819116a7c14466cf902
     for frame in save_frames:
         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
         _, image = vidcap.read()

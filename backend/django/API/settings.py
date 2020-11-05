@@ -52,14 +52,7 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'API.wsgi.application'
 
-# import my_settings
 DATABASES = my_settings.DATABASES
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.sqlite3',
-#         'NAME': BASE_DIR / 'db.sqlite3',
-#     }
-# }
 
 AUTH_PASSWORD_VALIDATORS = [
     {

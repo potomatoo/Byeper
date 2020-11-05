@@ -5,5 +5,6 @@ from . import views
 app_name = 'qna'
 
 urlpatterns = [
-    path('', views.questions_list),
+    # path('qa', views.create_problem_or_show_list),
+    # path('qa/<int:video_pk>/', views.questions_detail_list),
 ]

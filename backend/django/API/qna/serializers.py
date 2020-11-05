@@ -1,7 +1,7 @@
-from .models import Questionanswer
+from .models import Problem
 from rest_framework import serializers
 
 class ProblemSerializer(serializers.ModelSerializer):
     class Meta:
-        model = Questionanswer
+        model = Problem
         fields= '__all__'

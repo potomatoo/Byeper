@@ -125,10 +125,6 @@ def extract_from_youtube_url(youtube_url, n):
                         'diff': int(diff)}
     with open("{}.json".format(id), "w") as json_file:
         json.dump(info_dict, json_file)
-<<<<<<< HEAD
-
-=======
->>>>>>> bbe537e3630c9944a990584260c4ff0bacad0635
     return len(save_frames)
 
 

@@ -12,12 +12,13 @@ from .serializers import ProblemSerializer
 # Create your views here.
 
 # from . import question_generatorTEST
-import cv2
+import google.cloud.vision
+import google.cloud.translate_v2 as translate
+import cv2, os, io, re
 import numpy as np
-import os
-import pafy
-import re
-import json
+import pafy, json
+
+
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -141,13 +142,15 @@ def extract_image(request):
 
 
 @api_view(['GET', 'POST'])
-def create_problem_or_show_list(request, video_pk):
-    video = get_object_or_404(request, pk = video_pk)
+def problem_create_list(request, video_pk):
+    video = get_object_or_404(Video, pk=video_pk)
     if request.method == 'GET':
         problems = Problem.objects.all()
         serializer = ProblemSerializer(problems, many=True)
         return Response(serializer.data)
     elif request.method == 'POST':
+        print(os.getcwd())
         serializer = ProblemSerializer(data = request.data)
         if serializer.is_valid(raise_exception=True):
-            serializer.save(video_pk = video.id)
+            serializer.save(video_id=video.id)
+        return Response(200)

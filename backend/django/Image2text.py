@@ -13,7 +13,12 @@ def detect_text(path):
     response = client.document_text_detection(image=image)
 
     texts = response.text_annotations
-    print(texts[0].description)
+    sentence = ''
+    for text in texts[0].description.split('\n'):
+        # if len(text.replace(' ', '')) < 25: continue
+        print(len(text.replace(' ', '')), text)
+        sentence += text + ' '
+    # print(sentence)
     if response.error.message:
         raise Exception(
             '{}\nFor more info on error messages, check: '
@@ -21,6 +26,7 @@ def detect_text(path):
                 response.error.message))
 
 def combine_image(path):
+    # /var/file/VIDEO_ID
     # root = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
     target_dir = path[:-11]
     imgs = []

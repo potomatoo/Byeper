@@ -34,8 +34,7 @@ def imwrite(filename, img, params=None):
         return False
 
 def save(frame, image, title):
-    sec = frame // 30
-    imwrite("image/{}/{}.jpg".format(title, sec), image)
+    imwrite("/var/file/{}/{}.jpg".format(title, frame), image)
 
 def divide_and_conquer(vidcap, left, right, left_image, right_image):
     global save_frames
@@ -58,20 +57,20 @@ def divide_and_conquer(vidcap, left, right, left_image, right_image):
     diff = np.subtract(mid_image, right_image, dtype=np.int16)
     diff = np.abs(diff)
     diff_sum_right = np.sum(diff>10)
-    if diff_sum_left < 2000 and diff_sum_right < 2000:
+    if diff_sum_left < 1000 and diff_sum_right < 1000:
         # 뭔가 이상한곳
         return
-    if diff_sum_left > 2000 and diff_sum_right > 2000:
-        if right - left < 600:
+    if diff_sum_left > 1000 and diff_sum_right > 1000:
+        if right - left < 150:
             divide_and_conquer(vidcap, mid, right, mid_image, right_image)
         else:
             divide_and_conquer(vidcap, left, mid, left_image, mid_image)
             divide_and_conquer(vidcap, mid, right, mid_image, right_image)
         return
-    if diff_sum_left > 2000:
+    if diff_sum_left > 1000:
         divide_and_conquer(vidcap, left, mid, left_image, mid_image)
         return
-    if diff_sum_right > 2000:
+    if diff_sum_right > 1000:
         divide_and_conquer(vidcap, mid, right, mid_image, right_image)
         return
 
@@ -96,8 +95,8 @@ def extract_from_youtube_url(youtube_url, n):
     best = video.getbest()
     id = youtube_url[32:]
     
-    if not(os.path.isdir('image/{}'.format(id))):
-        os.makedirs(os.path.join('image/{}'.format(id)))
+    if not(os.path.isdir('/var/file/{}'.format(id))):
+        os.makedirs(os.path.join('/var/file/{}'.format(id)))
 
     vidcap = cv2.VideoCapture(best.url)
     vidcap.set(3, 400)
@@ -119,10 +118,10 @@ def extract_from_youtube_url(youtube_url, n):
         frame, diff = save_frame
         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
         _, image = vidcap.read()
-        save(frame, image, id)
+        save(i, image, id)
         info_dict[int(i)] = {'time': int(frame // 30), 
                         'diff': int(diff)}
-    with open("{}.json".format(id), "w") as json_file:
+    with open("/var/file/{}/{}.json".format(id, id), "w") as json_file:
         json.dump(info_dict, json_file)
     return len(save_frames)
 
@@ -136,7 +135,7 @@ def extract_image(request):
         serializer = VideoSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
-        return Response(200)
+        return Response(data)
 
 
 @api_view(['GET', 'POST'])

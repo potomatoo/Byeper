@@ -1,6 +1,4 @@
 import pandas as pd
-
-### Pickling
 import _pickle as cPickle
 from pathlib import Path
 
@@ -209,13 +207,14 @@ def generateQuestions(text, count):
     while orderedQaPairs and len(data_list) < count:
         dic = orderedQaPairs.pop()
         if len(dic['distractors']) == 4:
-            data_dict = {'question':dic['question'], 'answer':dic['answer'], 'origin':dic['origin'], 'similar':dic['distractors']}
+            data_dict = {
+                'problem':dic['question'], 
+                'answer':dic['answer'], 
+                'origin':dic['origin'], 
+                'similar1':dic['distractors'][0],
+                'similar2':dic['distractors'][1],
+                'similar3':dic['distractors'][2],
+                'similar4':dic['distractors'][3]
+                }
             data_list.append(data_dict)
     return data_list
-
-    
-
-# text = "Oxygen is a chemical element with symbol O and atomic number 8. It is a member of the chalcogen group on the periodic table, a highly reactive nonmetal, and an oxidizing agent that readily forms oxides with most elements as well as with other compounds. By mass, oxygen is the third-most abundant element in the universe, after hydrogen and helium. At standard temperature and pressure, two atoms of the element bind to form dioxygen, a colorless and odorless diatomic gas with the formula O2. Diatomic oxygen gas constitutes 20.8% of the Earth's atmosphere. As compounds including oxides, the element makes up almost half of the Earth's crust."
-text = """nice to meet you. i'm jaeho, 27 years old this year."""
-DATA = generateQuestions(text, 10)
-print(DATA)

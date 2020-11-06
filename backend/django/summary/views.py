@@ -1,21 +1,22 @@
 from django.shortcuts import render, get_object_or_404
-# from django.views.decorators.http import require_GET
-# from django.http.response import JsonResponse, HttpResponse
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Video
 from .serializers import VideoSerializer
-# Create your views here.
+from .models import Problem
+from .serializers import ProblemSerializer
 
-# from . import question_generatorTEST
-import cv2
+import google.cloud.translate_v2 as translate
+import cv2, os, io, re
 import numpy as np
-import os
-import pafy
-import re
-import json
+import pafy, json
+
+from Image2text import image_processing
+from question_generator import generateQuestions
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
+translate_client = translate.Client()
+
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -139,9 +140,22 @@ def extract_image(request):
 
 
 @api_view(['GET', 'POST'])
-def create_problem_or_show_list(request, video_pk):
-    video = get_object_or_404(request, pk = video_pk)
+def problem_create_list(request, video_pk):
+    video = get_object_or_404(Video, pk=video_pk)
     if request.method == 'GET':
-        pass
+        problems = Problem.objects.all()
+        serializer = ProblemSerializer(problems, many=True)
+        return Response(serializer.data)
+
     elif request.method == 'POST':
-        pass
+        path = os.path.join('C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\tmp', request.data['video'])
+        result = image_processing(path)  # image --> text
+        ENG = translate_client.translate(result, target_language='en')['translatedText']
+
+        questions_list = generateQuestions(ENG, 10)
+        for qna in questions_list:
+            qna['video'] = video.id
+            serializer = ProblemSerializer(data=qna)
+            if serializer.is_valid(raise_exception=True):
+                serializer.save(video_id=video.id)
+        return Response(200)

@@ -15,26 +15,32 @@
         <h2>{{ playList.playListName }}</h2>
         <p>{{ playList.playListDescription }}</p>
       </div>
-      <v-simple-table dense>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th class="text-left">
-                재생번호
-              </th>
-              <th class="text-left">
-                제목
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="item in desserts" :key="item.name">
-              <td style="cursor: pointer">{{ item.id }}</td>
-              <td style="cursor: pointer">{{ item.playName }}</td>
-            </tr>
-          </tbody>
-        </template>
-      </v-simple-table>
+      <div class="tableBox">
+        <v-simple-table dense>
+          <template v-slot:default>
+            <thead>
+              <tr>
+                <th class="text-left">
+                  재생번호
+                </th>
+                <th class="text-left">
+                  제목
+                </th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="item in desserts"
+                :key="item.name"
+                @click="moveScroll(item.id)"
+              >
+                <td style="cursor: pointer">{{ item.id }}</td>
+                <td style="cursor: pointer">{{ item.playName }}</td>
+              </tr>
+            </tbody>
+          </template>
+        </v-simple-table>
+      </div>
     </div>
   </div>
 </template>
@@ -44,6 +50,8 @@ import { Component, Vue } from "vue-property-decorator";
 
 @Component
 export default class IntroMain extends Vue {
+  $vuetify: any;
+
   playList = {
     playListName: this.$route.params.playListName,
     playListDescription:
@@ -80,6 +88,14 @@ export default class IntroMain extends Vue {
       playName: "CNN과 RNN"
     }
   ];
+
+  moveScroll(scrollId: string) {
+    const target: HTMLElement = document.getElementById(
+      scrollId
+    ) as HTMLElement;
+    const scrollLocation: number = target.offsetTop;
+    this.$vuetify.goTo(scrollLocation + 500);
+  }
 }
 </script>
 
@@ -110,6 +126,7 @@ export default class IntroMain extends Vue {
   max-width: 500px;
   z-index: 2;
 }
+
 .banner .textBox:before {
   content: "";
   position: absolute;
@@ -127,6 +144,22 @@ export default class IntroMain extends Vue {
   }
   100% {
     transform: scaleX(0);
+  }
+}
+
+.tableBox {
+  opacity: 0;
+  animation: fadeInBottom 0.5s linear forwards;
+  animation-delay: 1.5s;
+}
+@keyframes fadeInBottom {
+  0% {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  100% {
+    transform: translateY();
+    opacity: 1;
   }
 }
 .banner .textBox h2 {

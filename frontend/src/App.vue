@@ -2,6 +2,7 @@
   <v-app id="app">
     <app-navbar />
     <app-main style=" margin-top: 64px;" />
+    <go-top />
   </v-app>
 </template>
 
@@ -9,11 +10,13 @@
 import { Component, Vue } from "vue-property-decorator";
 import AppNavbar from "@/components/app/AppNavbar.vue";
 import AppMain from "@/components/app/AppMain.vue";
+import GoTop from "@/components/GoTop.vue";
 
 @Component({
   components: {
     AppNavbar,
-    AppMain
+    AppMain,
+    GoTop
   }
 })
 export default class App extends Vue {}

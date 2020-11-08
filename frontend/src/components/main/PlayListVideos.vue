@@ -3,7 +3,7 @@
     <v-container>
       <v-row v-for="item in list" :key="item.id" style="margin: 50px 0 50px 0">
         <v-col cols="6">
-          <div class="videodescription">
+          <div class="videodescription" :id="item.id">
             <div class="content">
               <div>
                 <h3 class="mb-5">

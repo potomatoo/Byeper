@@ -1,6 +1,7 @@
 export interface AccountsModule {
   user: User | null;
   token: string | null;
+  isSidebar: boolean | null;
 }
 
 export interface User {

@@ -1,18 +1,19 @@
 <template>
   <div>
     <v-app-bar style="position: fixed; z-index: 100">
-      <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon @click="TOGGLE_SIDEBAR"></v-app-bar-nav-icon>
       <v-col cols="3">
         <v-toolbar-title>VideoSummary</v-toolbar-title>
       </v-col>
-      <v-col cols="6">
+      <v-col cols="6" style="padding: 0">
         <v-text-field
+          solo
           color="white"
-          style="margin-top: 30px"
           outlined
           dense
           label="검색"
           prepend-inner-icon="mdi-magnify"
+          hide-details="true"
           v-model="inputText"
         >
         </v-text-field>
@@ -28,7 +29,12 @@
       </v-col>
     </v-app-bar>
 
-    <v-navigation-drawer app v-model="drawer" style="margin-top: 64px;">
+    <v-navigation-drawer
+      app
+      permanent
+      v-if="isSidebar"
+      style="margin-top: 64px;"
+    >
       <v-list nav dense>
         <v-list-item-group
           v-model="group"
@@ -74,11 +80,12 @@ const AccountsModule = namespace("AccountsModule");
 
 @Component
 export default class AppNavbar extends Vue {
+  @AccountsModule.State isSidebar!: boolean;
   @AccountsModule.Getter isLoggedIn!: boolean;
   @AccountsModule.Action GOOGLE_LOGIN: any;
   @AccountsModule.Mutation REMOVE_TOKEN: any;
+  @AccountsModule.Mutation TOGGLE_SIDEBAR: any;
 
-  drawer = true;
   group = null;
   inputText = null;
   $gAuth: any;

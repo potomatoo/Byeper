@@ -8,7 +8,8 @@ const module: Module<AccountsModule, RootState> = {
   namespaced: true,
   state: {
     user: null,
-    token: null || window.sessionStorage.getItem("jwt-token")
+    token: null || window.sessionStorage.getItem("jwt-token"),
+    isSidebar: false
   },
 
   getters: {
@@ -30,6 +31,9 @@ const module: Module<AccountsModule, RootState> = {
     REMOVE_TOKEN(state) {
       state.token = null;
       window.sessionStorage.removeItem("jwt-token");
+    },
+    TOGGLE_SIDEBAR(state) {
+      state.isSidebar = !state.isSidebar;
     }
   },
 

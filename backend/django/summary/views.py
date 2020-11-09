@@ -151,20 +151,55 @@ def problem_create_list(request, video_pk):
     elif request.method == 'POST':
         path = os.path.join('C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp', request.data['video_id'])
         result = image_processing(path)  # image --> text
-        ENG = translate_client.translate(result, target_language='en')['translatedText']
 
-        questions_list = generateQuestions(ENG, 10)
-        kor_questions = []
-        print(questions_list)
-        for qna in questions_list:
-            qna['problem'] = TextBlob(qna['problem']).translate(from_lang='en', to='ko') #translate_client.translate(qna['problem'], target_language='ko')['translatedText']
-            qna['answer'] = TextBlob(qna['answer']).translate(from_lang='en', to='ko') #translate_client.translate(qna['answer'], target_language='ko')['translatedText']
-            qna['origin'] = TextBlob(qna['origin']).translate(from_lang='en', to='ko') #translate_client.translate(qna['origin'], target_language='ko')['translatedText']
-            qna['similar1'] = TextBlob(qna['similar1']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar1'], target_language='ko')['translatedText']
-            qna['similar2'] = TextBlob(qna['similar2']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar2'], target_language='ko')['translatedText']
-            qna['similar3'] = TextBlob(qna['similar3']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar3'], target_language='ko')['translatedText']
-            qna['similar4'] = TextBlob(qna['similar4']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar4'], target_language='ko')['translatedText']
-            print(qna)
+        # questions_list = generateQuestions(ENG, 10)
+        # kor_questions = []
+        # print(questions_list)
+        # for qna in questions_list:
+        #     qna['problem'] = TextBlob(qna['problem']).translate(from_lang='en', to='ko') #translate_client.translate(qna['problem'], target_language='ko')['translatedText']
+        #     qna['answer'] = TextBlob(qna['answer']).translate(from_lang='en', to='ko') #translate_client.translate(qna['answer'], target_language='ko')['translatedText']
+        #     qna['origin'] = TextBlob(qna['origin']).translate(from_lang='en', to='ko') #translate_client.translate(qna['origin'], target_language='ko')['translatedText']
+        #     qna['similar1'] = TextBlob(qna['similar1']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar1'], target_language='ko')['translatedText']
+        #     qna['similar2'] = TextBlob(qna['similar2']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar2'], target_language='ko')['translatedText']
+        #     qna['similar3'] = TextBlob(qna['similar3']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar3'], target_language='ko')['translatedText']
+        #     qna['similar4'] = TextBlob(qna['similar4']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar4'], target_language='ko')['translatedText']
+        #     print(qna)
+        from textblob import TextBlob
+    # result = image_processing('C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM')
+    with open('foo.txt', 'r', encoding="utf-8") as f:
+        result = f.read()
+
+    import time
+    t = time.time()
+
+    origin = TextBlob(result)
+    eng = origin.translate('ko', 'en')
+    t1 = time.time()
+    print(t1 - t)
+
+    print(origin)
+    print('--------')
+    print(eng)
+    print('--------')
+
+    answers = []
+    for text in list(set(eng.noun_phrases)):
+        for t in text.split():
+            if len(t) <= 2: flag=True; break
+        else: answers.append(text)
+
+    for sentence in eng.split('\n'):
+        for answer in answers:
+            if answer in sentence:
+                
+                problem = sentence.replace(answer, '______')
+                problem = TextBlob(problem)
+                print(problem.translate('en', 'ko'),'||', answer.translate('en', 'ko'), answer)
+            
+        
+        
+        
+        
         for qna in questions_list:
             qna['video'] = video.id
             serializer = ProblemSerializer(data=qna)

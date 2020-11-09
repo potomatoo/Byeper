@@ -25,14 +25,18 @@ def image_processing(path):
     response = client.document_text_detection(image=image)
     texts = response.text_annotations
     sentence = ''
+    arr = []
     for text in texts[0].description.split('\n'):
         if not check_kor.search(text): continue
         
         if text[-1] in ('은', '는', '이', '가', '을', '를'):
             sentence += text + ' '
+        elif sentence:
+            arr.append(sentence)
+            sentence = ''
         else:
-            sentence += text + '\n'
-
+            arr.append(text)
+            
     if response.error.message:
         raise Exception(
             '{}\nFor more info on error messages, check: '
@@ -40,4 +44,7 @@ def image_processing(path):
                 response.error.message))
 
     os.remove(tmp_image)
-    return sentence
+    return arr
+
+result = image_processing('C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM')
+print(result)

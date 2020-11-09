@@ -148,6 +148,7 @@ export default class IntroMain extends Vue {
 }
 
 .tableBox {
+  margin-left: 80px;
   opacity: 0;
   animation: fadeInBottom 0.5s linear forwards;
   animation-delay: 1.5s;
@@ -168,7 +169,7 @@ export default class IntroMain extends Vue {
 
 .banner .textBox p {
   font-size: 1.1em;
-  margin: 5px 20px 0 0;
+  margin: 5px 0 0 0;
 }
 
 .banner .videoBx {

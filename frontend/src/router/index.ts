@@ -20,7 +20,7 @@ const routes: Array<RouteConfig> = [
     component: StudentPage
   },
   {
-    path: "/course",
+    path: "/course/:courseName",
     name: "LectureListPage",
     component: LectureListPage
   },

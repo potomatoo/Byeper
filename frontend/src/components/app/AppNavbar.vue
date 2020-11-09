@@ -47,7 +47,7 @@
             <v-list-item-title>홈</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item @click="goStudent">
             <v-list-item-icon>
               <v-icon>mdi-book-open-page-variant</v-icon>
             </v-list-item-icon>
@@ -96,6 +96,9 @@ export default class AppNavbar extends Vue {
   }
   goHome() {
     this.$router.push({ name: "Home" });
+  }
+  goStudent() {
+    this.$router.push({ name: "StudentPage" });
   }
   logout() {
     // this.LOGOUT();

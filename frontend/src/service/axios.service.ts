@@ -9,12 +9,12 @@ export class LocalAxios {
 
 export class Axios {
   static readonly instance: AxiosInstance = axios.create({
-    baseURL: "http://k3b108.p.ssafy.io:8080",
+    baseURL: "https://k3b108.p.ssafy.io:8080",
     timeout: 10000
   });
 
   static readonly instanceRec: AxiosInstance = axios.create({
-    baseURL: "http://k3b108.p.ssafy.io:8080",
+    baseURL: "https://k3b108.p.ssafy.io:8080",
     timeout: 10000
   });
 }

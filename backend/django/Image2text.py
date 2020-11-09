@@ -1,5 +1,7 @@
 from google.cloud import vision
 import os, cv2, io, re
+check_kor = re.compile('[가-힣]+')
+check_eng = re.compile('[a-z|A-Z]+')
 
 def image_processing(path):
     # /var/file/VIDEO_ID
@@ -22,14 +24,14 @@ def image_processing(path):
     image = vision.Image(content=content)
     response = client.document_text_detection(image=image)
     texts = response.text_annotations
-
     sentence = ''
     for text in texts[0].description.split('\n'):
-        text = re.sub(r"\((.*?)\)", '', text)
-        if len(text.replace(' ', '')) > 20: 
-            sentence += text
-            if sentence[-1] not in '?!.': sentence += '.'
-            sentence += ' '
+        if not check_kor.search(text): continue
+        
+        if text[-1] in ('은', '는', '이', '가', '을', '를'):
+            sentence += text + ' '
+        else:
+            sentence += text + '\n'
 
     if response.error.message:
         raise Exception(
@@ -39,7 +41,3 @@ def image_processing(path):
 
     os.remove(tmp_image)
     return sentence
-
-PATH = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
-result = image_processing(PATH)
-print(result)

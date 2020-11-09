@@ -1,12 +1,24 @@
 <template>
   <v-container fluid>
     <v-row>
-      <v-col cols="4" v-for="course in courseList" :key="course.id">
-        <v-card height="350" @click="routingToCource(course.courseName)">
+      <v-col
+        lg="4"
+        md="6"
+        sm="12"
+        v-for="course in courseList"
+        :key="course.id"
+      >
+        <v-card
+          class="mx-auto"
+          height="400px"
+          @click="routingToCource(course.courseName)"
+        >
           <v-img :src="course.img" height="200px"></v-img>
-          <v-row>
-            <v-col>
-              <v-card-title> {{ course.courseName }} </v-card-title>
+          <v-row align="center">
+            <v-col style="padding-bottom: 0">
+              <v-card-title style="font-size: 1em; height: 120px">
+                {{ course.courseName }}
+              </v-card-title>
             </v-col>
             <v-col cols="3" class="play-icon">
               <v-btn class="ma-4" outlined fab color="teal">

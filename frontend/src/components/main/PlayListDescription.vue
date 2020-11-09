@@ -16,7 +16,7 @@
         <p>{{ playList.playListDescription }}</p>
       </div>
       <div class="tableBox">
-        <v-simple-table dense>
+        <v-simple-table dense max-height="400px" width="400px">
           <template v-slot:default>
             <thead>
               <tr>

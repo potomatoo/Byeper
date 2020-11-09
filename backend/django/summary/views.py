@@ -14,6 +14,7 @@ import pafy, json
 
 from Image2text import image_processing
 from question_generator import generateQuestions
+from textblob import TextBlob
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
 translate_client = translate.Client()
 
@@ -153,6 +154,17 @@ def problem_create_list(request, video_pk):
         ENG = translate_client.translate(result, target_language='en')['translatedText']
 
         questions_list = generateQuestions(ENG, 10)
+        kor_questions = []
+        print(questions_list)
+        for qna in questions_list:
+            qna['problem'] = TextBlob(qna['problem']).translate(from_lang='en', to='ko') #translate_client.translate(qna['problem'], target_language='ko')['translatedText']
+            qna['answer'] = TextBlob(qna['answer']).translate(from_lang='en', to='ko') #translate_client.translate(qna['answer'], target_language='ko')['translatedText']
+            qna['origin'] = TextBlob(qna['origin']).translate(from_lang='en', to='ko') #translate_client.translate(qna['origin'], target_language='ko')['translatedText']
+            qna['similar1'] = TextBlob(qna['similar1']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar1'], target_language='ko')['translatedText']
+            qna['similar2'] = TextBlob(qna['similar2']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar2'], target_language='ko')['translatedText']
+            qna['similar3'] = TextBlob(qna['similar3']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar3'], target_language='ko')['translatedText']
+            qna['similar4'] = TextBlob(qna['similar4']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar4'], target_language='ko')['translatedText']
+            print(qna)
         for qna in questions_list:
             qna['video'] = video.id
             serializer = ProblemSerializer(data=qna)

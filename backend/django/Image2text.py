@@ -13,7 +13,7 @@ def image_processing(path):
     tmp_image = os.path.join(path, target_dir+'.png')
 
     cv2.imwrite(tmp_image, img)
-    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
+    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\pyoun\\Desktop\\pk.json"
     client = vision.ImageAnnotatorClient()
 
     with io.open(tmp_image, 'rb') as image_path:
@@ -40,5 +40,6 @@ def image_processing(path):
     os.remove(tmp_image)
     return sentence
 
-# PATH = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
-# result = image_processing(PATH)
+PATH = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
+result = image_processing(PATH)
+print(result)

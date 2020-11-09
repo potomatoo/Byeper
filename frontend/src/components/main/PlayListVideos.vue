@@ -29,7 +29,7 @@
               <img
                 class="smallimg"
                 src="@/assets/playBtn.png"
-                @click="goHome"
+                @click="goLecture(item.playListName)"
               />
             </div>
           </div>
@@ -83,8 +83,11 @@ export default class PlayListRoadmap extends Vue {
       playListName: "junho"
     }
   ];
-  goHome() {
-    this.$router.push({ name: "Home" });
+  goLecture(courseName: string) {
+    this.$router.push({
+      name: "LecturePage",
+      params: { courseName: courseName }
+    });
   }
 }
 </script>

@@ -24,7 +24,7 @@
           <v-icon>mdi-account</v-icon>로그인
         </v-btn>
         <v-btn v-if="isLoggedIn" @click="logout">
-          <v-icon>mdi-account</v-icon>로그인
+          <v-icon>mdi-account</v-icon>로그아웃
         </v-btn>
       </v-col>
     </v-app-bar>

@@ -7,21 +7,27 @@
         <v-card-text>강의 제목</v-card-text>
         <v-progress-linear
           color="deep-orange"
-          height="10"
-          v-model="value2"
+          height="18"
+          :value="value2"
           :active="show2"
           :indeterminate="query2"
-        ></v-progress-linear>
+          ><strong style="font-size: 0.8em"
+            >{{ Math.ceil(value2) }}%</strong
+          ></v-progress-linear
+        >
         <!-- </v-col>
         <v-col> -->
         <v-card-text>강의 제목</v-card-text>
         <v-progress-linear
           color="deep-orange"
-          height="10"
-          v-model="value"
+          height="18"
+          :value="value"
           :active="show"
           :indeterminate="query"
-        ></v-progress-linear>
+          ><strong style="font-size: 0.8em"
+            >{{ Math.ceil(value) }}%</strong
+          ></v-progress-linear
+        >
         <!-- </v-col> -->
       </v-row>
     </v-list-item>

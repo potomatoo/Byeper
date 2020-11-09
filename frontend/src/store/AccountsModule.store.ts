@@ -34,11 +34,15 @@ const module: Module<AccountsModule, RootState> = {
     },
     TOGGLE_SIDEBAR(state) {
       state.isSidebar = !state.isSidebar;
+    },
+    SET_USER_INFO(state, userInfo) {
+      state.user = userInfo;
     }
   },
 
   actions: {
     GOOGLE_LOGIN({ commit }, authToken) {
+      console.log(authToken);
       Axios.instance
         .post("/api/public/google/login", authToken)
         .then(({ data }) => {

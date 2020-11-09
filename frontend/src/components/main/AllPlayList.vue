@@ -56,14 +56,14 @@
                       <div
                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis; font-weight: bold; padding: 0px"
                       >
-                        [브이로그] 쿠팡개발자 김씨의 하루
+                        [브이로그] 슬기로운 싸피생활
                       </div>
                     </v-row>
                     <v-row>
                       <div
                         style="white-space: nowrap; overflow: hidden; text-overflow: ellipsis;"
                       >
-                        준호야 회사가자
+                        싸피대장
                       </div>
                     </v-row>
                   </v-col>
@@ -86,39 +86,39 @@ export default class AllPlayList extends Vue {
   list = [
     {
       id: 1,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 2,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 3,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 4,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 5,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 6,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 7,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 8,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     },
     {
       id: 9,
-      playListName: "junho"
+      playListName: "슬기로운 싸피생활"
     }
   ];
 

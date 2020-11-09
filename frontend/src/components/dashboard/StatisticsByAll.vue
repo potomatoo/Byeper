@@ -16,6 +16,7 @@
         </v-col>
         <v-col>
           <v-progress-circular
+            class="graph-class"
             rotate="-90"
             size="100"
             width="15"
@@ -45,22 +46,33 @@ export default class StatisticsByAll extends Vue {
     clearInterval(this.interval2);
   }
 
-  mounted() {
-    (this.interval = setInterval(() => {
-      if (this.value === 60) {
-        return;
-      }
-      this.value += 10;
-    }, 150))(
-      (this.interval2 = setInterval(() => {
+  queryAndIndeterminate() {
+    setTimeout(() => {
+      this.query = false;
+
+      this.interval = setInterval(() => {
+        if (this.value === 60) {
+          return;
+        }
+        this.value += 10;
+      }, 150);
+    });
+    setTimeout(() => {
+      this.query = false;
+
+      this.interval2 = setInterval(() => {
         if (this.value2 === 30) {
           return;
         }
         this.value2 += 10;
-      }, 150))
-    );
+      }, 150);
+    });
+  }
+
+  mounted() {
+    this.queryAndIndeterminate();
   }
 }
 </script>
 
-<style></style>
+<style scoped></style>

@@ -35,6 +35,9 @@ const module: Module<AccountsModule, RootState> = {
     TOGGLE_SIDEBAR(state) {
       state.isSidebar = !state.isSidebar;
     },
+    FALSE_SIDEBAR(state) {
+      state.isSidebar = false;
+    },
     SET_USER_INFO(state, userInfo) {
       state.user = userInfo;
     }

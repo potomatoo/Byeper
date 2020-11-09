@@ -7,10 +7,12 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import AppNavbar from "@/components/app/AppNavbar.vue";
 import AppMain from "@/components/app/AppMain.vue";
 import GoTop from "@/components/GoTop.vue";
+import { namespace } from "vuex-class";
+const AccountsModule = namespace("AccountsModule");
 
 @Component({
   components: {
@@ -19,7 +21,14 @@ import GoTop from "@/components/GoTop.vue";
     GoTop
   }
 })
-export default class App extends Vue {}
+export default class App extends Vue {
+  @AccountsModule.Mutation FALSE_SIDEBAR: any;
+
+  @Watch("$route", { immediate: true })
+  falseSidebar() {
+    this.FALSE_SIDEBAR();
+  }
+}
 </script>
 
 <style>

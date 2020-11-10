@@ -15,7 +15,7 @@ def image_processing(path):
     tmp_image = os.path.join(path, target_dir+'.png')
 
     cv2.imwrite(tmp_image, img)
-    os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\pk.json"
+    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\pk.json"
     client = vision.ImageAnnotatorClient()
 
     with io.open(tmp_image, 'rb') as image_path:
@@ -24,9 +24,9 @@ def image_processing(path):
     image = vision.Image(content=content)
     response = client.document_text_detection(image=image)
     texts = response.text_annotations
+    
     sentence = ''
-    arr = []
-    print(texts[0].description)
+
     for text in texts[0].description.split('\n'):
         if not check_kor.search(text): continue
         sentence += text
@@ -43,6 +43,3 @@ def image_processing(path):
 
     os.remove(tmp_image)
     return sentence
-
-# result = image_processing('C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM')
-# print(result)

@@ -14,8 +14,15 @@ eng = origin.translate('ko', 'en')
 # print(eng)
 # print('----------------')
 # print(set(eng.noun_phrases))
+arr = []
 for texts in set(eng.noun_phrases):
     for text in texts.split():
         if len(text) < 3: break
     else:
-        print(texts)
+        arr.append(texts)
+        # print(texts)
+
+for sen in eng.split('\n'):
+    for answer in arr:
+        if answer in sen:
+            print(sen.replace(answer, '_______'), '||', answer)

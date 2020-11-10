@@ -41,6 +41,7 @@ def divide_and_conquer(vidcap, left, right, left_image, right_image):
         diff = np.abs(diff)
         diff = np.sum(diff>10)
         save_frames.append([right, diff])
+        print('save ', right // 30, 's')
         return
     mid = (left + right) // 2
     vidcap.set(cv2.CAP_PROP_POS_FRAMES, mid)
@@ -58,7 +59,7 @@ def divide_and_conquer(vidcap, left, right, left_image, right_image):
         # 뭔가 이상한곳
         return
     if diff_sum_left > 1000 and diff_sum_right > 1000:
-        if right - left < 150:
+        if right - left < 600:
             divide_and_conquer(vidcap, mid, right, mid_image, right_image)
         else:
             divide_and_conquer(vidcap, left, mid, left_image, mid_image)
@@ -71,19 +72,12 @@ def divide_and_conquer(vidcap, left, right, left_image, right_image):
         divide_and_conquer(vidcap, mid, right, mid_image, right_image)
         return
 
-def get_time(sec):
-    if sec < 0: 
-        return 0, 0, 0
-    hour, remain = sec // 3600, sec % 3600
-    minute, sec = remain // 60, remain % 60
-    return hour, minute, sec
-
 def extract_from_videoid(id):
     return extract_from_youtube_url('https://www.youtube.com/watch?v=' + id, 0)
 
 def extract_from_youtube_url(youtube_url, n):
     global save_frames
-    if n == 5: 
+    if n == 8: 
         return False
     try:
         video = pafy.new(youtube_url)
@@ -94,7 +88,8 @@ def extract_from_youtube_url(youtube_url, n):
     
     if not(os.path.isdir('/var/file/{}'.format(id))):
         os.makedirs(os.path.join('/var/file/{}'.format(id)))
-
+    else:
+        return -1
     vidcap = cv2.VideoCapture(best.url)
     vidcap.set(3, 400)
     vidcap.set(4, 225)
@@ -122,18 +117,37 @@ def extract_from_youtube_url(youtube_url, n):
         json.dump(info_dict, json_file)
     return len(save_frames)
 
-
 @api_view(['POST'])
 def extract_image(request):
     if request.method == 'POST':
         data = request.data
+        start = datetime.datetime.now()
         video_max_img = extract_from_videoid(data['video_id'])
+        end = datetime.datetime.now()
+        print(end - start)
+        if video_max_img == -1:
+            return Response(200)
+        elif video_max_img == False:
+            return Response(500)
         data['video_max_img'] = video_max_img
         serializer = VideoSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
             serializer.save()
         return Response(data)
 
+@api_view(['POST'])
+def extract_time(request):
+    id = request.data['id']
+    url = 'https://www.youtube.com/watch?v=' + id
+    time = request.data['time']
+    frame = int(time * 30)
+    video = pafy.new(url)
+    best = video.getbest()
+    vidcap = cv2.VideoCapture(best.url)
+    vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
+    _, image = vidcap.read()
+    imwrite("/var/file/{}/{}.jpg".format(id, id + str(frame)), image)
+    return Response("/var/file/{}/{}.jpg".format(id, id + str(frame)))
 
 @api_view(['POST'])
 def problem_create_list(request, video_pk):

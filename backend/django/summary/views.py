@@ -13,7 +13,7 @@ import pafy, json
 
 from Image2text import image_processing
 from textblob import TextBlob
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/ubuntu/pk.json"
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -139,7 +139,7 @@ def extract_image(request):
 def problem_create_list(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
     if request.method == 'POST':
-        path = os.path.join('.\\var\\file', request.data['video_id'])
+        path = os.path.join('/var/file', request.data['video_id'])
         result = image_processing(path)  # image --> text
 
         origin = TextBlob(result)

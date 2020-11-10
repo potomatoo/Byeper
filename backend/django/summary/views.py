@@ -7,7 +7,6 @@ from .serializers import VideoSerializer
 from .models import Problem
 from .serializers import ProblemSerializer
 
-import google.cloud.translate_v2 as translate
 import cv2, os, io, re
 import numpy as np
 import pafy, json
@@ -15,8 +14,6 @@ import pafy, json
 from Image2text import image_processing
 from textblob import TextBlob
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
-translate_client = translate.Client()
-
 
 save_frames = []
 def imwrite(filename, img, params=None): 

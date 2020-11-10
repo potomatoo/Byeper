@@ -4,8 +4,6 @@ check_kor = re.compile('[가-힣]+')
 check_eng = re.compile('[a-z|A-Z]+')
 
 def image_processing(path):
-    # /var/file/VIDEO_ID
-    # root = 'C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM'
     imgs = []
     for f in os.listdir(path):
         tmp = cv2.imread(os.path.join(path, f), 0)
@@ -15,7 +13,6 @@ def image_processing(path):
     tmp_image = os.path.join(path, target_dir+'.png')
 
     cv2.imwrite(tmp_image, img)
-    # os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\pk.json"
     client = vision.ImageAnnotatorClient()
 
     with io.open(tmp_image, 'rb') as image_path:

@@ -153,3 +153,6 @@ dmypy.json
 .vscode
 .idea
 my_settings.py
+pk.json
+data/
+tmp/

@@ -143,7 +143,7 @@ def extract_image(request):
 def problem_create_list(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
     if request.method == 'POST':
-        path = os.path.join('C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\tmp', request.data['video_id'])
+        path = os.path.join('.\\var\\file', request.data['video_id'])
         result = image_processing(path)  # image --> text
 
         origin = TextBlob(result)
@@ -151,16 +151,19 @@ def problem_create_list(request, video_pk):
         
         answers = eng.noun_phrases
 
+        answer_list = []
+        for answers in set(eng.noun_phrases):
+            for answer in answers.split():
+                if len(answer) < 3: break
+            else:
+                answer_list.append(answers)
+
         QnA = []
         for sentence in eng.split('\n'):
-            for answer in set(answers):
+            for answer in answer_list:
                 if answer in sentence:
                     problem = sentence.replace(answer, '______')
                     DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
                     QnA.append(DATA)
 
-        for qna in QnA:
-            serializer = ProblemSerializer(data=qna)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save(video_id=video.id)
-        return Response(serializer.data)
+        return Response({'data':QnA})

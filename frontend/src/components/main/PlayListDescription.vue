@@ -16,30 +16,17 @@
         <p>{{ playList.playListDescription }}</p>
       </div>
       <div class="tableBox">
-        <v-simple-table dense max-height="400px" width="400px">
-          <template v-slot:default>
-            <thead>
-              <tr>
-                <th class="text-left">
-                  재생번호
-                </th>
-                <th class="text-left">
-                  제목
-                </th>
-              </tr>
-            </thead>
-            <tbody>
-              <tr
-                v-for="item in desserts"
-                :key="item.name"
-                @click="moveScroll(item.id)"
-              >
-                <td style="cursor: pointer">{{ item.id }}</td>
-                <td style="cursor: pointer">{{ item.playName }}</td>
-              </tr>
-            </tbody>
-          </template>
-        </v-simple-table>
+        <v-data-table
+          :headers="headers"
+          :items="play"
+          item-key="id"
+          group-by="Section"
+          dense
+          disable-sort
+          hide-default-footer
+          style="font-family: 'Noto Sans KR', sans-serif; cursor: pointer"
+          @click:row="moveScroll"
+        ></v-data-table>
       </div>
     </div>
   </div>
@@ -57,39 +44,28 @@ export default class IntroMain extends Vue {
     playListDescription:
       "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecatieum voluptate est eius, voluptatibus earum ipsum asperiores modi odit numquam alias. Reiciendis saepe ex, eius animi maxime non debitis! Recusandae!"
   };
-
-  desserts = [
+  headers = [
     {
-      id: 1,
-      playName: "머신러닝"
-    },
-    {
-      id: 2,
-      playName: "인공지능 개론"
-    },
-    {
-      id: 3,
-      playName: "인공신경망 최적화"
-    },
-    {
-      id: 4,
-      playName: "IOT 접목하기"
-    },
-    {
-      id: 5,
-      playName: "텐서플로우와 코드"
-    },
-    {
-      id: 6,
-      playName: "KERAS와 코드"
-    },
-    {
-      id: 7,
-      playName: "CNN과 RNN"
+      text: "커리큘럼",
+      align: "start",
+      value: "playName",
+      groupable: false
     }
   ];
 
-  moveScroll(scrollId: string) {
+  play = [
+    { id: 1, playName: "머신러닝", Section: "기초다지기" },
+    { id: 2, playName: "인공지능 개론", Section: "기초다지기" },
+    { id: 3, playName: "인공신경망 최적화", Section: "실습하기" },
+    { id: 4, playName: "IOT 접목하기", Section: "실습하기" },
+    { id: 5, playName: "텐서플로우와 코드", Section: "실습하기" },
+    { id: 6, playName: "KERAS와 코드", Section: "심화학습" },
+    { id: 7, playName: "CNN과 RNN", Section: "심화학습" }
+  ];
+
+  moveScroll(value: any) {
+    const numberScroll: number = value.id;
+    const scrollId: string = numberScroll.toString();
     const target: HTMLElement = document.getElementById(
       scrollId
     ) as HTMLElement;
@@ -176,8 +152,8 @@ export default class IntroMain extends Vue {
   position: relative;
   background: #fff;
   margin-right: 80px;
-  width: 500px;
-  height: 300px;
+  width: 300px;
+  height: 200px;
   z-index: 1;
 }
 

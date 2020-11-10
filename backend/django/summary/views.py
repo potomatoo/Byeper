@@ -164,7 +164,8 @@ def problem_create_list(request, video_pk):
         #     qna['similar3'] = TextBlob(qna['similar3']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar3'], target_language='ko')['translatedText']
         #     qna['similar4'] = TextBlob(qna['similar4']).translate(from_lang='en', to='ko') #translate_client.translate(qna['similar4'], target_language='ko')['translatedText']
         #     print(qna)
-        from textblob import TextBlob
+
+    from textblob import TextBlob
     # result = image_processing('C:\\Users\\pyoun\\Desktop\\s03p31b108\\backend\\django\\tmp\\tQHw2EovIOM')
     with open('foo.txt', 'r', encoding="utf-8") as f:
         result = f.read()

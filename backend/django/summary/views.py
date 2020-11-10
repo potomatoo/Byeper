@@ -13,7 +13,7 @@ import numpy as np
 import pafy, json
 
 from Image2text import image_processing
-from question_generator import generateQuestions
+from textblob import TextBlob
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\API\\pk.json"
 translate_client = translate.Client()
 
@@ -138,23 +138,31 @@ def extract_image(request):
         return Response(data)
 
 
-@api_view(['GET', 'POST'])
+@api_view(['POST'])
 def problem_create_list(request, video_pk):
     video = get_object_or_404(Video, pk=video_pk)
-    if request.method == 'GET':
-        problems = Problem.objects.all()
-        serializer = ProblemSerializer(problems, many=True)
-        return Response(serializer.data)
-
-    elif request.method == 'POST':
-        path = os.path.join('C:\\Users\\multicampus\\Desktop\\s03p31b108\\backend\\django\\tmp', request.data['video'])
+    if request.method == 'POST':
+        path = os.path.join('.\\var\\file', request.data['video_id'])
         result = image_processing(path)  # image --> text
-        ENG = translate_client.translate(result, target_language='en')['translatedText']
 
-        questions_list = generateQuestions(ENG, 10)
-        for qna in questions_list:
-            qna['video'] = video.id
-            serializer = ProblemSerializer(data=qna)
-            if serializer.is_valid(raise_exception=True):
-                serializer.save(video_id=video.id)
-        return Response(200)
+        origin = TextBlob(result)
+        eng = origin.translate('ko', 'en')
+        
+        answers = eng.noun_phrases
+
+        answer_list = []
+        for answers in set(eng.noun_phrases):
+            for answer in answers.split():
+                if len(answer) < 3: break
+            else:
+                answer_list.append(answers)
+
+        QnA = []
+        for sentence in eng.split('\n'):
+            for answer in answer_list:
+                if answer in sentence:
+                    problem = sentence.replace(answer, '______')
+                    DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
+                    QnA.append(DATA)
+
+        return Response({'data':QnA})

@@ -53,7 +53,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter {
 		http.formLogin().disable();
 		http.csrf().disable()// rest api이므로 csrf보안이 필요없음
 				.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS)// jwt 토큰 사용으로 세션이 필요 없음
-				.and().cors().disable().addFilterAt(customfilter(), UsernamePasswordAuthenticationFilter.class)
+				.and().cors().and().addFilterAt(customfilter(), UsernamePasswordAuthenticationFilter.class)
 				.addFilter(new JwtAuthorizationFilter(authenticationManager(), this.userRepository)).authorizeRequests()
 				.antMatchers("/swagger-ui.html").permitAll().antMatchers("/swagger-resources/**").permitAll()
 				.antMatchers("/v2/api-docs").permitAll().antMatchers("/webjars/**").permitAll()

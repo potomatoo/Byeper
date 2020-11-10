@@ -27,9 +27,6 @@ public class Video {
 	@Column(name = "user_id")
 	private String userId;
 
-	@Column(name = "video_file")
-	private String videoFile;
-
 	public String getVideoId() {
 		return videoId;
 	}
@@ -78,19 +75,10 @@ public class Video {
 		this.userId = userId;
 	}
 
-	public String getVideoFile() {
-		return videoFile;
-	}
-
-	public void setVideoFile(String videoFile) {
-		this.videoFile = videoFile;
-	}
-
 	@Override
 	public String toString() {
 		return "Video [videoId=" + videoId + ", videoTitle=" + videoTitle + ", videoDescription=" + videoDescription
-				+ ", videoImg=" + videoImg + ", videoMaxImg=" + videoMaxImg + ", userId=" + userId + ", videoFile="
-				+ videoFile + "]";
+				+ ", videoImg=" + videoImg + ", videoMaxImg=" + videoMaxImg + ", userId=" + userId + "]";
 	}
 
 }

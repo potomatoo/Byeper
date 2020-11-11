@@ -122,6 +122,7 @@ def extract_image(request):
     if request.method == 'POST':
         data = request.data
         video_max_img = extract_from_videoid(data['video_id'])
+
         if video_max_img == -1:
             return Response('already exist')
         elif video_max_img == False:

@@ -88,8 +88,6 @@ def extract_from_youtube_url(youtube_url, n):
     
     if not(os.path.isdir('/var/file/{}'.format(id))):
         os.makedirs(os.path.join('/var/file/{}'.format(id)))
-    else:
-        return -1
     vidcap = cv2.VideoCapture(best.url)
     vidcap.set(3, 400)
     vidcap.set(4, 225)

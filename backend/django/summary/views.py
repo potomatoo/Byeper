@@ -1,21 +1,20 @@
 from django.shortcuts import render, get_object_or_404
-# from django.views.decorators.http import require_GET
-# from django.http.response import JsonResponse, HttpResponse
-
 from rest_framework.response import Response
 from rest_framework.decorators import api_view
 
 from .models import Video
 from .serializers import VideoSerializer
-# Create your views here.
+from .models import Problem
+from .serializers import ProblemSerializer
 
-# from . import question_generatorTEST
-import cv2
+import cv2, os, io, re
 import numpy as np
-import os
-import pafy
-import re
-import json
+import pafy, json
+
+from Image2text import image_processing
+from textblob import TextBlob
+os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/ubuntu/pk.json"
+
 save_frames = []
 def imwrite(filename, img, params=None): 
     try: 
@@ -155,10 +154,31 @@ def extract_time(request):
     imwrite("/var/file/{}/{}.jpg".format(id, id + str(frame)), image)
     return Response("/var/file/{}/{}.jpg".format(id, id + str(frame)))
 
-@api_view(['GET', 'POST'])
-def create_problem_or_show_list(request, video_pk):
-    video = get_object_or_404(request, pk = video_pk)
-    if request.method == 'GET':
-        pass
-    elif request.method == 'POST':
-        pass
+@api_view(['POST'])
+def problem_create_list(request, video_pk):
+    video = get_object_or_404(Video, pk=video_pk)
+    if request.method == 'POST':
+        path = os.path.join('/var/file', request.data['video_id'])
+        result = image_processing(path)  # image --> text
+
+        origin = TextBlob(result)
+        eng = origin.translate('ko', 'en')
+        
+        answers = eng.noun_phrases
+
+        answer_list = []
+        for answers in set(eng.noun_phrases):
+            for answer in answers.split():
+                if len(answer) < 3: break
+            else:
+                answer_list.append(answers)
+
+        QnA = []
+        for sentence in eng.split('\n'):
+            for answer in answer_list:
+                if answer in sentence:
+                    problem = sentence.replace(answer, '______')
+                    DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
+                    QnA.append(DATA)
+
+        return Response({'data':QnA})

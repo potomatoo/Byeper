@@ -9,11 +9,7 @@ class Video(models.Model):
     video_max_img = models.IntegerField()
 
 class Problem(models.Model):
-    # video = models.ForeignKey(Video, on_delete=models.CASCADE)
+    video = models.ForeignKey(Video, on_delete=models.CASCADE)
     origin = models.TextField()
     problem = models.TextField()
     answer = models.CharField(max_length=100, null=True)
-    similar1 = models.CharField(max_length=100, null=True)
-    similar2 = models.CharField(max_length=100, null=True)
-    similar3 = models.CharField(max_length=100, null=True)
-    similar4 = models.CharField(max_length=100, null=True)

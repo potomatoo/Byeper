@@ -1,0 +1,738 @@
+Watching for file changes with StatReloader
+[10/Nov/2020 17:56:13] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 42
+ERROR: vKktSCf2ru0: YouTube said: Unable to extract video data
+Internal Server Error: /api/django/summary/extract_time/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 797, in extract_info
+    ie_result = ie.extract(url)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/extractor/common.py", line 532, in extract
+    ie_result = self._real_extract(url)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/extractor/youtube.py", line 1910, in _real_extract
+    'YouTube said: %s' % unavailable_message, expected=True, video_id=video_id)
+youtube_dl.utils.ExtractorError: vKktSCf2ru0: YouTube said: Unable to extract video data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 40, in _fetch_basic
+    self._ydl_info = ydl.extract_info(self.videoid, download=False)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 820, in extract_info
+    self.report_error(compat_str(e), e.format_traceback())
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 625, in report_error
+    self.trouble(error_message, tb)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 595, in trouble
+    raise DownloadError(message, exc_info)
+youtube_dl.utils.DownloadError: ERROR: vKktSCf2ru0: YouTube said: Unable to extract video data
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 144, in extract_time
+    video = pafy.new(url)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/pafy.py", line 124, in new
+    return Pafy(url, basic, gdata, size, callback, ydl_opts=ydl_opts)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 31, in __init__
+    super(YtdlPafy, self).__init__(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_shared.py", line 97, in __init__
+    self._fetch_basic()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 43, in _fetch_basic
+    raise IOError(str(e).replace('YouTube said', 'Youtube says'))
+OSError: ERROR: vKktSCf2ru0: Youtube says: Unable to extract video data
+[10/Nov/2020 17:56:22] "POST /api/django/summary/extract_time/ HTTP/1.0" 500 17740
+[10/Nov/2020 17:56:29] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 42
+Not Found: /api/django/summary/extract_image/
+[10/Nov/2020 17:58:11] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
+Not Found: /api/django/summary/extract_image/
+[10/Nov/2020 17:58:44] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
+Not Found: /api/django/summary/extract_image/
+[10/Nov/2020 17:59:43] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
+Not Found: /api/django/summary/extract_image/
+[10/Nov/2020 17:59:56] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
+Not Found: /api/django/summary/extract_image/
+[10/Nov/2020 18:00:02] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 124, in extract_image
+    start = datetime.datetime.now()
+NameError: name 'datetime' is not defined
+[10/Nov/2020 18:00:12] "POST /api/django/summary/extract/ HTTP/1.0" 500 15365
+Not Found: //api/django/summary/extract_time/
+[10/Nov/2020 18:00:47] "POST //api/django/summary/extract_time/ HTTP/1.0" 404 2263
+[10/Nov/2020 18:01:04] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 43
+/home/ubuntu/s03p31b108/backend/django/summary/urls.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 10, 2020 - 17:56:10
+Django version 2.2, using settings 'API.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Traceback (most recent call last):
+  File "manage.py", line 22, in <module>
+    main()
+  File "manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
+    utility.execute()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 325, in execute
+    settings.INSTALLED_APPS
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 79, in __getattr__
+    self._setup(name)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 66, in _setup
+    self._wrapped = Settings(settings_module)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 189, in __init__
+    raise ValueError("Incorrect timezone setting: %s" % self.TIME_ZONE)
+ValueError: Incorrect timezone setting: Asia/seoul
+Watching for file changes with StatReloader
+[10/Nov/2020 21:25:22] "POST /api/django/summary/extract/ HTTP/1.0" 200 131
+/home/ubuntu/s03p31b108/backend/django/API/my_settings.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 10, 2020 - 21:20:13
+Django version 2.2, using settings 'API.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+save  1 s
+save  28 s
+save  40 s
+save  43 s
+save  74 s
+save  830 s
+save  860 s
+save  931 s
+save  953 s
+save  959 s
+save  967 s
+save  979 s
+save  990 s
+save  1004 s
+save  1016 s
+save  1114 s
+save  1205 s
+save  1234 s
+save  1296 s
+save  1322 s
+save  1368 s
+save  1410 s
+save  1420 s
+save  1428 s
+save  1453 s
+save  1534 s
+save  1571 s
+save  1626 s
+save  1701 s
+save  1784 s
+save  1830 s
+save  1842 s
+save  1863 s
+save  1902 s
+save  1916 s
+save  2105 s
+save  2325 s
+save  2467 s
+save  2505 s
+save  2630 s
+save  2699 s
+save  2809 s
+save  2857 s
+save  2901 s
+save  2916 s
+save  2975 s
+save  3017 s
+save  3196 s
+save  3216 s
+save  3217 s
+save  3247 s
+save  3266 s
+save  3274 s
+save  3287 s
+save  3351 s
+save  3378 s
+save  3382 s
+save  3398 s
+save  3418 s
+save  3429 s
+save  3440 s
+save  3450 s
+save  3478 s
+save  3490 s
+save  3497 s
+save  3551 s
+save  3553 s
+save  3622 s
+save  3638 s
+save  3725 s
+save  3758 s
+save  3777 s
+save  3834 s
+save  3910 s
+save  4039 s
+save  4088 s
+save  4163 s
+save  4260 s
+save  4307 s
+save  4388 s
+save  4434 s
+save  4491 s
+save  4546 s
+save  4572 s
+save  4592 s
+save  4623 s
+save  4649 s
+save  4742 s
+save  4764 s
+save  4827 s
+save  4850 s
+save  4884 s
+save  4916 s
+save  4926 s
+save  4941 s
+save  4950 s
+save  4958 s
+save  5053 s
+save  5062 s
+Watching for file changes with StatReloader
+[11/Nov/2020 16:25:14] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
+[11/Nov/2020 16:25:48] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
+[11/Nov/2020 16:26:04] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
+[11/Nov/2020 16:38:06] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
+[11/Nov/2020 16:38:13] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
+    serializer.save()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
+    self.instance = self.create(validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+[11/Nov/2020 16:41:48] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
+[11/Nov/2020 16:43:10] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
+[11/Nov/2020 16:45:15] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 43
+[11/Nov/2020 16:46:25] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
+    serializer.save()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
+    self.instance = self.create(validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+[11/Nov/2020 16:51:18] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
+Method Not Allowed: /api/django/summary/extract/
+[11/Nov/2020 16:52:44] "GET /api/django/summary/extract/ HTTP/1.0" 405 68
+[11/Nov/2020 16:54:06] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
+    serializer.save()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
+    self.instance = self.create(validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
+[11/Nov/2020 16:55:40] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+MySQLdb._exceptions.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`ssafy`.`summary_video`, CONSTRAINT `summary_video_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`))')
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
+    serializer.save()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
+    self.instance = self.create(validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
+    instance = ModelClass._default_manager.create(**validated_data)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
+    obj.save(force_insert=True, using=self.db)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
+    force_update=force_update, update_fields=update_fields)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
+    force_update, using, update_fields,
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
+    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
+    using=using, raw=raw)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
+    return getattr(self.get_queryset(), name)(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
+    return query.get_compiler(using=using).execute_sql(return_id)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
+    cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
+    return super().execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
+    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
+    return executor(sql, params, many, context)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
+    raise dj_exc_value.with_traceback(traceback) from exc_value
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
+    return self.cursor.execute(sql, params)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
+    return self.cursor.execute(query, args)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
+    res = self._query(query)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
+    db.query(q)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
+    _mysql.connection.query(self, query)
+django.db.utils.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`ssafy`.`summary_video`, CONSTRAINT `summary_video_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`))')
+[11/Nov/2020 16:58:16] "POST /api/django/summary/extract/ HTTP/1.0" 500 20673
+/home/ubuntu/s03p31b108/backend/django/summary/urls.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+
+You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions, summary.
+Run 'python manage.py migrate' to apply them.
+November 11, 2020 - 09:35:48
+Django version 2.2, using settings 'API.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+save  134 s
+save  175 s
+save  188 s
+save  240 s
+save  264 s
+save  389 s
+save  532 s
+save  633 s
+save  736 s
+save  167 s
+save  239 s
+save  288 s
+save  321 s
+save  393 s
+save  453 s
+save  569 s
+save  650 s
+save  657 s
+save  134 s
+save  175 s
+save  188 s
+save  240 s
+save  264 s
+save  389 s
+save  532 s
+save  633 s
+save  736 s
+save  134 s
+save  175 s
+save  188 s
+save  240 s
+save  264 s
+save  389 s
+save  532 s
+save  633 s
+save  736 s
+Watching for file changes with StatReloader
+Performing system checks...
+
+Traceback (most recent call last):
+  File "manage.py", line 22, in <module>
+    main()
+  File "manage.py", line 18, in main
+    execute_from_command_line(sys.argv)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
+    utility.execute()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 375, in execute
+    self.fetch_command(subcommand).run_from_argv(self.argv)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/base.py", line 323, in run_from_argv
+    self.execute(*args, **cmd_options)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 60, in execute
+    super().execute(*args, **options)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/base.py", line 364, in execute
+    output = self.handle(*args, **options)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 95, in handle
+    self.run(**options)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 102, in run
+    autoreload.run_with_reloader(self.inner_run, **options)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 579, in run_with_reloader
+    start_django(reloader, main_func, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 564, in start_django
+    reloader.run(django_main_thread)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 272, in run
+    get_resolver().urlconf_module
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 564, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+Exception in thread Thread-1:
+Traceback (most recent call last):
+  File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
+    self.run()
+  File "/usr/lib/python3.6/threading.py", line 864, in run
+    self._target(*self._args, **self._kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 54, in wrapper
+    fn(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/commands/runserver.py", line 117, in inner_run
+    self.check(display_num_errors=True)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/base.py", line 390, in check
+    include_deployment_checks=include_deployment_checks,
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/base.py", line 377, in _run_checks
+    return checks.run_checks(**kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/checks/registry.py", line 72, in run_checks
+    new_errors = check(app_configs=app_configs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/checks/urls.py", line 40, in check_url_namespaces_unique
+    all_namespaces = _load_all_namespaces(resolver)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/checks/urls.py", line 57, in _load_all_namespaces
+    url_patterns = getattr(resolver, 'url_patterns', [])
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 571, in url_patterns
+    patterns = getattr(self.urlconf_module, "urlpatterns", self.urlconf_module)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 564, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/s03p31b108/backend/django/API/urls.py", line 10, in <module>
+    path('api/django/summary/', include('summary.urls')),
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/s03p31b108/backend/django/summary/urls.py", line 3, in <module>
+    from . import views
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 125
+    <<<<<<< HEAD
+     ^
+SyntaxError: invalid syntax
+
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/s03p31b108/backend/django/API/urls.py", line 10, in <module>
+    path('api/django/summary/', include('summary.urls')),
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/conf.py", line 34, in include
+    urlconf_module = import_module(urlconf_module)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
+  File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
+  File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
+  File "<frozen importlib._bootstrap_external>", line 678, in exec_module
+  File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
+  File "/home/ubuntu/s03p31b108/backend/django/summary/urls.py", line 3, in <module>
+    from . import views
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 125
+    <<<<<<< HEAD
+     ^
+SyntaxError: invalid syntax

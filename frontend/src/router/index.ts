@@ -6,6 +6,11 @@ import LecturePage from "@/views/lecture/LecturePage.vue";
 import Home from "../views/Home.vue";
 import PlayList from "../views/main/PlayList.vue";
 
+// 강사 페이지
+import InstructorDashboard from "@/views/lecturer/InstructorDashboard.vue";
+import CreateLecture from "@/views/lecturer/CreateLecture.vue";
+import InstructorFeedback from "@/views/lecturer/InstructorFeedback.vue";
+
 Vue.use(VueRouter);
 
 const routes: Array<RouteConfig> = [
@@ -33,6 +38,21 @@ const routes: Array<RouteConfig> = [
     path: "/playList/:playListName",
     name: "PlayList",
     component: PlayList
+  },
+  {
+    path: "/instructor",
+    name: "InstructorDashboard",
+    component: InstructorDashboard
+  },
+  {
+    path: "/instructor/CreateLecture",
+    name: "CreateLecture",
+    component: CreateLecture
+  },
+  {
+    path: "/instructor/Feedback",
+    name: "InstructorFeedback",
+    component: InstructorFeedback
   }
 ];
 

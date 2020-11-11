@@ -154,7 +154,7 @@ def extract_time(request):
     vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
     _, image = vidcap.read()
     imwrite("/var/file/{}/{}.jpg".format(id, id + str(frame)), image)
-    return Response("/var/file/{}/{}.jpg".format(id, id + str(frame)))
+    return Response("/file/{}/{}.jpg".format(id, id + str(frame)))
 
 @api_view(['POST'])
 def problem_create_list(request, video_pk):

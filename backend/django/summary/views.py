@@ -121,10 +121,7 @@ def extract_from_youtube_url(youtube_url, n):
 def extract_image(request):
     if request.method == 'POST':
         data = request.data
-        start = datetime.datetime.now()
         video_max_img = extract_from_videoid(data['video_id'])
-        end = datetime.datetime.now()
-        print(end - start)
         if video_max_img == -1:
             return Response(200)
         elif video_max_img == False:

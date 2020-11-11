@@ -121,14 +121,11 @@ def extract_from_youtube_url(youtube_url, n):
 def extract_image(request):
     if request.method == 'POST':
         data = request.data
-        start = datetime.datetime.now()
         video_max_img = extract_from_videoid(data['video_id'])
-        end = datetime.datetime.now()
-        print(end - start)
         if video_max_img == -1:
-            return Response(200)
+            return Response('already exist')
         elif video_max_img == False:
-            return Response(500)
+            return Response('failed')
         data['video_max_img'] = video_max_img
         serializer = VideoSerializer(data=data)
         if serializer.is_valid(raise_exception=True):
@@ -141,7 +138,15 @@ def extract_time(request):
     url = 'https://www.youtube.com/watch?v=' + id
     time = request.data['time']
     frame = int(time * 30)
-    video = pafy.new(url)
+    cnt = 0
+    if not(os.path.isdir('/var/file/{}'.format(id))):
+        os.makedirs(os.path.join('/var/file/{}'.format(id)))
+    while cnt < 10:
+        try:
+            video = pafy.new(url)
+            break
+        except:
+            cnt += 1
     best = video.getbest()
     vidcap = cv2.VideoCapture(best.url)
     vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)

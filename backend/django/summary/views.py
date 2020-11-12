@@ -164,8 +164,8 @@ def extract_time(request):
 @api_view(['POST'])
 def problem_create_list(request):
     if request.method == 'POST':
-        print(request.data['video_id'])
         path = os.path.join('/var/file', request.data['video_id'])
+        print(path,'------------------')
         result = image_processing(path)  # image --> text
 
         origin = TextBlob(result)

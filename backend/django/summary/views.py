@@ -118,21 +118,23 @@ def extract_from_youtube_url(youtube_url, n):
 @api_view(['POST'])
 def extract_image(request):
     if request.method == 'POST':
-        data = request.data
-        video_max_img = extract_from_videoid(data['video_id'])
-<<<<<<< HEAD
-=======
-
->>>>>>> 9779c7f0e12f609f13fd7b598f2d2c71bf201a12
-        if video_max_img == -1:
-            return Response('already exist')
-        elif video_max_img == False:
-            return Response('failed')
-        data['video_max_img'] = video_max_img
-        serializer = VideoSerializer(data=data)
-        if serializer.is_valid(raise_exception=True):
-            serializer.save()
-        return Response(data)
+        # data = request.data
+        # video_max_img = extract_from_videoid(data['video_id'])
+        # if video_max_img == -1:
+        #     return Response('already exist')
+        # elif video_max_img == False:
+        #     return Response('failed')
+        # data['video_max_img'] = video_max_img
+        # serializer = VideoSerializer(data=data)
+        # if serializer.is_valid(raise_exception=True):
+        #     serializer.save()
+        video_ids = request.data
+        for video_id in video_ids:
+            video = Video.objects.get(video_id=video_id)
+            video_max_img = extract_from_videoid(data['video_id'])
+            video.video_max_img = video_max_img
+            video.save()
+        return Response(200)
 
 @api_view(['POST'])
 def extract_time(request):

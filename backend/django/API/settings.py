@@ -88,9 +88,8 @@ STATIC_URL = '/static/'
 
 REST_FRAMEWORK = { 'DEFAULT_SCHEMA_CLASS': 'rest_framework.schemas.coreapi.AutoSchema' }
 
-CORS_ORIGIN_WHITELIST = ['http://127.0.0.1:8000']
-CORS_ALLOW_CREDENTIALS = True
-
+CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOW_CREDENTIOALS = True
 CORS_ALLOW_METHODS = (
     'DELETE',
     'GET',

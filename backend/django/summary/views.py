@@ -130,8 +130,9 @@ def extract_image(request):
             serializer.save()
         return Response(data)
 
-@api_view(['POST'])
+@api_view(['POST', 'OPTIONS'])
 def extract_time(request):
+    print(111)
     id = request.data['id']
     url = 'https://www.youtube.com/watch?v=' + id
     time = request.data['time']

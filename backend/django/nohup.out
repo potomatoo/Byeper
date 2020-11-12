@@ -736,3 +736,148 @@ SyntaxError: invalid syntax
     <<<<<<< HEAD
      ^
 SyntaxError: invalid syntax
+Watching for file changes with StatReloader
+Watching for file changes with StatReloader
+[11/Nov/2020 22:14:35] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 40
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+[11/Nov/2020 22:16:14] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 44
+Method Not Allowed: /api/django/summary/extract_time/
+[12/Nov/2020 09:08:33] "GET /api/django/summary/extract_time/ HTTP/1.0" 405 5733
+[ERROR:0] global /tmp/pip-req-build-qacpj5ci/opencv/modules/videoio/src/cap.cpp (140) open VIDEOIO(CV_IMAGES): raised OpenCV exception:
+
+OpenCV(4.4.0) /tmp/pip-req-build-qacpj5ci/opencv/modules/videoio/src/cap_images.cpp:235: error: (-5:Bad argument) CAP_IMAGES: error, expected '0?[1-9][du]' pattern, got: https://redirector.googlevideo.com/videoplayback?expire=1605161284&ei=5HysX_DmJqOSs8IPyMSd6Aw&ip=3.35.53.166&id=b3d147763ea377f5&itag=22&source=youtube&requiressl=yes&vprv=1&mime=video%2Fmp4&ratebypass=yes&dur=1013.922&lmt=1604929976423504&c=WEB&txp=6211224&sparams=expire%2Cei%2Cip%2Cid%2Citag%2Csource%2Crequiressl%2Cvprv%2Cmime%2Cratebypass%2Cdur%2Clmt&sig=AOq0QJ8wRgIhAMFwhYBltAVmLvsStn7rEzFMf0TDWXhWQLEDnvnmmabMAiEAtGpGQiwOfDl_7heK5i_xKAZBrYfzpKkrqwJ-rahZjmc%3D in function 'icvExtractPattern'
+
+
+[12/Nov/2020 09:08:36] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 40
+Method Not Allowed: /api/django/summary/extract_time/
+[12/Nov/2020 09:09:30] "GET /api/django/summary/extract_time/ HTTP/1.0" 405 5733
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+Internal Server Error: /api/django/summary/extract_time/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 149, in extract_time
+    best = video.getbest()
+UnboundLocalError: local variable 'video' referenced before assignment
+[12/Nov/2020 10:09:27] "POST /api/django/summary/extract_time/ HTTP/1.0" 500 16195
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+ERROR: s9FHdj6jd_U: YouTube said: Unable to extract video data
+Internal Server Error: /api/django/summary/extract_time/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 149, in extract_time
+    best = video.getbest()
+UnboundLocalError: local variable 'video' referenced before assignment
+[12/Nov/2020 10:09:42] "POST /api/django/summary/extract_time/ HTTP/1.0" 500 16195
+[12/Nov/2020 10:42:23] "OPTIONS /api/django/summary/extract HTTP/1.0" 301 0
+[12/Nov/2020 10:43:32] "OPTIONS /api/django/summary/extract/ HTTP/1.0" 200 0
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 122, in extract_image
+    video_max_img = extract_from_videoid(data['video_id'])
+TypeError: list indices must be integers or slices, not str
+[12/Nov/2020 10:43:32] "POST /api/django/summary/extract/ HTTP/1.0" 500 16304
+[12/Nov/2020 10:47:53] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 0
+[12/Nov/2020 10:47:54] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 40
+[12/Nov/2020 10:49:30] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 40
+[12/Nov/2020 10:54:00] "OPTIONS /api/django/summary/extract/ HTTP/1.0" 200 0
+Internal Server Error: /api/django/summary/extract/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 122, in extract_image
+    video_max_img = extract_from_videoid(data['video_id'])
+TypeError: list indices must be integers or slices, not str
+[12/Nov/2020 10:54:00] "POST /api/django/summary/extract/ HTTP/1.0" 500 16304

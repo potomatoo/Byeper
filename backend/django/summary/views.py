@@ -110,7 +110,7 @@ def extract_from_youtube_url(youtube_url, n):
         _, image = vidcap.read()
         save(i, image, id)
         info_dict.append({
-                        'address': '/file/{}/{}.jpg'.format(id, i)
+                        'address': '/file/{}/{}.jpg'.format(id, i),
                         'time': int(frame // 30), 
                         'diff': int(diff)})
     with open("/var/file/{}/{}.json".format(id, id), "w") as json_file:

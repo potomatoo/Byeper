@@ -78,7 +78,7 @@ def extract_from_videoid(id):
 def extract_from_youtube_url(youtube_url, n):
     global save_frames
     if n == 8: 
-        return False
+        return 0
     try:
         video = pafy.new(youtube_url)
     except:

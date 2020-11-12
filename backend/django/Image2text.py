@@ -10,7 +10,7 @@ def image_processing(path):
         imgs.append(cv2.resize(tmp, (854, 480)))
     img = cv2.vconcat(imgs)
     target_dir = path[-11:]
-    tmp_image = os.path.join(path, target_dir+'.png')
+    tmp_image = os.path.join(path, target_dir+'.jpg')
 
     cv2.imwrite(tmp_image, img)
     client = vision.ImageAnnotatorClient()

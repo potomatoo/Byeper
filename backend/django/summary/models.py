@@ -14,4 +14,4 @@ class Problem(models.Model):
     video = models.ForeignKey(Video, on_delete=models.CASCADE)
     origin = models.TextField()
     problem = models.TextField()
-    answer = models.CharField(max_length=100, null=True)
+    answer = models.TextField()

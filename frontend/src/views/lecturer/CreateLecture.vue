@@ -30,9 +30,14 @@
               v-model="LectureTitle"
             ></v-text-field>
             <h3 class="my-0">강의 설명</h3>
-            <v-text-field class="classdesc" height="20" outlined v-model="LectureDescription"></v-text-field>
+            <v-text-field
+              class="classdesc"
+              height="20"
+              outlined
+              v-model="LectureDescription"
+            ></v-text-field>
             <h3>카테고리</h3>
-            <v-chip-group column  v-model="LectureCategory">
+            <v-chip-group column v-model="LectureCategory">
               <v-chip label filter outlined>
                 개발ㆍ프로그래밍
               </v-chip>
@@ -84,7 +89,10 @@
                 <v-col>
                   <v-card>
                     <h2>내 동영상</h2>
-                    <div class="list" style="height: 60vh; width: 40vw; overflow-x: hidden">
+                    <div
+                      class="list"
+                      style="height: 60vh; width: 40vw; overflow-x: hidden"
+                    >
                       <drag
                         v-for="video in UserVideos"
                         :data="video"
@@ -106,82 +114,83 @@
                         </v-list-item>
                       </drag>
                     </div>
-
                   </v-card>
                 </v-col>
                 <v-col>
-<!--                  <v-btn @click="addSection" tile-->
-<!--                    ><v-icon left>mdi-plus-box-outline</v-icon>섹션-->
-<!--                    추가하기</v-btn-->
-<!--                  >-->
-                  <v-card style="height: 65vh; overflow-y: scroll; overflow-x: hidden">
-<!--                    <v-card v-for="(Section, idx) in SelectedVideos" :key="idx">-->
-<!--                      <v-row align="center">-->
-<!--                        <v-col cols="7">-->
-<!--                          <v-text-field-->
-<!--                            placeholder="섹션의 제목을 적어주세요"-->
-<!--                            class="mt-4 mb-0"-->
-<!--                            style="width: 35vw;"-->
-<!--                            v-model="LectureSectionTitles[idx]"-->
-<!--                            outlined-->
-<!--                          ></v-text-field>-->
-<!--                        </v-col>-->
-<!--                        <v-col cols="5">-->
-<!--                          <v-btn @click="deleteSection(idx)" large class="mb-4"-->
-<!--                            >섹션 제거</v-btn-->
-<!--                          >-->
-<!--                        </v-col>-->
-<!--                      </v-row>-->
-<!--                      <drop-list-->
-<!--                        :items="Section"-->
-<!--                        class="list mt-0"-->
-<!--                        style="min-height: 200px; margin-right: 20px;"-->
-<!--                        @insert="onInsert($event, Section)"-->
-<!--                        @reorder="$event.apply(Section)"-->
-<!--                      >-->
-<!--                        <template v-slot:item="{ item }">-->
-<!--                          <drag class="item" :key="item">-->
-<!--                            <v-list-item>-->
-<!--                              <v-list-item-content>-->
-<!--                                <v-list-item-title-->
-<!--                                  ><strong>{{-->
-<!--                                    item.title-->
-<!--                                  }}</strong></v-list-item-title-->
-<!--                                >-->
-<!--                                <v-list-item-content>{{-->
-<!--                                  item.description-->
-<!--                                }}</v-list-item-content>-->
-<!--                              </v-list-item-content>-->
-<!--                            </v-list-item>-->
-<!--                          </drag>-->
-<!--                        </template>-->
-<!--                        <template v-slot:feedback="{ data }">-->
-<!--                          <div class="item feedback" :key="data">-->
-<!--                            <v-list-item>-->
-<!--                              <v-list-item-content>-->
-<!--                                <v-list-item-title-->
-<!--                                  ><strong>{{-->
-<!--                                    data.title-->
-<!--                                  }}</strong></v-list-item-title-->
-<!--                                >-->
-<!--                                <v-list-item-content>{{-->
-<!--                                  data.description-->
-<!--                                }}</v-list-item-content>-->
-<!--                              </v-list-item-content>-->
-<!--                            </v-list-item>-->
-<!--                          </div>-->
-<!--                        </template>-->
-<!--                      </drop-list>-->
-<!--                    </v-card>-->
+                  <!--                  <v-btn @click="addSection" tile-->
+                  <!--                    ><v-icon left>mdi-plus-box-outline</v-icon>섹션-->
+                  <!--                    추가하기</v-btn-->
+                  <!--                  >-->
+                  <v-card
+                    style="height: 65vh; overflow-y: scroll; overflow-x: hidden"
+                  >
+                    <!--                    <v-card v-for="(Section, idx) in SelectedVideos" :key="idx">-->
+                    <!--                      <v-row align="center">-->
+                    <!--                        <v-col cols="7">-->
+                    <!--                          <v-text-field-->
+                    <!--                            placeholder="섹션의 제목을 적어주세요"-->
+                    <!--                            class="mt-4 mb-0"-->
+                    <!--                            style="width: 35vw;"-->
+                    <!--                            v-model="LectureSectionTitles[idx]"-->
+                    <!--                            outlined-->
+                    <!--                          ></v-text-field>-->
+                    <!--                        </v-col>-->
+                    <!--                        <v-col cols="5">-->
+                    <!--                          <v-btn @click="deleteSection(idx)" large class="mb-4"-->
+                    <!--                            >섹션 제거</v-btn-->
+                    <!--                          >-->
+                    <!--                        </v-col>-->
+                    <!--                      </v-row>-->
+                    <!--                      <drop-list-->
+                    <!--                        :items="Section"-->
+                    <!--                        class="list mt-0"-->
+                    <!--                        style="min-height: 200px; margin-right: 20px;"-->
+                    <!--                        @insert="onInsert($event, Section)"-->
+                    <!--                        @reorder="$event.apply(Section)"-->
+                    <!--                      >-->
+                    <!--                        <template v-slot:item="{ item }">-->
+                    <!--                          <drag class="item" :key="item">-->
+                    <!--                            <v-list-item>-->
+                    <!--                              <v-list-item-content>-->
+                    <!--                                <v-list-item-title-->
+                    <!--                                  ><strong>{{-->
+                    <!--                                    item.title-->
+                    <!--                                  }}</strong></v-list-item-title-->
+                    <!--                                >-->
+                    <!--                                <v-list-item-content>{{-->
+                    <!--                                  item.description-->
+                    <!--                                }}</v-list-item-content>-->
+                    <!--                              </v-list-item-content>-->
+                    <!--                            </v-list-item>-->
+                    <!--                          </drag>-->
+                    <!--                        </template>-->
+                    <!--                        <template v-slot:feedback="{ data }">-->
+                    <!--                          <div class="item feedback" :key="data">-->
+                    <!--                            <v-list-item>-->
+                    <!--                              <v-list-item-content>-->
+                    <!--                                <v-list-item-title-->
+                    <!--                                  ><strong>{{-->
+                    <!--                                    data.title-->
+                    <!--                                  }}</strong></v-list-item-title-->
+                    <!--                                >-->
+                    <!--                                <v-list-item-content>{{-->
+                    <!--                                  data.description-->
+                    <!--                                }}</v-list-item-content>-->
+                    <!--                              </v-list-item-content>-->
+                    <!--                            </v-list-item>-->
+                    <!--                          </div>-->
+                    <!--                        </template>-->
+                    <!--                      </drop-list>-->
+                    <!--                    </v-card>-->
                     <h2>강의 동영상</h2>
                     <drop-list
-                        :items="SelectedVideos"
-                        class="list"
-                        @insert="onInsert"
-                        @reorder="$event.apply(SelectedVideos)"
-                        style="height: 50vh; overflow-x: hidden; overflow-y: hidden"
+                      :items="SelectedVideos"
+                      class="list"
+                      @insert="onInsert"
+                      @reorder="$event.apply(SelectedVideos)"
+                      style="height: 50vh; overflow-x: hidden; overflow-y: hidden"
                     >
-                      <template v-slot:item="{item}">
+                      <template v-slot:item="{ item }">
                         <drag class="item" :key="item">
                           <v-list-item>
                             <v-list-item-content>
@@ -197,7 +206,7 @@
                           </v-list-item>
                         </drag>
                       </template>
-                      <template v-slot:feedback="{data}">
+                      <template v-slot:feedback="{ data }">
                         <div class="item feedback" :key="data">
                           <v-list-item>
                             <v-list-item-content>
@@ -215,9 +224,9 @@
                       </template>
                     </drop-list>
                     <v-btn
-                        class="ml-12"
-                        color="primary"
-                        @click="CreateLectureStep = 3"
+                      class="ml-12"
+                      color="primary"
+                      @click="CreateLectureStep = 3"
                     >
                       다음 단계로
                     </v-btn>
@@ -235,39 +244,45 @@
         <v-stepper-content step="3">
           <v-row>
             <v-col cols="6">
-<!--              <v-card class="mb-12">-->
-<!--                <v-list v-for="(Section, idx) in SelectedVideos" :key="idx">-->
-<!--                  <h2>섹션 {{ idx + 1 }} : {{ LectureSectionTitles[idx] }}</h2>-->
-<!--                  <v-list-item v-for="Video in Section" :key="Video.videoId">-->
-<!--                    <v-avatar size="82" class="mr-5" tile>-->
-<!--                      <img :src="Video.thumbnailurl" :alt="Video.title" />-->
-<!--                    </v-avatar>-->
-<!--                    <v-list-item-content>-->
-<!--                      <v-list-item-title-->
-<!--                        ><strong>{{ Video.title }}</strong></v-list-item-title-->
-<!--                      >-->
-<!--                      <v-list-item-content>{{-->
-<!--                        Video.description-->
-<!--                      }}</v-list-item-content>-->
-<!--                    </v-list-item-content>-->
-<!--                  </v-list-item>-->
-<!--                </v-list>-->
-<!--              </v-card>-->
-              <v-card class="mb-12" style="max-height: 80vh; overflow-y: scroll">
-                  <h2>강의 목록</h2>
-                  <v-list-item v-for="Video in SelectedVideos" :key="Video.videoId">
-                    <v-avatar size="82" class="mr-5" tile>
-                      <img :src="Video.thumbnailurl" :alt="Video.title" />
-                    </v-avatar>
-                    <v-list-item-content>
-                      <v-list-item-title
+              <!--              <v-card class="mb-12">-->
+              <!--                <v-list v-for="(Section, idx) in SelectedVideos" :key="idx">-->
+              <!--                  <h2>섹션 {{ idx + 1 }} : {{ LectureSectionTitles[idx] }}</h2>-->
+              <!--                  <v-list-item v-for="Video in Section" :key="Video.videoId">-->
+              <!--                    <v-avatar size="82" class="mr-5" tile>-->
+              <!--                      <img :src="Video.thumbnailurl" :alt="Video.title" />-->
+              <!--                    </v-avatar>-->
+              <!--                    <v-list-item-content>-->
+              <!--                      <v-list-item-title-->
+              <!--                        ><strong>{{ Video.title }}</strong></v-list-item-title-->
+              <!--                      >-->
+              <!--                      <v-list-item-content>{{-->
+              <!--                        Video.description-->
+              <!--                      }}</v-list-item-content>-->
+              <!--                    </v-list-item-content>-->
+              <!--                  </v-list-item>-->
+              <!--                </v-list>-->
+              <!--              </v-card>-->
+              <v-card
+                class="mb-12"
+                style="max-height: 80vh; overflow-y: scroll"
+              >
+                <h2>강의 목록</h2>
+                <v-list-item
+                  v-for="Video in SelectedVideos"
+                  :key="Video.videoId"
+                >
+                  <v-avatar size="82" class="mr-5" tile>
+                    <img :src="Video.thumbnailurl" :alt="Video.title" />
+                  </v-avatar>
+                  <v-list-item-content>
+                    <v-list-item-title
                       ><strong>{{ Video.title }}</strong></v-list-item-title
-                      >
-                      <v-list-item-content>{{
-                          Video.description
-                        }}</v-list-item-content>
-                    </v-list-item-content>
-                  </v-list-item>
+                    >
+                    <v-list-item-content>{{
+                      Video.description
+                    }}</v-list-item-content>
+                  </v-list-item-content>
+                </v-list-item>
               </v-card>
             </v-col>
             <v-col cols="6">
@@ -288,7 +303,8 @@
                       class="ml-15"
                       width="320"
                       height="200"
-                      src="@/assets/jun.png"></v-img>
+                      src="@/assets/jun.png"
+                    ></v-img>
                   </v-col>
                   <v-col cols="6">
                     <h5 class="mt-10 mb-3">강의를 대표하는 이미지</h5>
@@ -312,10 +328,19 @@
                   </v-col>
                 </v-row>
                 <h2>저작물 활용 동의서</h2>
-                <v-textarea class="my-0" disabled outlined value="본인은 우리서비스 가 본인이 제작한 강의를 비영리적인 목적으로 활용(전체, 인용, 발췌, 편집)하거나 출판, 공표, 복제, 공연, 방송, 전시 및 배포 할 권리와 수정, 변경, 삭제 등 2차적 제작물 또는 편집 제작물 작성 등 관련 지적재산권 일체를 포괄적으로 이용할 권리를 갖는 것에 동의합니다.">
+                <v-textarea
+                  class="my-0"
+                  disabled
+                  outlined
+                  value="본인은 우리서비스 가 본인이 제작한 강의를 비영리적인 목적으로 활용(전체, 인용, 발췌, 편집)하거나 출판, 공표, 복제, 공연, 방송, 전시 및 배포 할 권리와 수정, 변경, 삭제 등 2차적 제작물 또는 편집 제작물 작성 등 관련 지적재산권 일체를 포괄적으로 이용할 권리를 갖는 것에 동의합니다."
+                >
                 </v-textarea>
-                <v-checkbox class="mt-0" label="내용을 충분히 이해하였으며, 이에 동의합니다." value="1"></v-checkbox>
-                <v-btn color="primary" @click="CreateLectureStep = 1">
+                <v-checkbox
+                  class="mt-0"
+                  label="내용을 충분히 이해하였으며, 이에 동의합니다."
+                  value="1"
+                ></v-checkbox>
+                <v-btn color="primary" @click="CreatePlayList">
                   강의 생성
                 </v-btn>
 
@@ -325,8 +350,6 @@
               </v-card>
             </v-col>
           </v-row>
-
-
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
@@ -418,6 +441,7 @@ export default class CreateLecture extends Vue {
   LectureDifficulty = "";
   LectureThumbnail = null;
   LectureThumbnailURL = null;
+  LectureThumbnailLink = null;
 
   onInsert(event) {
     this.SelectedVideos.splice(event.index, 0, event.data);
@@ -437,30 +461,63 @@ export default class CreateLecture extends Vue {
 
   async Thumbnail() {
     this.LectureThumbnailURL = URL.createObjectURL(this.LectureThumbnail);
-    if(this.LectureThumbnail) {
+    if (this.LectureThumbnail) {
       try {
-        const res = await axios.post("http://k3b108.p.ssafy.io:8080/api/public/playlist/imgupload", {
-          file : this.LectureThumbnail
-        }, {
-          headers: {
-            "Content-Type": "multipart/form-data",
-            Authorization: "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+        const formData = new FormData();
+        formData.append("file", this.LectureThumbnail);
+        const res = await axios.post(
+          "http://k3b108.p.ssafy.io:8080/api/public/playlist/imgupload",
+          {
+            formData
+          },
+          {
+            headers: {
+              "Content-Type": "multipart/form-data",
+              Authorization:
+                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+            }
           }
-        });
+        );
         console.log(res);
+        this.LectureThumbnailLink = res;
       } catch (e) {
         console.error(e);
       }
     }
   }
 
+  async CreatePlayList() {
+    try {
+      const res = await axios.post(
+        "http://k3b108.p.ssafy.io:8080/api/private/playlist/save",
+        {
+          playlistCategory: this.LectureCategory,
+          playlistDescription: this.LectureDescription,
+          playlistId: 0,
+          playlistImg: this.LectureThumbnailLink,
+          playlistLevel: 0,
+          playlistTitle: this.LectureTitle,
+          playlistType: 1,
+          userId: ""
+        },
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+          }
+        }
+      );
+    } catch (e) {
+      console.error(e);
+    }
+  }
 
-
-
+  // async GetPlayList() {}
 }
 </script>
 
-<style lang="scss">
+<style lang="scss" scoped>
 html,
 body,
 #app,

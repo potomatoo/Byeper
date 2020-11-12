@@ -182,12 +182,16 @@
 
     <editor-content class="editor__content" :editor="editor" />
     <div id="focus-position"></div>
-    <image-capture-chip @addCapture="addCapture" />
+    <image-capture-chip
+      :player="player"
+      :videoId="videoId"
+      @addCapture="addCapture"
+    />
   </div>
 </template>
 
 <script>
-import { Component, Components, Vue } from "vue-property-decorator";
+import { Component, Vue, Prop } from "vue-property-decorator";
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import {
   Blockquote,
@@ -218,6 +222,8 @@ import ImageCaptureChip from "@/components/lecture/ImageCaptureChip.vue";
   }
 })
 export default class TextEditor extends Vue {
+  @Prop(Object) player;
+  @Prop(String) videoId;
   editor = new Editor({
     extensions: [
       new Blockquote(),
@@ -317,5 +323,11 @@ symbol {
   *[d="M0 0h24v24H0z"] {
     display: none;
   }
+}
+.menubar {
+  margin: 20px 0px;
+}
+.editor__content {
+  color: black;
 }
 </style>

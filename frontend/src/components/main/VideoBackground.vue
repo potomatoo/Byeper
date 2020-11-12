@@ -82,12 +82,10 @@ export default class IntroMain extends Vue {
 
 .banner .textBox h2 {
   font-size: 2em;
-  font-family: "Noto Sans KR", sans-serif;
 }
 .banner .textBox p {
   font-size: 1.1em;
   margin: 5px 0 25px;
-  font-family: "Noto Sans KR", sans-serif;
 }
 .banner .textBox a {
   position: relative;
@@ -100,7 +98,6 @@ export default class IntroMain extends Vue {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
-  font-family: "Noto Sans KR", sans-serif;
 }
 .banner .videoBx {
   position: relative;

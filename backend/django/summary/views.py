@@ -103,14 +103,16 @@ def extract_from_youtube_url(youtube_url, n):
     save_frames = [[0, 99999]]
     divide_and_conquer(vidcap, 0, end, start_image, end_image)
     
-    info_dict = {}
+    info_dict = []
     for i, save_frame in enumerate(save_frames):
         frame, diff = save_frame
         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
         _, image = vidcap.read()
         save(i, image, id)
-        info_dict[int(i)] = {'time': int(frame // 30), 
-                        'diff': int(diff)}
+        info_dict.append({
+                        'address': '/file/{}/{}.jpg'.format(id, i)
+                        'time': int(frame // 30), 
+                        'diff': int(diff)})
     with open("/var/file/{}/{}.json".format(id, id), "w") as json_file:
         json.dump(info_dict, json_file)
     return len(save_frames)

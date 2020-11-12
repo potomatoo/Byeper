@@ -160,8 +160,7 @@ def extract_time(request):
     return Response("/file/{}/{}.jpg".format(id, id + str(frame)))
 
 @api_view(['POST'])
-def problem_create_list(request, video_pk):
-    video = get_object_or_404(Video, pk=video_pk)
+def problem_create_list(request):
     if request.method == 'POST':
         path = os.path.join('/var/file', request.data['video_id'])
         result = image_processing(path)  # image --> text

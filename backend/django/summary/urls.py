@@ -6,7 +6,7 @@ app_name = 'summary'
 
 urlpatterns = [
     path('extract/', views.extract_image),
-    path('qna/<str:video_pk>/', views.problem_create_list),
+    path('qna/', views.problem_create_list),
     path('extract_time/', views.extract_time)
     # path('', views.extract_image),
     # path('qa/<int:video_pk>/', views.questions_detail_list),

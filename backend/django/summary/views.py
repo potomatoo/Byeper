@@ -110,7 +110,7 @@ def extract_from_youtube_url(youtube_url, n):
         _, image = vidcap.read()
         save(i, image, id)
         info_dict.append({
-                        'address': '/file/{}/{}.jpg'.format(id, i)
+                        'address': '/file/{}/{}.jpg'.format(id, i),
                         'time': int(frame // 30), 
                         'diff': int(diff)})
     with open("/var/file/{}/{}.json".format(id, id), "w") as json_file:
@@ -162,8 +162,7 @@ def extract_time(request):
     return Response("/file/{}/{}.jpg".format(id, id + str(frame)))
 
 @api_view(['POST'])
-def problem_create_list(request, video_pk):
-    video = get_object_or_404(Video, pk=video_pk)
+def problem_create_list(request):
     if request.method == 'POST':
         path = os.path.join('/var/file', request.data['video_id'])
         result = image_processing(path)  # image --> text

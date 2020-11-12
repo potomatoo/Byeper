@@ -1,12 +1,12 @@
 <template>
   <div>
     <v-app-bar style="position: fixed; z-index: 100">
-      <v-app-bar-nav-icon @click="TOGGLE_SIDEBAR"></v-app-bar-nav-icon>
+      <v-app-bar-nav-icon
+        v-if="$route.name !== 'LecturePage'"
+        @click="TOGGLE_SIDEBAR"
+      ></v-app-bar-nav-icon>
       <v-col cols="3">
-        <v-toolbar-title
-          style="font-family: 'Noto Sans KR', sans-serif !important; font-weight: bold"
-          >VPT</v-toolbar-title
-        >
+        <v-toolbar-title style="font-weight: bold">VPT</v-toolbar-title>
       </v-col>
       <v-col cols="6" style="padding: 0">
         <v-text-field
@@ -21,7 +21,7 @@
         >
         </v-text-field>
       </v-col>
-      <v-col cols="1.5"></v-col>
+      <v-col cols="1" style="margin-left: 30px"></v-col>
       <v-col cols="1">
         <v-btn v-if="!isLoggedIn" @click="toGoogleLogin">
           <v-icon>mdi-account</v-icon>로그인

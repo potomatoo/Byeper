@@ -12,9 +12,13 @@
     "allowSyntheticDefaultImports": true,
     "sourceMap": true,
     "baseUrl": ".",
+    "typeRoots": ["./types", "./node_modules/@types"],
+    "declaration": true,
+    "declarationDir": "./types",
     "types": [
       "webpack-env",
-      "vuetify"
+      "vuetify",
+      "vue-youtube"
     ],
     "paths": {
       "@/*": [

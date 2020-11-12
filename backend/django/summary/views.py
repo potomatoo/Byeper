@@ -129,10 +129,9 @@ def extract_image(request):
         # if serializer.is_valid(raise_exception=True):
         #    serializer.save()
         video_ids = request.data
-        videos = Video.objects.all()
         for video_id in video_ids:
             video = Video.objects.get(video_id=video_id)
-            video_max_img = extract_from_videoid(data['video_id'])
+            video_max_img = extract_from_videoid(video_id)
             video.video_max_img = video_max_img
             video.save()
         return Response(200)

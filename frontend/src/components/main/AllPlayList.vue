@@ -89,6 +89,7 @@ const PlayListModule = namespace("PlayListModule");
 export default class AllPlayList extends Vue {
   @PlayListModule.State AllPlayList!: PlayList[] | null;
   @PlayListModule.State scrollEnd!: boolean;
+  @PlayListModule.Mutation SET_PLAYLIST_ZERO: any;
   @PlayListModule.Action FETCH_ALL_PLAYLIST: any;
 
   scrollHeight = 0;
@@ -122,10 +123,10 @@ export default class AllPlayList extends Vue {
     this.scrollHeight = window.innerHeight;
   }
 
-  pushPlayList(playListName: string) {
+  pushPlayList(playListId: string) {
     this.$router.push({
       name: "PlayList",
-      params: { playListName: playListName }
+      params: { playListId: playListId }
     });
   }
 
@@ -135,6 +136,10 @@ export default class AllPlayList extends Vue {
     this.FETCH_ALL_PLAYLIST({
       start: this.start
     });
+  }
+
+  destroyed() {
+    this.SET_PLAYLIST_ZERO();
   }
 }
 </script>

@@ -97,18 +97,21 @@
                         v-for="video in UserVideos"
                         :data="video"
                         class="item my-0"
-                        :key="video"
+                        :key="video.videoId"
                       >
                         <v-list-item>
                           <v-avatar size="82" class="mr-5" tile>
-                            <img :src="video.thumbnailurl" :alt="video.title" />
+                            <img
+                              :src="video.videoImg"
+                              :alt="video.videoTitle"
+                            />
                           </v-avatar>
                           <v-list-item-content>
                             <v-list-item-title
-                              ><b>{{ video.title }}</b></v-list-item-title
+                              ><b>{{ video.videoTitle }}</b></v-list-item-title
                             >
                             <v-list-item-content>{{
-                              video.description
+                              video.videoDescription
                             }}</v-list-item-content>
                           </v-list-item-content>
                         </v-list-item>
@@ -191,32 +194,32 @@
                       style="height: 50vh; overflow-x: hidden; overflow-y: hidden"
                     >
                       <template v-slot:item="{ item }">
-                        <drag class="item" :key="item">
+                        <drag class="item" :key="item.videoId">
                           <v-list-item>
                             <v-list-item-content>
                               <v-list-item-title
                                 ><strong>{{
-                                  item.title
+                                  item.videoTitle
                                 }}</strong></v-list-item-title
                               >
                               <v-list-item-content>{{
-                                item.description
+                                item.videoDescription
                               }}</v-list-item-content>
                             </v-list-item-content>
                           </v-list-item>
                         </drag>
                       </template>
                       <template v-slot:feedback="{ data }">
-                        <div class="item feedback" :key="data">
+                        <div class="item feedback" :key="data.videoId">
                           <v-list-item>
                             <v-list-item-content>
                               <v-list-item-title
                                 ><strong>{{
-                                  data.title
+                                  data.videoTitle
                                 }}</strong></v-list-item-title
                               >
                               <v-list-item-content>{{
-                                data.description
+                                data.videoDescription
                               }}</v-list-item-content>
                             </v-list-item-content>
                           </v-list-item>
@@ -272,14 +275,16 @@
                   :key="Video.videoId"
                 >
                   <v-avatar size="82" class="mr-5" tile>
-                    <img :src="Video.thumbnailurl" :alt="Video.title" />
+                    <img :src="Video.videoImg" :alt="Video.videoTitle" />
                   </v-avatar>
                   <v-list-item-content>
                     <v-list-item-title
-                      ><strong>{{ Video.title }}</strong></v-list-item-title
+                      ><strong>{{
+                        Video.videoTitle
+                      }}</strong></v-list-item-title
                     >
                     <v-list-item-content>{{
-                      Video.description
+                      Video.videoDescription
                     }}</v-list-item-content>
                   </v-list-item-content>
                 </v-list-item>
@@ -316,8 +321,7 @@
                       placeholder="Select your files"
                       prepend-icon="mdi-paperclip"
                       outlined
-                      :show-size="500"
-                      @change="Thumbnail"
+                      @change="thumbnail"
                     >
                       <template v-slot:selection="{ index, text }">
                         <v-chip color="deep-purple accent-4" dark label small>
@@ -340,7 +344,7 @@
                   label="내용을 충분히 이해하였으며, 이에 동의합니다."
                   value="1"
                 ></v-checkbox>
-                <v-btn color="primary" @click="CreatePlayList">
+                <v-btn color="primary" @click="createLecture">
                   강의 생성
                 </v-btn>
 
@@ -357,8 +361,10 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import { Drag, DropList } from "vue-easy-dnd";
+import { Axios } from "@/service/axios.service";
+//import { PlayList } from "@/store/Instructor.interface";
 import axios from "axios";
 
 @Component({
@@ -370,64 +376,49 @@ import axios from "axios";
 export default class CreateLecture extends Vue {
   UserVideos = [
     {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
+      videoId: "t8sjTFM_tfE",
+      videoTitle: "0.1초 동안 컴퓨터를 빌려보자 - AWS Lambda",
+      videoDescription:
+        "0.1초 동안만 컴퓨터를 빌릴 수 있다면 얼마나 좋을까요? 0.1초 단위로 컴퓨터를 임대해주는 아마존 웹서비스 람다 수업을 만들었습니다. 람다의 실행방법과 디버깅 ...",
+      videoImg: "https://i.ytimg.com/vi/t8sjTFM_tfE/hqdefault.jpg",
+      videoMaxImg: 0,
+      userId: "test@test.com"
     },
     {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
+      videoId: "87Ra6xwepFI",
+      videoTitle: "Machine learning 1 - 6. 모델",
+      videoDescription:
+        "이 수업은 머신러닝을 처음 시작하는 분들이 이론없이, 수학없이, 코딩없이 머신러닝을 경험해볼 수 있도록 고안된 수업입니다. 이 수업이 끝나고 나면 머신러닝이 ...",
+      videoImg: "https://i.ytimg.com/vi/87Ra6xwepFI/hqdefault.jpg",
+      videoMaxImg: 0,
+      userId: "test@test.com"
     },
     {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
+      videoId: "F5SUlHhjYCk",
+      videoTitle: "Machine learning 1 - 5. Teachable machine",
+      videoDescription:
+        "이 수업은 머신러닝을 처음 시작하는 분들이 이론없이, 수학없이, 코딩없이 머신러닝을 경험해볼 수 있도록 고안된 수업입니다. 이 수업이 끝나고 나면 머신러닝이 ...",
+      videoImg: "https://i.ytimg.com/vi/F5SUlHhjYCk/hqdefault.jpg",
+      videoMaxImg: 0,
+      userId: "test@test.com"
     },
     {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
+      videoId: "KR8ddnPjCtk",
+      videoTitle: "Machine learning 1 - 2. 머신러닝이란?",
+      videoDescription:
+        "이 수업은 머신러닝을 처음 시작하는 분들이 이론없이, 수학없이, 코딩없이 머신러닝을 경험해볼 수 있도록 고안된 수업입니다. 이 수업이 끝나고 나면 머신러닝이 ...",
+      videoImg: "https://i.ytimg.com/vi/KR8ddnPjCtk/hqdefault.jpg",
+      videoMaxImg: 0,
+      userId: "test@test.com"
     },
     {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
+      videoId: "LPqmPfhnR1o",
+      videoTitle: "Machine learning 1 - 1. 오리엔테이션",
+      videoDescription:
+        "이 수업은 머신러닝을 처음 시작하는 분들이 이론없이, 수학없이, 코딩없이 머신러닝을 경험해볼 수 있도록 고안된 수업입니다. 이 수업이 끝나고 나면 머신러닝이 ...",
+      videoImg: "https://i.ytimg.com/vi/LPqmPfhnR1o/hqdefault.jpg",
+      videoMaxImg: 0,
+      userId: "test@test.com"
     }
   ];
   CreateLectureStep = 1;
@@ -442,6 +433,7 @@ export default class CreateLecture extends Vue {
   LectureThumbnail = null;
   LectureThumbnailURL = null;
   LectureThumbnailLink = null;
+  LectureTrackId = null;
 
   onInsert(event) {
     this.SelectedVideos.splice(event.index, 0, event.data);
@@ -459,37 +451,35 @@ export default class CreateLecture extends Vue {
   //   this.SelectedVideos.splice(idx, 1);
   // }
 
-  async Thumbnail() {
-    this.LectureThumbnailURL = URL.createObjectURL(this.LectureThumbnail);
+  async thumbnail() {
     if (this.LectureThumbnail) {
+      this.LectureThumbnailURL = URL.createObjectURL(this.LectureThumbnail);
       try {
-        const formData = new FormData();
-        formData.append("file", this.LectureThumbnail);
-        const res = await axios.post(
-          "http://k3b108.p.ssafy.io:8080/api/public/playlist/imgupload",
-          {
-            formData
-          },
+        const file = new FormData();
+        file.append("file", this.LectureThumbnail);
+        const res = await Axios.instance.post(
+          "/api/public/playlist/imgupload",
+          file,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+              "Content-Type": "multipart/form-data"
             }
           }
         );
-        console.log(res);
-        this.LectureThumbnailLink = res;
+        if (res) {
+          const link = "http://k3b108.p.ssafy.io/file/playlist/";
+          this.LectureThumbnailLink = link + res.data.data;
+        }
       } catch (e) {
         console.error(e);
       }
     }
   }
 
-  async CreatePlayList() {
+  async createPlayList() {
     try {
-      const res = await axios.post(
-        "http://k3b108.p.ssafy.io:8080/api/private/playlist/save",
+      const res = await Axios.instance.post(
+        "/api/private/playlist/save",
         {
           playlistCategory: this.LectureCategory,
           playlistDescription: this.LectureDescription,
@@ -497,23 +487,91 @@ export default class CreateLecture extends Vue {
           playlistImg: this.LectureThumbnailLink,
           playlistLevel: 0,
           playlistTitle: this.LectureTitle,
-          playlistType: 1,
+          playlistType: 0,
           userId: ""
         },
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+            "Content-Type": "application/json"
           }
         }
       );
+      console.log(res);
+      if (res.data.data) this.LectureTrackId = res.data.data.playlistId;
     } catch (e) {
       console.error(e);
     }
   }
 
-  // async GetPlayList() {}
+  async getVideoList() {
+    try {
+      const res = await axios.get(
+        "http://k3b108.p.ssafy.io:8080/api/public/videos",
+        {
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjA2MDIyNzU2fQ.V3tcA-nOA_9Zjat5NtwBDekY07WXGUw5TMx25EdOVxTOGyc1oXz7sGeQlo3b97uAk5LGI614lJlM57vxbzQ4xQ"
+          }
+        }
+      );
+      console.log(res);
+      if (res.data.data != null) this.UserVideos = res.data.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async addVideo() {
+    try {
+      const res = await Axios.instance.post(
+        "/api/pirvate/playlist/addvideo",
+        this.SelectedVideos,
+        {
+          params: {
+            playlistId: this.LectureTrackId
+          },
+          headers: {
+            "Content-Type": "application/json",
+            Authorization:
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjA1OTYzNjY0fQ.6FNwNeQ0AoGpxU1hvJzlc3joh9XYPdWHKfEH4SH7NA3sd_-5Dfhyt6BkRj2DumlZep48R-2hPBTdXBrlSq2AUw"
+          }
+        }
+      );
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async djangoVideoAnalysis() {
+    try {
+      const videoIDs = [];
+      this.SelectedVideos.map(elem => videoIDs.push(elem.videoId));
+      const res = await Axios.instanceDjango.post(
+        "api/django/summary/extract/",
+        videoIDs,
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log(res);
+    } catch (e) {
+      console.log("어쨋든 요청은 보냄");
+    }
+  }
+
+  async createLecture() {
+    await this.thumbnail();
+    await this.createPlayList();
+    await this.addVideo();
+    await this.djangoVideoAnalysis();
+  }
+  created() {
+    this.getVideoList();
+  }
 }
 </script>
 

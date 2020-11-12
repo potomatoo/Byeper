@@ -1,17 +1,14 @@
 <template>
   <div class="quiz">
-    <v-card flat tile width="100%">
-      <v-window v-model="onboarding" vertical>
-        <v-window-item v-for="Quiz in Quizes" :key="Quiz.id">
-          <v-card class="quiz-content" color="grey">
-            <v-row align="center" justify="center">
+    <v-row class="quiz-content" align="center">
+      <v-col class="quiz-col" cols="11">
+        <v-window v-model="window" vertical>
+          <v-window-item v-for="Quiz in Quizes" :key="Quiz.id">
+            <v-row class="quiz-text" align="center" justify="center">
               <v-col cols="12">
-                <h1
-                  style="font-size: 1rem; text-align: center;"
-                  class="white--text"
-                >
-                  {{ Quiz.text }}
-                </h1>
+              <p style="text-align: center">
+                {{ Quiz.text }}
+              </p>
               </v-col>
               <v-col cols="3">
                 <v-text-field
@@ -22,30 +19,26 @@
                 ></v-text-field>
               </v-col>
             </v-row>
-          </v-card>
-        </v-window-item>
-      </v-window>
-
-      <v-card-actions class="justify-space-between">
-        <v-btn text @click="prev">
-          <v-icon>mdi-chevron-left</v-icon>
-        </v-btn>
-        <v-item-group v-model="onboarding" class="text-center" mandatory>
-          <v-item
-            v-for="n in length"
-            :key="`btn-${n}`"
-            v-slot="{ active, toggle }"
-          >
-            <v-btn :input-value="active" icon @click="toggle">
-              <v-icon>mdi-record</v-icon>
-            </v-btn>
+          </v-window-item>
+        </v-window>
+      </v-col>
+      <v-col cols="1">
+        <v-item-group
+          v-model="window"
+          class="shrink mr-6"
+          mandatory
+          tag="v-flex"
+        >        
+          <v-item v-for="n in length" :key="n" v-slot="{ active, toggle }">
+            <div>
+              <v-btn :input-value="active" icon @click="toggle">
+                <v-icon>mdi-record</v-icon>
+              </v-btn>
+            </div>
           </v-item>
         </v-item-group>
-        <v-btn text @click="next">
-          <v-icon>mdi-chevron-right</v-icon>
-        </v-btn>
-      </v-card-actions>
-    </v-card>
+      </v-col>
+    </v-row>
   </div>
 </template>
 
@@ -55,7 +48,7 @@ import { Component, Vue } from "vue-property-decorator";
 @Component
 export default class Quiz extends Vue {
   length = 3;
-  onboarding = 0;
+  window = 0;
 
   Quizes = [
     { id: 1, text: "자료구조는 크게 ____구조와 ____구조로 나뉜다." },
@@ -73,12 +66,10 @@ export default class Quiz extends Vue {
   }
 
   next() {
-    this.onboarding =
-      this.onboarding + 1 === this.length ? 0 : this.onboarding + 1;
+    this.window = this.window + 1 === this.length ? 0 : this.window + 1;
   }
   prev() {
-    this.onboarding =
-      this.onboarding - 1 < 0 ? this.length - 1 : this.onboarding - 1;
+    this.window = this.window - 1 < 0 ? this.length - 1 : this.window - 1;
   }
 }
 </script>
@@ -86,11 +77,21 @@ export default class Quiz extends Vue {
 <style scoped>
 .quiz {
   width: 100%;
-  height: calc(100%-64px);
 }
 .quiz-content {
-  height: calc(100vh - 156px);
-  align-items: center;
-  display: flex;
+  width: 100%;
+  height: calc(100vh - 100px);  
+  padding: 0;
+}
+.quiz-text {
+  width: 100%;
+  height: calc(100vh - 100px);
+  background-color: gray;
+  margin: 0;
+}
+.quiz-col {
+  padding-top: 0; 
+  padding-bottom: 0; 
+  
 }
 </style>

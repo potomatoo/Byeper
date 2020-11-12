@@ -1,19 +1,20 @@
 <template>
   <div class="playlistvideos">
     <v-container>
-      <v-row v-for="item in list" :key="item.id" style="margin: 50px 0 50px 0">
+      <v-row
+        v-for="video in PlayListVideos"
+        :key="video.video_id"
+        style="margin: 50px 0 50px 0"
+      >
         <v-col cols="6">
-          <div class="videodescription" :id="item.id">
+          <div class="videodescription" :id="video.video_id">
             <div class="content">
               <div>
                 <h3 class="mb-5">
-                  슬기로운 싸피생활
+                  {{ video.video_title }}
                 </h3>
                 <p style="font-weight: light; ">
-                  Lorem ipsum dolor sit amet consectetur adipisicing elit. Alias
-                  quis consequuntur magni accusantium similique corporis dolores
-                  voluptatum ipsum distinctio maiores. Voluptas ullam ratione
-                  nostrum non maiores quia molestiae aperiam. Magnam.
+                  {{ video.video_description }}
                 </p>
                 <div>
                   <p
@@ -24,10 +25,10 @@
                   <v-progress-linear
                     color="deep-orange"
                     height="18"
-                    value="40"
+                    :value="video.play_log"
                     striped
                     ><strong style="font-size: 0.8em"
-                      >{{ 40 }}%</strong
+                      >{{ video.play_log }}%</strong
                     ></v-progress-linear
                   >
                 </div>
@@ -39,23 +40,17 @@
         <v-col cols="1"></v-col>
 
         <v-col cols="5" justify="center">
-          <div class="card" @mouseover="isHover = !isHover">
-            <div class="imgBx" :data-text="item.playListName">
-              <img class="bigimg" src="@/assets/jun.png" />
+          <div class="card">
+            <div class="imgBx">
+              <img class="bigimg" :src="video.video_img" />
               <img
                 class="smallimg"
                 src="@/assets/playBtn.png"
-                @click="goLecture(item.playListName)"
+                @click="goLecture(video.video_title)"
               />
             </div>
             <div class="content">
-              <video
-                src="@/assets/mainVideo.mp4"
-                @mouseover="autoplay"
-                muted
-                loop
-                type="mp4"
-              ></video>
+              <img :src="video.video_img" />
             </div>
           </div>
         </v-col>
@@ -66,51 +61,15 @@
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import { PlayList } from "../../store/PlayList.interface";
+
+const PlayListModule = namespace("PlayListModule");
 
 @Component
 export default class PlayListRoadmap extends Vue {
-  isHover = true;
-  autoplay(e: any) {
-    e.target.play();
-  }
-  list = [
-    {
-      id: 1,
-      playListName: "junho"
-    },
-    {
-      id: 2,
-      playListName: "junho"
-    },
-    {
-      id: 3,
-      playListName: "junho"
-    },
-    {
-      id: 4,
-      playListName: "junho"
-    },
-    {
-      id: 5,
-      playListName: "junho"
-    },
-    {
-      id: 6,
-      playListName: "junho"
-    },
-    {
-      id: 7,
-      playListName: "junho"
-    },
-    {
-      id: 8,
-      playListName: "junho"
-    },
-    {
-      id: 9,
-      playListName: "junho"
-    }
-  ];
+  @PlayListModule.State PlayListVideos!: [];
+
   goLecture(courseName: string) {
     this.$router.push({
       name: "LecturePage",
@@ -214,7 +173,7 @@ export default class PlayListRoadmap extends Vue {
   align-items: center;
   cursor: pointer;
 }
-.card .content video {
+.card .content img {
   width: 400px;
   height: 225px;
 }

@@ -98,15 +98,29 @@ export default class AppNavbar extends Vue {
       .then((authToken: string) => this.GOOGLE_LOGIN(authToken));
   }
   goHome() {
-    this.$router.push({ name: "Home" });
+    if (this.$route.name !== "Home") {
+      this.$router.push({ name: "Home" });
+    }
   }
   goStudent() {
-    this.$router.push({ name: "StudentPage" });
+    if (this.isLoggedIn) {
+      this.$router.push({ name: "StudentPage" });
+    } else {
+      if (
+        confirm("로그인이 필요합니다.\n구글 로그인을 하시겠습니까?") === true
+      ) {
+        this.$gAuth
+          .getAuthCode()
+          .then((authToken: string) => this.GOOGLE_LOGIN(authToken));
+      }
+    }
   }
   logout() {
     // this.LOGOUT();
     this.REMOVE_TOKEN();
-    this.$router.push({ name: "Home" });
+    if (this.$route.name !== "Home") {
+      this.$router.push({ name: "Home" });
+    }
   }
 }
 </script>

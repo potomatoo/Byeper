@@ -1,7 +1,7 @@
 from google.cloud import vision
 import os, cv2, io, re
 check_kor = re.compile('[가-힣]+')
-check_eng = re.compile('[a-z|A-Z]+')
+#check_eng = re.compile('[a-z|A-Z]+')
 
 def image_processing(path):
     imgs = []

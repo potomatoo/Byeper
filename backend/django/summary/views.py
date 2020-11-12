@@ -165,9 +165,12 @@ def extract_time(request):
 def problem_create_list(request):
     if request.method == 'POST':
         path = os.path.join('/var/file', request.data['video_id'])
-        print(path,'------------------')
+
         result = image_processing(path)  # image --> text
 
+        if not result:
+            return Response(200)
+            
         origin = TextBlob(result)
         eng = origin.translate('ko', 'en')
         

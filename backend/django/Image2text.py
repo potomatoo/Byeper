@@ -6,8 +6,9 @@ check_eng = re.compile('[a-z|A-Z]+')
 def image_processing(path):
     imgs = []
     for f in os.listdir(path):
-        tmp = cv2.imread(os.path.join(path, f), 0)
-        imgs.append(cv2.resize(tmp, (854, 480)))
+        if f[-3:] == 'jpg':
+            tmp = cv2.imread(os.path.join(path, f), 0)
+            imgs.append(cv2.resize(tmp, (854, 480)))
     img = cv2.vconcat(imgs)
     target_dir = path[-11:]
     tmp_image = os.path.join(path, target_dir+'.jpg')

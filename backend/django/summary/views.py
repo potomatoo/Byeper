@@ -186,7 +186,7 @@ def problem_create_list(request):
         QnA = []
         for sentence in result.split('\n'):
             for answer in answers:
-                if answer in sentence:
+                if len(setence.split()) >= 4 and answer in sentence:
                     problem = sentence.replace(answer, '______')
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)

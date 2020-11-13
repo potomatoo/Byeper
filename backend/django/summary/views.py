@@ -179,13 +179,9 @@ def problem_create_list(request):
         # answers = eng.noun_phrases
 
         answer_list = []
-        # for answers in set(eng.noun_phrases):
-        #     for answer in answers.split():
-        #         if len(answer) < 3: break
-        #     else:
-        #         answer_list.append(answers)
+
         answers = set([word for word in komoran.nouns(result) \
-            if len(word) > 1 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')])
+            if len(word) > 2 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')])
 
         QnA = []
         for sentence in result.split('\n'):
@@ -195,11 +191,5 @@ def problem_create_list(request):
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)
 
-        # for sentence in eng.split('\n'):
-        #     for answer in answer_list:
-        #         if answer in sentence:
-        #             problem = sentence.replace(answer, '______')
-        #             DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
-        #             QnA.append(DATA)
 
         return Response({'data':QnA, 'OCR':result})

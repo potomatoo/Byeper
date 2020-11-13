@@ -5,6 +5,13 @@ check_kor = re.compile('[가-힣]+')
 
 def image_processing(path):
     imgs = []
+    
+    is_json = os.path.join(path, path[-11:]+'.json')
+    
+    if not os.path.isdir(path) or not os.path.isfile(is_json):
+        return -1
+
+
     for f in os.listdir(path):
         if f[-3:] == 'jpg':
             tmp = cv2.imread(os.path.join(path, f), 0)

@@ -171,8 +171,8 @@ def problem_create_list(request):
 
         result = image_processing(path)  # image --> text
 
-        # if not result:
-        #     return Response(200)
+        if result == -1:
+             return Response("아직 문석이 끝나지 않았습니다")
             
         # origin = TextBlob(result)
         # eng = origin.translate('ko', 'en')
@@ -186,7 +186,7 @@ def problem_create_list(request):
         QnA = []
         for sentence in result.split('\n'):
             for answer in answers:
-                if len(setence.split()) >= 4 and answer in sentence:
+                if len(sentence.split()) >= 4 and answer in sentence:
                     problem = sentence.replace(answer, '______')
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)

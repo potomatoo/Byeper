@@ -11,11 +11,7 @@ import cv2, os, io, re
 import numpy as np
 import pafy, json
 
-from Image2text import image_processing
-from konlpy.tag import Komoran
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/ubuntu/pk.json"
-os.environ['JAVA_HOME'] = "/usr/lib/jvm/java-11-openjdk-amd64/bin"
-komoran = Komoran()
+from speech2text import make_answer
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -142,7 +138,7 @@ def extract_image(request):
 
 @api_view(['POST', 'OPTIONS'])
 def extract_time(request):
-    print(111)
+
     id = request.data['id']
     url = 'https://www.youtube.com/watch?v=' + id
     time = request.data['time']
@@ -167,29 +163,20 @@ def extract_time(request):
 def problem_create_list(request):
     if request.method == 'POST':
         video_pk = request.data['video_id']
-        path = os.path.join('/var/file', video_pk)
+        # path = os.path.join('/var/file', video_pk)
 
-        result = image_processing(path)  # image --> text
+        sentence, answers = make_answer(video_pk)
 
         if result == -1:
-             return Response("아직 문석이 끝나지 않았습니다")
+             return Response("아직 분석이 끝나지 않았습니다")
             
-        # origin = TextBlob(result)
-        # eng = origin.translate('ko', 'en')
-        # answers = eng.noun_phrases
-
-        answer_list = []
-
-        answers = set([word for word in komoran.nouns(result) \
-            if len(word) > 2 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')])
-
         QnA = []
-        for sentence in result.split('\n'):
+        for sen in sentence.split('\n'):
             for answer in answers:
-                if len(sentence.split()) >= 4 and answer in sentence:
+                if len(sen.split()) >= 4 and answer in sen:
                     problem = sentence.replace(answer, '______')
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)
 
 
-        return Response({'data':QnA, 'OCR':result})
+        return Response({ 'data':QnA })

@@ -25,10 +25,10 @@ def imwrite(filename, img, params=None):
         else: 
             return False 
     except Exception as e: 
-        print(e) 
+7ThkvfCKKQs        print(e) 
         return False
 
-def save(frame, image, title):
+is_json = os.path.join(path, path[-11:]+'.json')def save(frame, image, title):
     imwrite("/var/file/{}/{}.jpg".format(title, frame), image)
 
 def divide_and_conquer(vidcap, left, right, left_image, right_image):

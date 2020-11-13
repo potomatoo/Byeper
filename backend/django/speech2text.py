@@ -36,5 +36,6 @@ def make_answer(url):
         else:
             answers.append(k[0])
         if len(answers) == 10: break
+    print(eng, answers)
     return eng, answers
 

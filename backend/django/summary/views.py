@@ -25,10 +25,9 @@ def imwrite(filename, img, params=None):
         else: 
             return False 
     except Exception as e: 
-7ThkvfCKKQs        print(e) 
         return False
 
-is_json = os.path.join(path, path[-11:]+'.json')def save(frame, image, title):
+def save(frame, image, title):
     imwrite("/var/file/{}/{}.jpg".format(title, frame), image)
 
 def divide_and_conquer(vidcap, left, right, left_image, right_image):
@@ -170,16 +169,13 @@ def problem_create_list(request):
             return -1  # --> video dir check
 
         sentence, answers = make_answer(video_pk)
-
-        if result == -1:
-             return Response("아직 분석이 끝나지 않았습니다")
-            
+        sentence = str(sentence)
         QnA = []
         for sen in sentence.split('\n'):
             for answer in answers:
                 if len(sen.split()) >= 4 and answer in sen:
-                    problem = sentence.replace(answer, '______')
-                    DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
+                    problem = sen.replace(answer, '______')
+                    DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sen}
                     QnA.append(DATA)
 
 

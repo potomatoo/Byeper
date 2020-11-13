@@ -163,7 +163,11 @@ def extract_time(request):
 def problem_create_list(request):
     if request.method == 'POST':
         video_pk = request.data['video_id']
-        # path = os.path.join('/var/file', video_pk)
+
+        path = os.path.join('/var/file', video_pk)
+        is_json = os.path.join(path, video_pk+'.json')
+        if not os.path.isdir(path) or not os.path.isfile(is_json):
+            return -1  # --> video dir check
 
         sentence, answers = make_answer(video_pk)
 

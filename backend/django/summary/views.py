@@ -188,7 +188,7 @@ def problem_create_list(request):
         #     else:
         #         answer_list.append(answers)
         answers = set([word for word in komoran.nouns(text) \
-            if len(word) > 2 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')]
+            if len(word) > 2 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')])
 
         QnA = []
         for sentence in result:

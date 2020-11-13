@@ -1,16 +1,24 @@
 from google.cloud import vision
 import os, cv2, io, re
 check_kor = re.compile('[가-힣]+')
-check_eng = re.compile('[a-z|A-Z]+')
+#check_eng = re.compile('[a-z|A-Z]+')
 
 def image_processing(path):
     imgs = []
+    
+    is_json = os.path.join(path, path[-11:]+'.json')
+    
+    if not os.path.isdir(path) or not os.path.isfile(is_json):
+        return -1
+
+
     for f in os.listdir(path):
-        tmp = cv2.imread(os.path.join(path, f), 0)
-        imgs.append(cv2.resize(tmp, (854, 480)))
+        if f[-3:] == 'jpg':
+            tmp = cv2.imread(os.path.join(path, f), 0)
+            imgs.append(cv2.resize(tmp, (854, 480)))
     img = cv2.vconcat(imgs)
     target_dir = path[-11:]
-    tmp_image = os.path.join(path, target_dir+'.png')
+    tmp_image = os.path.join(path, target_dir+'.jpg')
 
     cv2.imwrite(tmp_image, img)
     client = vision.ImageAnnotatorClient()
@@ -37,6 +45,5 @@ def image_processing(path):
             '{}\nFor more info on error messages, check: '
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
-
     os.remove(tmp_image)
     return sentence

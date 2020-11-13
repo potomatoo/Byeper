@@ -38,6 +38,5 @@ def image_processing(path):
             '{}\nFor more info on error messages, check: '
             'https://cloud.google.com/apis/design/errors'.format(
                 response.error.message))
-
     os.remove(tmp_image)
     return sentence

@@ -164,9 +164,12 @@ def extract_time(request):
 @api_view(['POST'])
 def problem_create_list(request):
     if request.method == 'POST':
-        path = os.path.join('/var/file', request.data['video_id'])
-        print(path,'------------------')
+        video_pk = request.data['video_id']
+        path = os.path.join('/var/file', video_pk)
         result = image_processing(path)  # image --> text
+        
+        if not result:
+            return Response(200)
 
         origin = TextBlob(result)
         eng = origin.translate('ko', 'en')
@@ -185,7 +188,7 @@ def problem_create_list(request):
             for answer in answer_list:
                 if answer in sentence:
                     problem = sentence.replace(answer, '______')
-                    DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
+                    DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)
 
         return Response({'data':QnA})

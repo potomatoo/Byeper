@@ -12,8 +12,10 @@ import numpy as np
 import pafy, json
 
 from Image2text import image_processing
-from textblob import TextBlob
+from konlpy.tag import Komoran
 os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/ubuntu/pk.json"
+os.environ['JAVA_HOME'] = "/usr/lib/jvm/java-11-openjdk-amd64/bin"
+komoran = Komoran()
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -166,29 +168,41 @@ def problem_create_list(request):
     if request.method == 'POST':
         video_pk = request.data['video_id']
         path = os.path.join('/var/file', video_pk)
+
         result = image_processing(path)  # image --> text
         
         if not result:
             return Response(200)
 
-        origin = TextBlob(result)
-        eng = origin.translate('ko', 'en')
-        
-        answers = eng.noun_phrases
+        if not result:
+            return Response(200)
+            
+        # origin = TextBlob(result)
+        # eng = origin.translate('ko', 'en')
+        # answers = eng.noun_phrases
 
         answer_list = []
-        for answers in set(eng.noun_phrases):
-            for answer in answers.split():
-                if len(answer) < 3: break
-            else:
-                answer_list.append(answers)
+        # for answers in set(eng.noun_phrases):
+        #     for answer in answers.split():
+        #         if len(answer) < 3: break
+        #     else:
+        #         answer_list.append(answers)
+        answers = set([word for word in komoran.nouns(text) \
+            if len(word) > 2 and word[-1] not in ('은', '는', '이', '을', '를', '요', '다', '까')]
 
         QnA = []
-        for sentence in eng.split('\n'):
-            for answer in answer_list:
+        for sentence in result:
+            for answer in answers:
                 if answer in sentence:
                     problem = sentence.replace(answer, '______')
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sentence}
                     QnA.append(DATA)
+
+        # for sentence in eng.split('\n'):
+        #     for answer in answer_list:
+        #         if answer in sentence:
+        #             problem = sentence.replace(answer, '______')
+        #             DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
+        #             QnA.append(DATA)
 
         return Response({'data':QnA})

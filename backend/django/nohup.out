@@ -1,31 +1,10 @@
 Watching for file changes with StatReloader
-[10/Nov/2020 17:56:13] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 42
-ERROR: vKktSCf2ru0: YouTube said: Unable to extract video data
-Internal Server Error: /api/django/summary/extract_time/
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 797, in extract_info
-    ie_result = ie.extract(url)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/extractor/common.py", line 532, in extract
-    ie_result = self._real_extract(url)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/extractor/youtube.py", line 1910, in _real_extract
-    'YouTube said: %s' % unavailable_message, expected=True, video_id=video_id)
-youtube_dl.utils.ExtractorError: vKktSCf2ru0: YouTube said: Unable to extract video data
-
-During handling of the above exception, another exception occurred:
-
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 40, in _fetch_basic
-    self._ydl_info = ydl.extract_info(self.videoid, download=False)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 820, in extract_info
-    self.report_error(compat_str(e), e.format_traceback())
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 625, in report_error
-    self.trouble(error_message, tb)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/youtube_dl/YoutubeDL.py", line 595, in trouble
-    raise DownloadError(message, exc_info)
-youtube_dl.utils.DownloadError: ERROR: vKktSCf2ru0: YouTube said: Unable to extract video data
-
-During handling of the above exception, another exception occurred:
-
+[13/Nov/2020 23:24:31] "OPTIONS /api/django/summary/qna/ HTTP/1.0" 200 0
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
 Traceback (most recent call last):
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
     response = get_response(request)
@@ -47,30 +26,15 @@ Traceback (most recent call last):
     response = handler(request, *args, **kwargs)
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
     return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 144, in extract_time
-    video = pafy.new(url)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/pafy.py", line 124, in new
-    return Pafy(url, basic, gdata, size, callback, ydl_opts=ydl_opts)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 31, in __init__
-    super(YtdlPafy, self).__init__(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_shared.py", line 97, in __init__
-    self._fetch_basic()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pafy/backend_youtube_dl.py", line 43, in _fetch_basic
-    raise IOError(str(e).replace('YouTube said', 'Youtube says'))
-OSError: ERROR: vKktSCf2ru0: Youtube says: Unable to extract video data
-[10/Nov/2020 17:56:22] "POST /api/django/summary/extract_time/ HTTP/1.0" 500 17740
-[10/Nov/2020 17:56:29] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 42
-Not Found: /api/django/summary/extract_image/
-[10/Nov/2020 17:58:11] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
-Not Found: /api/django/summary/extract_image/
-[10/Nov/2020 17:58:44] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
-Not Found: /api/django/summary/extract_image/
-[10/Nov/2020 17:59:43] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
-Not Found: /api/django/summary/extract_image/
-[10/Nov/2020 17:59:56] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
-Not Found: /api/django/summary/extract_image/
-[10/Nov/2020 18:00:02] "POST /api/django/summary/extract_image/ HTTP/1.0" 404 2688
-Internal Server Error: /api/django/summary/extract/
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:24:38] "POST /api/django/summary/qna/ HTTP/1.0" 500 16208
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
 Traceback (most recent call last):
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
     response = get_response(request)
@@ -92,537 +56,174 @@ Traceback (most recent call last):
     response = handler(request, *args, **kwargs)
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
     return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 124, in extract_image
-    start = datetime.datetime.now()
-NameError: name 'datetime' is not defined
-[10/Nov/2020 18:00:12] "POST /api/django/summary/extract/ HTTP/1.0" 500 15365
-Not Found: //api/django/summary/extract_time/
-[10/Nov/2020 18:00:47] "POST //api/django/summary/extract_time/ HTTP/1.0" 404 2263
-[10/Nov/2020 18:01:04] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 43
-/home/ubuntu/s03p31b108/backend/django/summary/urls.py changed, reloading.
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:25:16] "POST /api/django/summary/qna/ HTTP/1.0" 500 16208
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:25:43] "POST /api/django/summary/qna/ HTTP/1.0" 500 16208
+Internal Server Error: /api/django/summary/qna/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 168, in problem_create_list
+    sentence, answers = make_answer(video_pk)
+  File "/home/ubuntu/s03p31b108/backend/django/speech2text.py", line 12, in make_answer
+    yt = YouTube(video_url)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pytube/__main__.py", line 103, in __init__
+    self.prefetch()
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pytube/__main__.py", line 192, in prefetch
+    self.js_url = extract.js_url(self.watch_html)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pytube/extract.py", line 178, in js_url
+    base_js = get_ytplayer_config(html)['assets']['js']
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/pytube/extract.py", line 278, in get_ytplayer_config
+    caller="get_ytplayer_config", pattern="config_patterns, setconfig_patterns"
+pytube.exceptions.RegexMatchError: get_ytplayer_config: could not find match for config_patterns, setconfig_patterns
+[13/Nov/2020 23:26:49] "POST /api/django/summary/qna/ HTTP/1.0" 500 16754
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:26:56] "POST /api/django/summary/qna/ HTTP/1.0" 500 15791
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:27:25] "POST /api/django/summary/qna/ HTTP/1.0" 500 16208
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+Internal Server Error: /api/django/summary/qna/
+Traceback (most recent call last):
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
+    response = get_response(request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
+    response = self.process_exception_by_middleware(e, request)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
+    response = wrapped_callback(request, *callback_args, **callback_kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
+    return view_func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
+    return self.dispatch(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
+    response = self.handle_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
+    self.raise_uncaught_exception(exc)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
+    raise exc
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
+    response = handler(request, *args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
+    return func(*args, **kwargs)
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 170, in problem_create_list
+    if result == -1:
+NameError: name 'result' is not defined
+[13/Nov/2020 23:27:28] "POST /api/django/summary/qna/ HTTP/1.0" 500 16208
+/home/ubuntu/s03p31b108/backend/django/summary/views.py changed, reloading.
 Performing system checks...
 
 System check identified no issues (0 silenced).
-November 10, 2020 - 17:56:10
+November 13, 2020 - 22:16:10
 Django version 2.2, using settings 'API.settings'
 Starting development server at http://127.0.0.1:8000/
 Quit the server with CONTROL-C.
-Traceback (most recent call last):
-  File "manage.py", line 22, in <module>
-    main()
-  File "manage.py", line 18, in main
-    execute_from_command_line(sys.argv)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 381, in execute_from_command_line
-    utility.execute()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/management/__init__.py", line 325, in execute
-    settings.INSTALLED_APPS
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 79, in __getattr__
-    self._setup(name)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 66, in _setup
-    self._wrapped = Settings(settings_module)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/conf/__init__.py", line 189, in __init__
-    raise ValueError("Incorrect timezone setting: %s" % self.TIME_ZONE)
-ValueError: Incorrect timezone setting: Asia/seoul
-Watching for file changes with StatReloader
-[10/Nov/2020 21:25:22] "POST /api/django/summary/extract/ HTTP/1.0" 200 131
-/home/ubuntu/s03p31b108/backend/django/API/my_settings.py changed, reloading.
-Performing system checks...
-
-System check identified no issues (0 silenced).
-November 10, 2020 - 21:20:13
-Django version 2.2, using settings 'API.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-save  1 s
-save  28 s
-save  40 s
-save  43 s
-save  74 s
-save  830 s
-save  860 s
-save  931 s
-save  953 s
-save  959 s
-save  967 s
-save  979 s
-save  990 s
-save  1004 s
-save  1016 s
-save  1114 s
-save  1205 s
-save  1234 s
-save  1296 s
-save  1322 s
-save  1368 s
-save  1410 s
-save  1420 s
-save  1428 s
-save  1453 s
-save  1534 s
-save  1571 s
-save  1626 s
-save  1701 s
-save  1784 s
-save  1830 s
-save  1842 s
-save  1863 s
-save  1902 s
-save  1916 s
-save  2105 s
-save  2325 s
-save  2467 s
-save  2505 s
-save  2630 s
-save  2699 s
-save  2809 s
-save  2857 s
-save  2901 s
-save  2916 s
-save  2975 s
-save  3017 s
-save  3196 s
-save  3216 s
-save  3217 s
-save  3247 s
-save  3266 s
-save  3274 s
-save  3287 s
-save  3351 s
-save  3378 s
-save  3382 s
-save  3398 s
-save  3418 s
-save  3429 s
-save  3440 s
-save  3450 s
-save  3478 s
-save  3490 s
-save  3497 s
-save  3551 s
-save  3553 s
-save  3622 s
-save  3638 s
-save  3725 s
-save  3758 s
-save  3777 s
-save  3834 s
-save  3910 s
-save  4039 s
-save  4088 s
-save  4163 s
-save  4260 s
-save  4307 s
-save  4388 s
-save  4434 s
-save  4491 s
-save  4546 s
-save  4572 s
-save  4592 s
-save  4623 s
-save  4649 s
-save  4742 s
-save  4764 s
-save  4827 s
-save  4850 s
-save  4884 s
-save  4916 s
-save  4926 s
-save  4941 s
-save  4950 s
-save  4958 s
-save  5053 s
-save  5062 s
-Watching for file changes with StatReloader
-[11/Nov/2020 16:25:14] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
-[11/Nov/2020 16:25:48] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
-[11/Nov/2020 16:26:04] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
-[11/Nov/2020 16:38:06] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
-[11/Nov/2020 16:38:13] "OPTIONS /api/django/summary/extract_time/ HTTP/1.0" 200 171
-Internal Server Error: /api/django/summary/extract/
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
-    serializer.save()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
-    self.instance = self.create(validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
-    instance = ModelClass._default_manager.create(**validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
-    force_update, using, update_fields,
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
-    using=using, raw=raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
-    cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
-    return super().execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
-    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-[11/Nov/2020 16:41:48] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
-[11/Nov/2020 16:43:10] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
-[11/Nov/2020 16:45:15] "POST /api/django/summary/extract_time/ HTTP/1.0" 200 43
-[11/Nov/2020 16:46:25] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
-Internal Server Error: /api/django/summary/extract/
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
-    serializer.save()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
-    self.instance = self.create(validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
-    instance = ModelClass._default_manager.create(**validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
-    force_update, using, update_fields,
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
-    using=using, raw=raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
-    cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
-    return super().execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
-    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-[11/Nov/2020 16:51:18] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
-Method Not Allowed: /api/django/summary/extract/
-[11/Nov/2020 16:52:44] "GET /api/django/summary/extract/ HTTP/1.0" 405 68
-[11/Nov/2020 16:54:06] "POST /api/django/summary/extract/ HTTP/1.0" 200 3
-Internal Server Error: /api/django/summary/extract/
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-MySQLdb._exceptions.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
-    serializer.save()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
-    self.instance = self.create(validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
-    instance = ModelClass._default_manager.create(**validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
-    force_update, using, update_fields,
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
-    using=using, raw=raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
-    cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
-    return super().execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
-    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-django.db.utils.ProgrammingError: (1146, "Table 'ssafy.summary_video' doesn't exist")
-[11/Nov/2020 16:55:40] "POST /api/django/summary/extract/ HTTP/1.0" 500 20263
-Internal Server Error: /api/django/summary/extract/
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-MySQLdb._exceptions.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`ssafy`.`summary_video`, CONSTRAINT `summary_video_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`))')
-
-The above exception was the direct cause of the following exception:
-
-Traceback (most recent call last):
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/exception.py", line 34, in inner
-    response = get_response(request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 115, in _get_response
-    response = self.process_exception_by_middleware(e, request)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/core/handlers/base.py", line 113, in _get_response
-    response = wrapped_callback(request, *callback_args, **callback_kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/decorators/csrf.py", line 54, in wrapped_view
-    return view_func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/views/generic/base.py", line 71, in view
-    return self.dispatch(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 509, in dispatch
-    response = self.handle_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 469, in handle_exception
-    self.raise_uncaught_exception(exc)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 480, in raise_uncaught_exception
-    raise exc
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/views.py", line 506, in dispatch
-    response = handler(request, *args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/decorators.py", line 50, in handler
-    return func(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 132, in extract_image
-    serializer.save()
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 205, in save
-    self.instance = self.create(validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/rest_framework/serializers.py", line 939, in create
-    instance = ModelClass._default_manager.create(**validated_data)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 422, in create
-    obj.save(force_insert=True, using=self.db)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 741, in save
-    force_update=force_update, update_fields=update_fields)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 779, in save_base
-    force_update, using, update_fields,
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 870, in _save_table
-    result = self._do_insert(cls._base_manager, using, fields, update_pk, raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/base.py", line 908, in _do_insert
-    using=using, raw=raw)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/manager.py", line 82, in manager_method
-    return getattr(self.get_queryset(), name)(*args, **kwargs)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/query.py", line 1186, in _insert
-    return query.get_compiler(using=using).execute_sql(return_id)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/models/sql/compiler.py", line 1332, in execute_sql
-    cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 99, in execute
-    return super().execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 67, in execute
-    return self._execute_with_wrappers(sql, params, many=False, executor=self._execute)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 76, in _execute_with_wrappers
-    return executor(sql, params, many, context)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/utils.py", line 89, in __exit__
-    raise dj_exc_value.with_traceback(traceback) from exc_value
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/utils.py", line 84, in _execute
-    return self.cursor.execute(sql, params)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/db/backends/mysql/base.py", line 71, in execute
-    return self.cursor.execute(query, args)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 206, in execute
-    res = self._query(query)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/cursors.py", line 319, in _query
-    db.query(q)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/MySQLdb/connections.py", line 259, in query
-    _mysql.connection.query(self, query)
-django.db.utils.IntegrityError: (1452, 'Cannot add or update a child row: a foreign key constraint fails (`ssafy`.`summary_video`, CONSTRAINT `summary_video_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `user` (`user_id`))')
-[11/Nov/2020 16:58:16] "POST /api/django/summary/extract/ HTTP/1.0" 500 20673
-/home/ubuntu/s03p31b108/backend/django/summary/urls.py changed, reloading.
-Performing system checks...
-
-System check identified no issues (0 silenced).
-
-You have 18 unapplied migration(s). Your project may not work properly until you apply the migrations for app(s): admin, auth, contenttypes, sessions, summary.
-Run 'python manage.py migrate' to apply them.
-November 11, 2020 - 09:35:48
-Django version 2.2, using settings 'API.settings'
-Starting development server at http://127.0.0.1:8000/
-Quit the server with CONTROL-C.
-save  134 s
-save  175 s
-save  188 s
-save  240 s
-save  264 s
-save  389 s
-save  532 s
-save  633 s
-save  736 s
-save  167 s
-save  239 s
-save  288 s
-save  321 s
-save  393 s
-save  453 s
-save  569 s
-save  650 s
-save  657 s
-save  134 s
-save  175 s
-save  188 s
-save  240 s
-save  264 s
-save  389 s
-save  532 s
-save  633 s
-save  736 s
-save  134 s
-save  175 s
-save  188 s
-save  240 s
-save  264 s
-save  389 s
-save  532 s
-save  633 s
-save  736 s
 Watching for file changes with StatReloader
 Performing system checks...
 
@@ -648,17 +249,6 @@ Traceback (most recent call last):
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 579, in run_with_reloader
     start_django(reloader, main_func, *args, **kwargs)
   File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 564, in start_django
-    reloader.run(django_main_thread)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 272, in run
-    get_resolver().urlconf_module
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
-    res = instance.__dict__[self.name] = self.func(instance)
-  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 564, in urlconf_module
-    return import_module(self.urlconf_name)
-  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
-    return _bootstrap._gcd_import(name[level:], package, level)
-  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
-  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
 Exception in thread Thread-1:
 Traceback (most recent call last):
   File "/usr/lib/python3.6/threading.py", line 916, in _bootstrap_inner
@@ -709,11 +299,22 @@ Traceback (most recent call last):
   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
   File "/home/ubuntu/s03p31b108/backend/django/summary/urls.py", line 3, in <module>
     from . import views
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 125
-    <<<<<<< HEAD
-     ^
-SyntaxError: invalid syntax
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 28
+    7ThkvfCKKQs        print(e)
+                               ^
+IndentationError: expected an indented block
 
+    reloader.run(django_main_thread)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/autoreload.py", line 272, in run
+    get_resolver().urlconf_module
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/utils/functional.py", line 80, in __get__
+    res = instance.__dict__[self.name] = self.func(instance)
+  File "/home/ubuntu/s03p31b108/backend/django/venv/lib/python3.6/site-packages/django/urls/resolvers.py", line 564, in urlconf_module
+    return import_module(self.urlconf_name)
+  File "/usr/lib/python3.6/importlib/__init__.py", line 126, in import_module
+    return _bootstrap._gcd_import(name[level:], package, level)
+  File "<frozen importlib._bootstrap>", line 994, in _gcd_import
+  File "<frozen importlib._bootstrap>", line 971, in _find_and_load
   File "<frozen importlib._bootstrap>", line 955, in _find_and_load_unlocked
   File "<frozen importlib._bootstrap>", line 665, in _load_unlocked
   File "<frozen importlib._bootstrap_external>", line 678, in exec_module
@@ -732,7 +333,169 @@ SyntaxError: invalid syntax
   File "<frozen importlib._bootstrap>", line 219, in _call_with_frames_removed
   File "/home/ubuntu/s03p31b108/backend/django/summary/urls.py", line 3, in <module>
     from . import views
-  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 125
-    <<<<<<< HEAD
-     ^
-SyntaxError: invalid syntax
+  File "/home/ubuntu/s03p31b108/backend/django/summary/views.py", line 28
+    7ThkvfCKKQs        print(e) 
+    ^
+IndentationError: expected an indented block
+Watching for file changes with StatReloader
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+[13/Nov/2020 23:45:52] "POST /api/django/summary/qna/ HTTP/1.0" 200 4626
+[13/Nov/2020 23:46:29] "OPTIONS /api/django/summary/qna/ HTTP/1.0" 200 0
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 13, 2020 - 23:44:10
+Django version 2.2, using settings 'API.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+Okay, from now on, maybe I’ll start a class on the subject of web services and cloud computing.
+Amazon Web Services can be said to be a representative enterprise or product or service that comes to mind when it comes to cloud computing.
+Like this, the representative company that comes to mind when we think of the mobile revolution is Apple, and the representative product is the iPhone. Therefore, it can be seen as such a product called web service.
+Why is our goal in our class to teach you how to use Amazon Web Services and at the same time help you understand what Cloud Computing is through Amazon Web Services?
+So, maybe we'll look at the specific product for web services later, and first, let's talk about what cloud computing is a little comprehensive, not very accurate.
+Now, if you say that you use a computer to do something, what do you need first?
+You need a computer. Yes, you will probably buy a computer. So the traditional way of using a computer is to install the computer you bought, plus the programs you need, to do the work on that computer and see the results.
+Then, the cloud computing motivation is different from other baseball tricks. What is different is that you use a computer installed on the cloud to perform actual tasks.
+Of course, it’s not a real cloud
+When it comes to emptying about something, the Internet is likened to a cloud.
+In other words, you still need your computer, but let's imagine it as an example and let's take a look at a return case.
+Now, let's consider to the extreme that there are about 1 to 8 volumes of data to be analyzed that you have to process, but the analysis is quite complex and it takes a year to process it with the computer you have. Now in that case, let's wait for a year. You can’t
+So in this case, you are connected to the Internet. Your computer transmits the data that you have to analyze through the Internet. This is a cloud computer. Then, somewhere in this world connected to this Internet, There may be computers. Well, hundreds of thousands of computers with hundreds of thousands of connected computers transmit data to those computers so that you have to process them and actually process them
+And it can be said that one of the examples of using this cloud computing is that the processed result is downloaded through the Internet and displayed on the screen of your computer.
+So uh, this word cloud computing is actually a buzzword for me to think about
+We call it Buzz Word, but the internet started in 1960, and since 1960, in fact, since the internet, people have already been so accustomed to using computers beyond the internet.
+Dende Now, the computing power has increased by eight, and the things that need to process data in accordance with his steps are multi-layered, and the buzzword of cloud computing in various contexts was born. No, it is the role of producers who use things like cloud computing. So, I hope you will not be deceived by these buzzwords. I would like to finish
+Anyway, the mental idea of ​​this cloud computing is the Internet
+Using a huge computer connected to the Internet is the central idea of ​​cloud computing.
+Now, this screen you're looking at is the screen you can see when you sign up for an Amazon web service and log in
+There are a lot of things written on it like sesame seeds, and each one here is 2 These products provided by Amazon
+So, each one of these products is actually a very thick product made up of very large computers, but because a company called Iyama Good is growing tremendously in two fields, so many products have become unique.
+However, not all products here existed from the beginning, and some of them were still in its infancy, so there are the most widely available services that act as the basis for the infrastructure of the species of the rest of the services, and some services emerged later in that era. It is a mixture of specialized products that reflect the trend of or can be used very conveniently and inexpensively in certain situations.
+So now the class is going to go on, uh, uh, first-made products or some underlying example that is used more broadly. We will look at how to use uh from those products, and in some special cases used in very special cases, very The things that can be used conveniently are now what I look at, and if I need it myself, I will write it and make an exam and raise it to the water pressure in this way.
+Now, the first thing you need to do is come to a site called aws dot Amazon.com, so you have to come to the homepage before this. Now, if you come here, what you need to do now is to register as a member.
+Uh, you need a credit card to sign up.
+Among the credit cards, you need a credit card that can be used abroad, such as Visa or Master.
+We'll be ready and we'll see how to sign up for this member next time. ['internet', 'amazon web', 'web services', 'web service', 'amazon', 'special cases', 'credit card', 'okay', 'representative enterprise', 'representative company']
+Now, this time, let’s look at how to use the representative product of Amazon web service called c2.
+Enter the console of aws and you will see a screen like this
+Now, if you look at the top of this screen, the first thing that says "Situ" appears.
+Clicking this will bring up a screen like this
+Now, these screens can always change, so don’t be fooled by the screen, and even if the content has changed, if you look for it well, there is some place. This c2 is now. I have this
+I see, that's a region, that is, we're going to use that service called c2, of that service, that is, where the service we want to use is
+In other words, if you designate it as Tokyo, from now on, you can think that all of the various things you give in this icon are all the commands that are made for Tokyo and the computers in Tokyo.
+This c2 is one of the earliest services among Amazon web services, and it is the most general service that can be used in other words, that is, a service that you may be most interested in. That is, this c2 is called c2. I think this product can be viewed as such a product that rents a whole independent computer to you.
+Now on this screen here, the first part you need to visit is the part that says to wash the instance right here.
+If you click on me, you will see a screen like this. Now, what is an instance, you can think of a computer as an instance. If you rent a computer at Oh right, if you rented 3 computers, you would have 3 You can think of it as using two instances
+So, if you click on the part that says to wash the instance, you will be taken to a page where you can see the status of the computers that you have been leased. Now, there is nothing. Because I didn’t
+Now, let's start with the lease quickly. But you'll get that out of your mind. Now, if you click on the part labeled Launch Instance, it means launch to launch, but it means to create an instance.
+Now from now on, I'm going to build a computer at a very fast speed
+The little guys have to take care of, you don't have to know what each of the staff means. Just click, click, and the computer will be created quickly. Now, I have to choose an operating system, but I will choose an operating system called Ubuntu rather than Windows.
+Now, the specifications of the computer are one cpu and one gigabyte of memory, select a computer that can be used free of charge for one year, and then go to the next screen. Now the computer will be created per month. Set the storage device to be installed on the computer as 8 GB and go to the next tag instance.
+Now, you have to specify the name of the computer. The name of the computer is called Web Server. Then, when we go to the next step, we specify the security-related settings on this computer. Put in until
+You won't understand this. Now, when you launch Review n Launch, the information I've specified so far comes out like this. When you finally check the information here and press the Launch button, you can specify the password to access the computer we created. This is the screen
+Now, if you type uh aws pwd here, that is not a password, but a file containing the password will be downloaded to your computer.
+This is the actual password
+Now, when you do a launch instance, the computer starts to be created as you can see
+If you're not an instance 5 launching means your instance is being created now
+If you click on the empty instance to sleep, it goes to the instance screen, ignore the requirements for web development below, and the part that says web server here is running the pack, which means that you are currently building a web server.
+So, "Pending" means that you wait and stand. Now that you are working, the part marked "Up l Up" is changed to "Up" and the color of the ball here changes to green. It’s all ready
+You know
+This way, as you can see in just one minute, a computer was created on top of the infrastructure of Amazon Web Services in Tokyo.
+With a click in one minute, I can remotely access this computer I created and control it remotely as if it were a computer on my desk.
+Then, you can install a web server to do web services, or you may have heard of something like that. You can install such a big data system to process huge data, or if you are a Mac user, you can run a Windows computer that requires ActiveX. If you have to use it, you can create a window and access it with the remote control of the window and do things like internet banking.
+It's a very amazing and weird system that can do these things
+So, I left it to your imagination, and what I showed you now is a computer-generated image.
+And the fact that the process of creating it took only 1 minute is something that you should be impressed with
+If you need a server computer yourself, you can buy it and put it all in your home or in some data center, and then install some operating system and it takes quite a while to do these things.
+Yes, there is a huge difference between those things and cloud computing like this.
+Is
+And you don't need this computer anymore
+Then, if you right-click here and click the term “Nate” in the area labeled Instance a state, it means stop.
+This computer that I have selected will be deleted.
+It says Shiting D'eon
+And in a little while, uh, the 02 over here will turn red and a message will appear like the ones below, saying that it has been terminated.
+Now what happens then
+At this very moment, the moment you delete this computer, no further billing occurs.
+If you buy a computer yourself, it can't be capital anymore until you sell it as used. It's hard to become an asset.
+But when you use cloud computing like this, you turn on your computer.
+If you don’t need a computer, you can turn it off. In other words, it is the moment when the computer becomes a consumable.
+Now, in this way, I showed you how to create the most important computer and delete the computer among the various functions in this c2 and ec2, which is the most important service in 2 Amazon web services, without practice. I want you to feel that it has such utility and efficiency is
+Next time, we will look at the process of creating a computer in detail./home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+[13/Nov/2020 23:46:32] "POST /api/django/summary/qna/ HTTP/1.0" 200 8492
+ ['tokyo', 'web server', 'amazon', 'web services', 'launch instance', 'windows', 'launch', 'representative product', 'web service', 'enter']
+Now, try aws search aws ec2 and price If you search in Google or the like, you can easily reach the page that shows the price policy on cc2 among the 2 Amazon web service pricing policies.
+Now, if you can’t speak Korean, you just choose Korean and work hard on Korean
+Now, if you look here, there is a story about the free tier
+This is a story about what conditions the free tier is free
+Yes, so if you go into the details of the color, 750 hours of using a microphone instance for 750 hours is about 720 when you multiply 24 hours a day by 30 days.
+Is that you can use a little more time than that 720
+It means that if you turn one on and use it all the time without turning it off, it will be free for one year. If you use multiple units, it will mean that the combined unit is free if it does not exceed 750 750 hours.
+Yes, then, then this part here means that you have to put a storage device on the computer that you rented. It doesn't act like an ad disk ssd, which means that the free space is up to 30 GB. However, if reading and writing data in the storage device costs 2 million won, it means that you are charged and charged, and I will skip the snapshot for Stories.
+Now, summing up all aws services and transmitting 15 units of data means that not only this c2, but also all services in aws, the amount of transmission that you transfer data to the Internet 2 exceeds 15 gigabytes. The month this occurred is such a story
+Now, if you go all the way down, the story of pricing policy comes out in earnest. This on-demand instance is a computer that you rent, and on-demand is a computer you rent whenever you need it.
+You can turn the computer on and off.
+Those instances that can be turned on and off are called the whole team &
+Then is there anything that doesn't? A slightly different form comes after
+So, if you look at the contents here, you should know how to view the system of on demand instance charges.
+Now here, if you choose Linux for each operating system, uh, the price policies are slightly different for each operating system. So here, if you want to use Linux, then you can choose Linux.
+Or, if you want to use Windows, then if you install and choose Windows, the price policies will come out. So, if you go down the pit, it means a region, which means that it is a region where the theory is
+Vision if you have a computer on the dock table
+Then, if you select Asia Pacific Tokyo, the price of the corresponding instances of that Tokyo will appear below
+Let’s zoom out the screen
+It comes out like this
+So, if you compare Linux and Windows installed here like this, let's take a look at this one together. When you write Minwook, what you are seeing is the Linux area. If you click this, the price will increase further.
+And if you have a Windows sql server installed, you can see that the price comes in.
+Yes It will change a lot Yes And 5 Anyway, so if you look at it with Linux selected, as you can see, in the case of the Earl Linux micro instance, it says that as you can see, it is charged at 0.0 2 per hour.
+So, if we calculate 0.0 itala, 0.0 is the cause of 20 as you can see if Korea always uses the exchange rate of 1000 won. That is, this cu of 1 pu is not uh 1 gig, not sugar.
+Now, the memory is 1 GB, but it only takes about 10 won to ligature the computer.
+Wrap me up
+Now, multiplying everything here means 24 hours a day, so if you do 24, it means that the amount you use per day is 480 won, and you will be charged 14,400 won per month.
+At that time, it feels like a little price, but if you say that you use it for a month, it will be 14,000 won. That's not it. If you only spend an hour, you only need to pay 20 won. So, if you use it for a long time, the price competitiveness is low. It starts to lose, but if you use it for a while and turn it off, the price price energy is much higher.
+So if you say that you are using a computer for development, the performance is not very good when you use the I-Oh here, but it may be enough when you use it for development.
+That's because the price is 0.01, so if you divide by 2 here, you can use a computer like this if you pay 7,200 won a month as you can see.
+In particular, there is a function that allows you to temporarily stop the computer rather than delete it.
+If you stop Lee, you won't be charged, so it's good to know that you can save even more money by turning on your computer only when you need it and pausing the computer when you don't need it.
+So if you look down at the computer here, there is a huge computer here
+Well, 36 CPUs and 244 gigabytes of memory. Yes, and there are 24 escaping ah hard disks.
+It's a great computer, let's see this computer
+How much is it per hour? no
+So that cloud computing can be turned on when you need it and turned off as if you don't need it, so you have to process some kind of data, but because you want to process that data, uh, your own computer takes too much time.
+Now, in such a case, you turn on a computer that has very good computing power to process it and use it for about a day. Then how beautiful is it?
+24 Then it's 11,000,000, 160,000 won
+If you think about whether you are going to pay 160,000 won to finish the day or do it for a month using a computer you already have, this could be a lot more price-competitive.
+In other words, you can choose clearly according to your situation.
+Now, going down a bit, there is a thing called the number of reserved instances.
+In other words, there is a concept of turning on d&d instances when they are needed and turning them off when they are not needed, and there is another concept called Reserved Instances. Now, what is a Reserved Instance? You can say that you are purchasing an active product.
+In other words, the characteristic of ohm d&d, that is, turn it on when needed and turn it off when it is not needed, does not change. However, it is much cheaper in some cases if you buy a currency ticket and apply the discount coupon when turning it on or off. The concept of reserved instances is that you can use the service easily.
+For example, you run a server and there is no reason to turn it off for 365 days a year.
+The server is like that. Now, if you buy a Reserved Instance, you can save more. According to Amazon here, you can also use the instance at the example price when the strategy is up to 75%. Of course, this price promotion rate varies from 20% to 75%. All because there is
+Not 75%
+Also, if you can buy four Hualinger for a year, but you can do 3 years of horning for 3 years at a time, then you can get more benefits.
+So, if you look at this here, as you can see, if you use the Nano instance as an on-demand instance, as you can see, it is priced at $0.01 per hour. As a result, if you use the reserved instance with a contract for one year Well, there are a lot of differences here, and you can see the price drop after you've studied it up and down to 0.00 sieves
+Yes, so you can save 25%
+If you buy a two-story book for 3 years, it is a figurative expression. If you buy a hooling gun, if you buy a reservation for Eastern, you can use an instance of $0.01 for $0.005.
+That means that you can use it 50% cheaper.
+Now, you have to think carefully about this
+In a way, there's a bit of a gamble. So I signed a contract for 3 or 3 years, but I didn't need it after a year. Then it's flying again. So this is a part that you have to judge carefully
+There is a very interesting and very unusual instance called the Terror Mask Spot Instance.
+Spot Instances means that you can turn on your computer and get it whenever you need it, which means that you already have a lot of computers on Amazon Web Services.
+Because when you need it, when you need it
+What that means is that there are always computers to play, so maybe in the past, when there are more computers to play, the price is cheaper if you buy computers in the form of hey spot instances.
+And if you don't have a computer to play with, the price of this spot instance can be higher than that of regular instances.
+Yes, that's why if you use Spot Instances, you can use Instances at a very low price. Now, this is something we'll deal with separately, so I won't go into it in depth here.
+In other words, you only need to know that the price of an instance has a variable price policy like the stock price is that it is used as a sparist.
+Now, in this way, we have talked about the types of instances so far and what price each instance will charge.
+This pricing policy Dota 2 and some specifications of the computer I have roughly explained to you now, but if you look closely, each one is endlessly complicated.
+However, I also explained that because there are as many as I know, I did not explain it in that range, and you don't have to try to be too meticulous from the beginning.
+Anyway, when the situation arises, I have no choice but to study it deeply.
+Because I have to save money, I will organize it to this level and talk about the rest next time./home/ubuntu/s03p31b108/backend/django/speech2text.py:14: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+[13/Nov/2020 23:47:58] "POST /api/django/summary/qna/ HTTP/1.0" 200 7081

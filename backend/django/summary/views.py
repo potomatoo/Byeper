@@ -11,9 +11,7 @@ import cv2, os, io, re
 import numpy as np
 import pafy, json
 
-from Image2text import image_processing
-from textblob import TextBlob
-os.environ['GOOGLE_APPLICATION_CREDENTIALS'] = "/home/ubuntu/pk.json"
+from speech2text import make_answer
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -27,7 +25,6 @@ def imwrite(filename, img, params=None):
         else: 
             return False 
     except Exception as e: 
-        print(e) 
         return False
 
 def save(frame, image, title):
@@ -78,7 +75,7 @@ def extract_from_videoid(id):
 def extract_from_youtube_url(youtube_url, n):
     global save_frames
     if n == 8: 
-        return False
+        return 0
     try:
         video = pafy.new(youtube_url)
     except:
@@ -103,14 +100,16 @@ def extract_from_youtube_url(youtube_url, n):
     save_frames = [[0, 99999]]
     divide_and_conquer(vidcap, 0, end, start_image, end_image)
     
-    info_dict = {}
+    info_dict = []
     for i, save_frame in enumerate(save_frames):
         frame, diff = save_frame
         vidcap.set(cv2.CAP_PROP_POS_FRAMES, frame)
         _, image = vidcap.read()
         save(i, image, id)
-        info_dict[int(i)] = {'time': int(frame // 30), 
-                        'diff': int(diff)}
+        info_dict.append({
+                        'address': '/file/{}/{}.jpg'.format(id, i),
+                        'time': int(frame // 30), 
+                        'diff': int(diff)})
     with open("/var/file/{}/{}.json".format(id, id), "w") as json_file:
         json.dump(info_dict, json_file)
     return len(save_frames)
@@ -127,17 +126,18 @@ def extract_image(request):
         # data['video_max_img'] = video_max_img
         # serializer = VideoSerializer(data=data)
         # if serializer.is_valid(raise_exception=True):
-        #     serializer.save()
+        #    serializer.save()
         video_ids = request.data
         for video_id in video_ids:
             video = Video.objects.get(video_id=video_id)
-            video_max_img = extract_from_videoid(data['video_id'])
+            video_max_img = extract_from_videoid(video_id)
             video.video_max_img = video_max_img
             video.save()
         return Response(200)
 
-@api_view(['POST'])
+@api_view(['POST', 'OPTIONS'])
 def extract_time(request):
+
     id = request.data['id']
     url = 'https://www.youtube.com/watch?v=' + id
     time = request.data['time']
@@ -159,30 +159,24 @@ def extract_time(request):
     return Response("/file/{}/{}.jpg".format(id, id + str(frame)))
 
 @api_view(['POST'])
-def problem_create_list(request, video_pk):
-    video = get_object_or_404(Video, pk=video_pk)
+def problem_create_list(request):
     if request.method == 'POST':
-        path = os.path.join('/var/file', request.data['video_id'])
-        result = image_processing(path)  # image --> text
+        video_pk = request.data['video_id']
 
-        origin = TextBlob(result)
-        eng = origin.translate('ko', 'en')
-        
-        answers = eng.noun_phrases
+        path = os.path.join('/var/file', video_pk)
+        is_json = os.path.join(path, video_pk+'.json')
+        if not os.path.isdir(path) or not os.path.isfile(is_json):
+            return -1  # --> video dir check
 
-        answer_list = []
-        for answers in set(eng.noun_phrases):
-            for answer in answers.split():
-                if len(answer) < 3: break
-            else:
-                answer_list.append(answers)
-
+        sentence, answers = make_answer(video_pk)
+        sentence = str(sentence)
         QnA = []
-        for sentence in eng.split('\n'):
-            for answer in answer_list:
-                if answer in sentence:
-                    problem = sentence.replace(answer, '______')
-                    DATA = {'problem':problem, 'answer': answer, 'video':video.id, 'origin':sentence}
+        for sen in sentence.split('\n'):
+            for answer in answers:
+                if len(sen.split()) >= 4 and answer in sen:
+                    problem = sen.replace(answer, '______')
+                    DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sen}
                     QnA.append(DATA)
 
-        return Response({'data':QnA})
+
+        return Response({ 'data':QnA })

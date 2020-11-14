@@ -2,7 +2,12 @@
   <div>
     <v-row style="margin: 10px 10%" cols="12" sm="6" offset-sm="3">
       <h2 class="mt-12">나의 강좌</h2>
-      <vue-slick-carousel v-if="Lectures" class="slick mt-12" v-bind="settings">
+      <v-btn @click="$router.push({name: 'CreateLecture'})" class="ml-auto mt-12">강의 만들기</v-btn>
+      <vue-slick-carousel
+        v-if="Lectures.length"
+        class="slick mt-12"
+        v-bind="settings"
+      >
         <div v-for="lecture in Lectures" :key="lecture.playlistId">
           <img
             class="Lecture-img"
@@ -26,7 +31,11 @@
             v-for="(Lecture, index) in SelectedPlayLists"
             :key="index"
           >
-            <v-list-item v-for="(video, idx) in Lecture.videos" :key="idx">
+            <v-list-item
+              @click="getProblems(video)"
+              v-for="(video, idx) in Lecture.videos"
+              :key="idx"
+            >
               <v-list-item-avatar tile>
                 <v-img :src="video.video_img"></v-img>
               </v-list-item-avatar>
@@ -49,6 +58,40 @@
         </v-card>
       </v-col>
     </v-row>
+    <v-dialog v-model="problemPopup">
+      <v-row justify="center">
+        <v-col cols="4">
+          <v-card height="70vh" style="overflow-y: scroll">
+            <h1>추천 문제</h1>
+            <v-list v-for="(problem, idx) in problemCandidate" :key="idx">
+              <v-list-item @click="selectProblem(problem)">
+                <v-list-item-content>
+                  <v-list-item-title>{{ problem.problem }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+        </v-col>
+        <v-col cols="5">
+          <v-card class="mb-5" height="45vh">
+            <v-textarea outlined label="문제" v-model="problem"></v-textarea>
+            <v-textarea outlined label="정답" v-model="answer"></v-textarea>
+            <v-btn class="ml-3" style="width: 37vw" @click="addProblem()">문제 추가</v-btn>
+          </v-card>
+          <v-card height="25vh" style="overflow-y: scroll">
+            <v-list v-for="(problem, idx) in problemList" :key="idx">
+              <v-list-item>
+                <v-list-item-content>
+                  <v-list-item-title><strong>{{idx+1}}</strong>  {{ problem.problemQuestion }}</v-list-item-title>
+                </v-list-item-content>
+              </v-list-item>
+            </v-list>
+          </v-card>
+            <v-btn @click="submitProblems" class="mr-5">문제 생성</v-btn>
+            <v-btn @click="clearProblem">취소</v-btn>
+        </v-col>
+      </v-row>
+    </v-dialog>
   </div>
 </template>
 
@@ -152,6 +195,15 @@ export default class InstructorDashboard extends Vue {
       }
     ]
   };
+  // 문제 제출 관련 변수들
+  problemPopup = false;
+  problemCandidate = [
+  ];
+  problemList = [];
+  // 문제
+  selectedproblem = "";
+  problem = "";
+  answer = "";
 
   async getTotalLecture() {
     const Lectures = await this.getMyPlayList();
@@ -180,13 +232,14 @@ export default class InstructorDashboard extends Vue {
     getLecture(Lectures).then(res => {
       this.LecturePlayLists = res;
       this.SelectedPlayLists.push(this.LecturePlayLists[0]);
-      console.log("초기상태", this.SelectedPlayLists);
     });
   }
 
   async getMyPlayList() {
     try {
-      const myLectures = await Axios.instance.get("/api/public/playlist/user");
+      const myLectures = await Axios.instance.get(
+        "/api/public/playlist/management"
+      );
       if (myLectures) this.Lectures = myLectures.data.data;
       return myLectures.data.data;
     } catch (e) {
@@ -198,7 +251,70 @@ export default class InstructorDashboard extends Vue {
     this.SelectedPlayLists = this.LecturePlayLists.filter(
       playlist => playlist.playlistId === playlistId
     );
-    console.log("나중상태", this.SelectedPlayLists);
+  }
+
+  async getProblems(video) {
+    console.log(video);
+    this.problemPopup = true;
+    try {
+      const res = await Axios.instanceDjango.post("api/django/summary/qna/", {
+            video_id : video.video_id
+          }, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      });
+      if(res.data.data) this.problemCandidate = res.data.data;
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  selectProblem(problem) {
+    this.selectedproblem = problem;
+    console.log(this.selectedproblem);
+    this.problem = problem.problem;
+    this.answer = problem.answer;
+  }
+
+  addProblem() {
+    if(this.problem && this.answer) {
+      this.problemList.push({
+        problemCharfield : this.answer,
+        problemId : 0,
+        problemOrigin: this.selectedproblem.origin,
+        problemQuestion : this.problem,
+        videoId: this.selectedproblem.video
+      })
+    }
+    this.problem = "";
+    this.answer = "";
+    this.selectedproblem = "";
+  }
+
+  clearProblem() {
+    this.problem = "";
+    this.answer = "";
+    this.selectedproblem = "";
+    this.problemCandidate = null;
+    this.problemPopup = false;
+  }
+
+  async submitProblems(){
+    try {
+      const res = await Axios.instance.post(
+          "/api/public/problem/save",
+          this.problemList,
+          {
+            headers: {
+              "Content-Type" : "application/json"
+            }
+          }
+      )
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
   }
 
   async created() {
@@ -208,6 +324,7 @@ export default class InstructorDashboard extends Vue {
 </script>
 
 <style scoped>
+
 .slick {
   width: 100%;
   height: 165px;

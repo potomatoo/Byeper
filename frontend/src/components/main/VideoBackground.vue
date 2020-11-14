@@ -49,7 +49,7 @@ export default class IntroMain extends Vue {
   padding: 0 100px;
   display: flex;
   min-height: 500px;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
 }
 .banner:before {
@@ -98,6 +98,7 @@ export default class IntroMain extends Vue {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
+  border-radius: 10px;
 }
 .banner .videoBx {
   position: relative;

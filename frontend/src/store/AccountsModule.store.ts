@@ -31,6 +31,8 @@ const module: Module<AccountsModule, RootState> = {
     REMOVE_TOKEN(state) {
       state.token = null;
       window.sessionStorage.removeItem("jwt-token");
+      Axios.instance.defaults.headers.common["Authorization"] = null;
+      Axios.instanceDjango.defaults.headers.common["Authorization"] = null;
     },
     TOGGLE_SIDEBAR(state) {
       state.isSidebar = !state.isSidebar;
@@ -57,7 +59,35 @@ const module: Module<AccountsModule, RootState> = {
     LOGOUT({ commit }) {
       Axios.instance
         .get("/api/public/logout")
-        .then(res => console.log(res))
+        .then(res => commit("REMOVE_TOKEN"))
+        .catch(err => console.error(err));
+    },
+    FETCH_USER_INFO({ commit }) {
+      Axios.instance
+        .get("/api/private/user/detail")
+        .then(({ data }) => commit("SET_USER_INFO", data.data))
+        .catch(err => console.error(err));
+    },
+    CHANGE_USER_NAME({ dispatch }, userName) {
+      Axios.instance
+        .put("/api/private/user/changeusername", { userName })
+        .then(({ data }) => {
+          if (data.status) {
+            dispatch("FETCH_USER_INFO");
+            alert("수정이 완료되었습니다.");
+          }
+        })
+        .catch(err => console.error(err));
+    },
+    REGISTER_TEACHER({ dispatch }) {
+      Axios.instance
+        .put("/api/private/user/registteacher")
+        .then(({ data }) => {
+          if (data.status) {
+            dispatch("FETCH_USER_INFO");
+            alert("강사등록이 완료되었습니다.");
+          }
+        })
         .catch(err => console.error(err));
     }
   }

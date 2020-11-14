@@ -76,7 +76,7 @@
             >
               다음 단계로
             </v-btn>
-            <v-btn class="mt-12">
+            <v-btn @click="$router.push({name : 'InstructorDashboard' })" class="mt-12">
               취소하기
             </v-btn>
           </v-card>
@@ -234,8 +234,8 @@
                       다음 단계로
                     </v-btn>
 
-                    <v-btn text>
-                      취소하기
+                    <v-btn @click="CreateLectureStep = 1">
+                      이전 단계로
                     </v-btn>
                   </v-card>
                 </v-col>
@@ -342,13 +342,13 @@
                 <v-checkbox
                   class="mt-0"
                   label="내용을 충분히 이해하였으며, 이에 동의합니다."
-                  value="1"
+                  v-model="CopyrightAgreement"
                 ></v-checkbox>
                 <v-btn color="primary" @click="createLecture">
                   강의 생성
                 </v-btn>
 
-                <v-btn text>
+                <v-btn @click="CreateLectureStep = 2">
                   이전 단계로
                 </v-btn>
               </v-card>
@@ -434,6 +434,7 @@ export default class CreateLecture extends Vue {
   LectureThumbnailURL = null;
   LectureThumbnailLink = null;
   LectureTrackId = null;
+  CopyrightAgreement = false;
 
   onInsert(event) {
     this.SelectedVideos.splice(event.index, 0, event.data);
@@ -511,7 +512,7 @@ export default class CreateLecture extends Vue {
           headers: {
             "Content-Type": "application/json",
             Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjA2MDIyNzU2fQ.V3tcA-nOA_9Zjat5NtwBDekY07WXGUw5TMx25EdOVxTOGyc1oXz7sGeQlo3b97uAk5LGI614lJlM57vxbzQ4xQ"
+              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjA2MTE2MjUxfQ.rPtgy9ukKU1sC9jC37t7hTTyVsAxnyX7Wt1Ei_PIJdYvjBphHN8S9MfWIH6g-5WRI9RQkhRlw13GfJ9UkfeZ4w"
           }
         }
       );
@@ -533,8 +534,6 @@ export default class CreateLecture extends Vue {
           },
           headers: {
             "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJ0ZXN0QHRlc3QuY29tIiwiZXhwIjoxNjA1OTYzNjY0fQ.6FNwNeQ0AoGpxU1hvJzlc3joh9XYPdWHKfEH4SH7NA3sd_-5Dfhyt6BkRj2DumlZep48R-2hPBTdXBrlSq2AUw"
           }
         }
       );
@@ -564,10 +563,16 @@ export default class CreateLecture extends Vue {
   }
 
   async createLecture() {
-    await this.thumbnail();
-    await this.createPlayList();
-    await this.addVideo();
-    await this.djangoVideoAnalysis();
+    if(!this.CopyrightAgreement) {
+      alert("저작권 활용 동의가 필요합니다.")
+    } else {
+      await this.thumbnail();
+      await this.createPlayList();
+      await this.addVideo();
+      await this.djangoVideoAnalysis();
+      alert("강의가 생성되었습니다");
+      await this.$router.push({name: "InstructorDashboard"});
+    }
   }
   created() {
     this.getVideoList();

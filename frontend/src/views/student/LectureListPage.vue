@@ -1,31 +1,34 @@
 <template>
-  <div
-    class="lecture-list-page mx-auto mt-10"
-    style="font-family: 'Do Hyeon', sans-serif !important;"
-  >
-    <div
-      class="lecture-title text-h3 mb-10 "
-      style="text-align: center; font-family: 'Do Hyeon', sans-serif !important;"
-    >
-      {{ this.$route.params.courseName }}
+  <div class="lecture-list-page mx-auto mt-10">
+    <div class="lecture-title text-h3 mb-10 ">
+      {{ $route.params.playlistTitle }}
     </div>
-    <statistics-by-cource />
-    <play-list-videos />
+    <statistics-by-course />
+    <lecture-list-by-course />
   </div>
 </template>
 
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
-import StatisticsByCource from "@/components/dashboard/StatisticsByCource.vue";
-import PlayListVideos from "@/components/main/PlayListVideos.vue";
+import StatisticsByCourse from "@/components/dashboard/StatisticsByCourse.vue";
+import LectureListByCourse from "@/components/lecture/LectureListByCourse.vue";
+import { namespace } from "vuex-class";
+
+const LecturesModule = namespace("LecturesModule");
 
 @Component({
   components: {
-    StatisticsByCource,
-    PlayListVideos
+    StatisticsByCourse,
+    LectureListByCourse
   }
 })
-export default class LectureListPage extends Vue {}
+export default class LectureListPage extends Vue {
+  @LecturesModule.Action FETCH_LECTURE_BY_COURSE: any;
+
+  created() {
+    this.FETCH_LECTURE_BY_COURSE(this.$route.params.playlistId);
+  }
+}
 </script>
 
 <style>
@@ -41,7 +44,7 @@ export default class LectureListPage extends Vue {}
   width: 100%;
   height: 300px;
   transform-origin: right;
-  animation: revealText 3s ease-in-out forwards;
+  animation: revealText 2s ease-in-out forwards;
 }
 @keyframes revealText {
   0% {

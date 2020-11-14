@@ -266,19 +266,29 @@ export default class TextEditor extends Vue {
             – mom
           </blockquote>
         `,
-    autoFocus: true
+    autoFocus: true,
+    editorProps: {
+      handleClick: (view, pos, event) => {
+        if (event.toElement.nodeName === "IMG") {
+          this.startVideo(Number(event.toElement.alt));
+        }
+      }
+    }
   });
   beforeDestroy() {
     this.editor.destroy();
   }
 
-  async addCapture(imgUrl) {
+  async addCapture({ url, time }) {
     this.editor.setContent(
-      `${this.editor.getHTML()}<p><img draggable="true" contenteditable="false" src="${imgUrl}"><br></p>`
+      `${this.editor.getHTML()}<img draggable="true" contenteditable="false" src="http://k3b108.p.ssafy.io${url}" alt="${time}"><br>`
     );
     this.editor.focus();
     const focused = await document.querySelector("#focus-position");
     this.$vuetify.goTo(focused.offsetTop);
+  }
+  startVideo(time) {
+    this.player.seekTo(time);
   }
 }
 </script>

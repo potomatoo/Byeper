@@ -44,11 +44,15 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
 import TextEditor from "@/components/lecture/TextEditor.vue";
 import Quiz from "@/components/lecture/Quiz.vue";
 import Curriculum from "@/components/lecture/Curriculum.vue";
 import LectureVideo from "@/components/lecture/LectureVideo.vue";
+import { namespace } from "vuex-class";
+import { Lecture } from "../../store/Lectures.interface";
+
+const LecturesModule = namespace("LecturesModule");
 
 @Component({
   components: {
@@ -59,10 +63,14 @@ import LectureVideo from "@/components/lecture/LectureVideo.vue";
   }
 })
 export default class LecturePage extends Vue {
+  @LecturesModule.State lecture!: Lecture;
+  @LecturesModule.Action FETCH_ALL_CAPTURE_IMAGES: any;
+  @LecturesModule.Action FETCH_LECTURE_DETAIL: any;
+
   player: { seekTo: (n: number) => {} } | null = null;
   start = 0;
 
-  videoURL = "s9FHdj6jd_U";
+  videoURL = "6AnnvVrth4w";
 
   startVideo() {
     this.start += 10;
@@ -90,8 +98,20 @@ export default class LecturePage extends Vue {
     video?.addEventListener("mousewheel", this.scroll);
   }
 
+  @Watch("lecture")
+  fetchAllCapture() {
+    if (this.lecture) {
+      console.log("hihi", this.lecture.video_id);
+      // this.FETCH_ALL_CAPTURE_IMAGES(this.videoURL);
+      this.FETCH_ALL_CAPTURE_IMAGES(this.lecture.video_id);
+    }
+  }
+
   mounted() {
     this.preventScroll();
+  }
+  created() {
+    this.FETCH_LECTURE_DETAIL(this.$route.params.playId);
   }
 }
 </script>

@@ -36,7 +36,7 @@
       app
       permanent
       v-if="isSidebar"
-      style="margin-top: 64px; width: 200px"
+      style="margin-top: 64px;"
     >
       <v-list nav dense>
         <v-list-item-group
@@ -57,19 +57,59 @@
             <v-list-item-title>학습 관리</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item v-if="user && user.userType !== 1" @click="goMyLecture">
             <v-list-item-icon>
               <v-icon>mdi-fire</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>인기</v-list-item-title>
+            <v-list-item-title>내 강의 관리</v-list-item-title>
           </v-list-item>
 
-          <v-list-item>
+          <v-list-item
+            v-if="user && user.userType !== 1"
+            @click="goCreateLecture"
+          >
             <v-list-item-icon>
               <v-icon>mdi-play-box-multiple</v-icon>
             </v-list-item-icon>
-            <v-list-item-title>구독</v-list-item-title>
+            <v-list-item-title>새 강의 추가</v-list-item-title>
           </v-list-item>
+
+          <v-dialog v-model="dialog" width="500">
+            <template v-slot:activator="{ on, attrs }">
+              <v-list-item
+                v-if="user && user.userType === 1"
+                v-bind="attrs"
+                v-on="on"
+              >
+                <v-list-item-icon>
+                  <v-icon>mdi-account-plus</v-icon>
+                </v-list-item-icon>
+                <v-list-item-title>강사 등록</v-list-item-title>
+              </v-list-item>
+            </template>
+
+            <v-card>
+              <v-card-title class="headline">
+                강사등록
+              </v-card-title>
+
+              <v-card-text>
+                강사로 등록하면 자신의 유튜브 동영상 강의를 등록 가능합니다.<br />
+                자신의 동영상 강의를 Byeper 기능을 활용하여 유저가 학습 효율을
+                최대화 할 수 있습니다. <br />지금 바로 강사로 등록하려면 확인
+                버튼을 누르세요!
+              </v-card-text>
+
+              <v-divider></v-divider>
+
+              <v-card-actions>
+                <v-spacer></v-spacer>
+                <v-btn color="primary" text @click="registerTeacher">
+                  확인
+                </v-btn>
+              </v-card-actions>
+            </v-card>
+          </v-dialog>
         </v-list-item-group>
       </v-list>
     </v-navigation-drawer>
@@ -79,15 +119,21 @@
 <script lang="ts">
 import { Component, Vue } from "vue-property-decorator";
 import { namespace } from "vuex-class";
+import { User } from "../../store/Accounts.interface";
+
 const AccountsModule = namespace("AccountsModule");
 
 @Component
 export default class AppNavbar extends Vue {
   @AccountsModule.State isSidebar!: boolean;
+  @AccountsModule.State user!: User;
   @AccountsModule.Getter isLoggedIn!: boolean;
   @AccountsModule.Action GOOGLE_LOGIN: any;
+  @AccountsModule.Action REGISTER_TEACHER: any;
   @AccountsModule.Mutation REMOVE_TOKEN: any;
   @AccountsModule.Mutation TOGGLE_SIDEBAR: any;
+
+  dialog = false;
 
   group = null;
   inputText = null;
@@ -102,6 +148,19 @@ export default class AppNavbar extends Vue {
       this.$router.push({ name: "Home" });
     }
   }
+
+  goCreateLecture() {
+    if (this.isLoggedIn) {
+      this.$router.push({ name: "CreateLecture" });
+    }
+  }
+
+  goMyLecturer() {
+    if (this.isLoggedIn) {
+      this.$router.push({ name: "instructor" });
+    }
+  }
+
   goStudent() {
     if (this.isLoggedIn) {
       this.$router.push({ name: "StudentPage" });
@@ -115,6 +174,12 @@ export default class AppNavbar extends Vue {
       }
     }
   }
+
+  async registerTeacher() {
+    await this.REGISTER_TEACHER();
+    this.dialog = false;
+  }
+
   logout() {
     // this.LOGOUT();
     this.REMOVE_TOKEN();

@@ -21,7 +21,12 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card dark flat class="mb-12" style="margin: 10px 20%">
+          <v-card
+            dark
+            flat
+            class="mb-12"
+            style="margin: 10px 20%; padding: 20px"
+          >
             <h3 class="mb-0">강의 제목</h3>
             <v-text-field
               class="classdesc mb-0"
@@ -127,9 +132,7 @@
                   <!--                    ><v-icon left>mdi-plus-box-outline</v-icon>섹션-->
                   <!--                    추가하기</v-btn-->
                   <!--                  >-->
-                  <v-card
-                    style="height: 65vh; overflow-y: scroll; overflow-x: hidden"
-                  >
+                  <v-card style="height: 65vh;  overflow-x: hidden">
                     <!--                    <v-card v-for="(Section, idx) in SelectedVideos" :key="idx">-->
                     <!--                      <v-row align="center">-->
                     <!--                        <v-col cols="7">-->
@@ -194,7 +197,7 @@
                       class="list"
                       @insert="onInsert"
                       @reorder="$event.apply(SelectedVideos)"
-                      style="height: 50vh; overflow-x: hidden; overflow-y: hidden"
+                      style="height: 50vh; overflow-x: hidden; overflow-y: scroll"
                     >
                       <template v-slot:item="{ item }">
                         <drag class="item" :key="item.videoId">
@@ -270,7 +273,7 @@
               <!--              </v-card>-->
               <v-card
                 class="mb-12"
-                style="max-height: 80vh; overflow-y: scroll"
+                style="max-height: 80vh; overflow-y: scroll; padding: 20px"
               >
                 <h2>강의 목록</h2>
                 <v-list-item
@@ -294,25 +297,19 @@
               </v-card>
             </v-col>
             <v-col cols="6">
-              <v-card>
+              <v-card style="padding: 20px">
                 <h2 class="mb-5">커버 이미지</h2>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col
+                    cols="6"
+                    style="align-self: center; justify-self: center"
+                  >
                     <v-img
                       v-if="LectureThumbnailURL"
-                      class="ml-15"
-                      width="320"
-                      height="200"
                       :src="LectureThumbnailURL"
                       alt="강의 썸네일 이미지"
                     ></v-img>
-                    <v-img
-                      v-else
-                      class="ml-15"
-                      width="320"
-                      height="200"
-                      src="@/assets/jun.png"
-                    ></v-img>
+                    <v-img v-else src="@/assets/Byeper.png"></v-img>
                   </v-col>
                   <v-col cols="6">
                     <h5 class="mt-10 mb-3">강의를 대표하는 이미지</h5>

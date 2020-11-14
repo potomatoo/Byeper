@@ -33,7 +33,8 @@ export default class App extends Vue {
     this.FALSE_SIDEBAR();
   }
 
-  created() {
+  @Watch("$route", { immediate: true })
+  fetchUserInfo() {
     if (this.isLoggedIn && !this.user) {
       this.FETCH_USER_INFO();
     }

@@ -1,6 +1,6 @@
 <template>
   <div class="lecture-list-page mx-auto mt-10">
-    <div class="lecture-title text-h3 mb-10 ">
+    <div class="lecture-title text-h3 mb-10" style="text-align: center">
       {{ $route.params.playlistTitle }}
     </div>
     <statistics-by-course />
@@ -35,6 +35,7 @@ export default class LectureListPage extends Vue {
 .lecture-list-page {
   width: 80%;
 }
+
 .lecture-title:before {
   content: "";
   position: absolute;

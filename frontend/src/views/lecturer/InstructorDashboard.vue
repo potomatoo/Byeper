@@ -2,7 +2,11 @@
   <div>
     <v-row style="margin: 10px 10%" cols="12" sm="6" offset-sm="3">
       <h2 class="mt-12">나의 강좌</h2>
-      <v-btn @click="$router.push({name: 'CreateLecture'})" class="ml-auto mt-12">강의 만들기</v-btn>
+      <v-btn
+        @click="$router.push({ name: 'CreateLecture' })"
+        class="ml-auto mt-12"
+        >강의 만들기</v-btn
+      >
       <vue-slick-carousel
         v-if="Lectures.length"
         class="slick mt-12"
@@ -76,19 +80,24 @@
           <v-card class="mb-5" height="45vh">
             <v-textarea outlined label="문제" v-model="problem"></v-textarea>
             <v-textarea outlined label="정답" v-model="answer"></v-textarea>
-            <v-btn class="ml-3" style="width: 37vw" @click="addProblem()">문제 추가</v-btn>
+            <v-btn class="ml-3" style="width: 37vw" @click="addProblem()"
+              >문제 추가</v-btn
+            >
           </v-card>
           <v-card height="25vh" style="overflow-y: scroll">
             <v-list v-for="(problem, idx) in problemList" :key="idx">
               <v-list-item>
                 <v-list-item-content>
-                  <v-list-item-title><strong>{{idx+1}}</strong>  {{ problem.problemQuestion }}</v-list-item-title>
+                  <v-list-item-title
+                    ><strong>{{ idx + 1 }}</strong>
+                    {{ problem.problemQuestion }}</v-list-item-title
+                  >
                 </v-list-item-content>
               </v-list-item>
             </v-list>
           </v-card>
-            <v-btn @click="submitProblems" class="mr-5">문제 생성</v-btn>
-            <v-btn @click="clearProblem">취소</v-btn>
+          <v-btn @click="submitProblems" class="mr-5">문제 생성</v-btn>
+          <v-btn @click="clearProblem">취소</v-btn>
         </v-col>
       </v-row>
     </v-dialog>
@@ -197,8 +206,7 @@ export default class InstructorDashboard extends Vue {
   };
   // 문제 제출 관련 변수들
   problemPopup = false;
-  problemCandidate = [
-  ];
+  problemCandidate = [];
   problemList = [];
   // 문제
   selectedproblem = "";
@@ -257,14 +265,18 @@ export default class InstructorDashboard extends Vue {
     console.log(video);
     this.problemPopup = true;
     try {
-      const res = await Axios.instanceDjango.post("api/django/summary/qna/", {
-            video_id : video.video_id
-          }, {
-        headers: {
-          "Content-Type": "application/json"
+      const res = await Axios.instanceDjango.post(
+        "api/django/summary/qna/",
+        {
+          video_id: video.video_id
+        },
+        {
+          headers: {
+            "Content-Type": "application/json"
+          }
         }
-      });
-      if(res.data.data) this.problemCandidate = res.data.data;
+      );
+      if (res.data.data) this.problemCandidate = res.data.data;
     } catch (e) {
       console.error(e);
     }
@@ -278,14 +290,14 @@ export default class InstructorDashboard extends Vue {
   }
 
   addProblem() {
-    if(this.problem && this.answer) {
+    if (this.problem && this.answer) {
       this.problemList.push({
-        problemCharfield : this.answer,
-        problemId : 0,
+        problemCharfield: this.answer,
+        problemId: 0,
         problemOrigin: this.selectedproblem.origin,
-        problemQuestion : this.problem,
+        problemQuestion: this.problem,
         videoId: this.selectedproblem.video
-      })
+      });
     }
     this.problem = "";
     this.answer = "";
@@ -300,17 +312,17 @@ export default class InstructorDashboard extends Vue {
     this.problemPopup = false;
   }
 
-  async submitProblems(){
+  async submitProblems() {
     try {
       const res = await Axios.instance.post(
-          "/api/public/problem/save",
-          this.problemList,
-          {
-            headers: {
-              "Content-Type" : "application/json"
-            }
+        "/api/public/problem/save",
+        this.problemList,
+        {
+          headers: {
+            "Content-Type": "application/json"
           }
-      )
+        }
+      );
       console.log(res);
     } catch (e) {
       console.error(e);
@@ -324,7 +336,6 @@ export default class InstructorDashboard extends Vue {
 </script>
 
 <style scoped>
-
 .slick {
   width: 100%;
   height: 165px;

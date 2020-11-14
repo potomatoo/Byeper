@@ -110,6 +110,7 @@ export default class LecturePage extends Vue {
   mounted() {
     this.preventScroll();
   }
+
   created() {
     this.FETCH_LECTURE_DETAIL(this.$route.params.playId);
   }
@@ -140,8 +141,6 @@ export default class LecturePage extends Vue {
   min-width: 300px;
   height: 100%;
   padding: 0;
-  background-color: white;
-  padding-bottom: 100px;
 }
 .lecture-video {
   position: fixed;

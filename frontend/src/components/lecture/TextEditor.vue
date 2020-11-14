@@ -290,6 +290,12 @@ export default class TextEditor extends Vue {
   startVideo(time) {
     this.player.seekTo(time);
   }
+
+  mounted() {
+    const editorContainer = document.querySelector(".editor-container");
+    editorContainer.style.backgroundColor = "white";
+    editorContainer.style.paddingBottom = "100px";
+  }
 }
 </script>
 

@@ -6,7 +6,11 @@
         @click="TOGGLE_SIDEBAR"
       ></v-app-bar-nav-icon>
       <v-col cols="3">
-        <v-toolbar-title style="font-weight: bold">VPT</v-toolbar-title>
+        <v-toolbar-title
+          style="font-weight: bold; cursor: pointer"
+          @click="goHome"
+          >Byeper</v-toolbar-title
+        >
       </v-col>
       <v-col cols="6" style="padding: 0">
         <v-text-field
@@ -57,17 +61,14 @@
             <v-list-item-title>학습 관리</v-list-item-title>
           </v-list-item>
 
-          <v-list-item v-if="user && user.userType !== 1" @click="goMyLecture">
+          <v-list-item @click="goMyLecture">
             <v-list-item-icon>
               <v-icon>mdi-fire</v-icon>
             </v-list-item-icon>
             <v-list-item-title>내 강의 관리</v-list-item-title>
           </v-list-item>
 
-          <v-list-item
-            v-if="user && user.userType !== 1"
-            @click="goCreateLecture"
-          >
+          <v-list-item @click="goCreateLecture">
             <v-list-item-icon>
               <v-icon>mdi-play-box-multiple</v-icon>
             </v-list-item-icon>
@@ -155,9 +156,9 @@ export default class AppNavbar extends Vue {
     }
   }
 
-  goMyLecturer() {
+  goMyLecture() {
     if (this.isLoggedIn) {
-      this.$router.push({ name: "instructor" });
+      this.$router.push({ name: "InstructorDashboard" });
     }
   }
 

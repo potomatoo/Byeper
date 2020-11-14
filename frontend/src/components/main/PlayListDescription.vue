@@ -1,5 +1,5 @@
 <template>
-  <div v-if="PlayList">
+  <div id="playListDescription" v-if="PlayList">
     <div class="buyBtn">
       <v-btn
         v-if="!isBuy"
@@ -127,7 +127,12 @@ export default class PlayListDescription extends Vue {
       scrollId
     ) as HTMLElement;
     const scrollLocation: number = target.offsetTop;
-    this.$vuetify.goTo(scrollLocation + 500);
+    const playListDescription: HTMLElement = document.getElementById(
+      "playListDescription"
+    ) as HTMLElement;
+    const heightOfPlayListDescription: number =
+      playListDescription.offsetHeight;
+    this.$vuetify.goTo(scrollLocation + heightOfPlayListDescription);
   }
 
   buyPlayList() {

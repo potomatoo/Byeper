@@ -9,7 +9,7 @@
         type="mp4"
       ></video>
       <div class="textBox">
-        <h2>VPT</h2>
+        <h2>Byeper</h2>
         <p>
           Video Summary 서비스를 이용하여 동영상을 학습하고 자동으로 PPT를
           추출해보세요!

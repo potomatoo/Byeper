@@ -178,6 +178,8 @@ def problem_create_list(request):
 
         sentence, answers = make_answer(video_pk)
 
+        sentence, answers = make_answer(video_pk)
+        sentence = str(sentence)
         QnA = []
         for sen in sentence.split('\n'):
             for answer in answers:

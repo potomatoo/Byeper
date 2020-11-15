@@ -16,6 +16,7 @@
           </v-card-title>
           <v-slider
             class="capture-slider"
+            v-model="sensitivity"
             :tick-labels="ticksLabels"
             :max="2"
             color="#E53935"
@@ -26,32 +27,20 @@
           ></v-slider>
           <v-divider class="slider-divide"></v-divider>
           <v-card-text>
-            Lorem ipsum dolor sit amet, semper quis, sapien id natoque elit.
-            Nostra urna at, magna at neque sed sed ante imperdiet, dolor mauris
-            cursus velit, velit non, sem nec. Volutpat sem ridiculus placerat
-            leo, augue in, duis erat proin condimentum in a eget, sed fermentum
-            sed vestibulum varius ac, vestibulum volutpat orci ut elit eget
-            tortor. Ultrices nascetur nulla gravida ante arcu. Pharetra rhoncus
-            morbi ipsum, nunc tempor debitis, ipsum pellentesque, vitae id quam
-            ut mauris dui tempor, aptent non. Quisque turpis. Phasellus quis
-            lectus luctus orci eget rhoncus. Amet donec vestibulum mattis
-            commodo, nulla aliquet, nibh praesent, elementum nulla. Sit lacus
-            pharetra tempus magna neque pellentesque, nulla vel erat. Justo ex
-            quisque nulla accusamus venenatis, sed quis. Nibh phasellus gravida
-            metus in, fusce aenean ut erat commodo eros. Ut turpis, dui integer,
-            nonummy pede placeat nec in sit leo. Faucibus porttitor illo taciti
-            odio, amet viverra scelerisque quis quis et tortor, curabitur morbi
-            a. Enim tempor at, rutrum elit condimentum, amet rutrum vitae tempor
-            torquent nunc. Praesent vestibulum integer maxime felis. Neque
-            aenean quia vitae nostra, tempus elit enim id dui, at egestas
-            pulvinar.
+            <div v-for="img in selectedCaptures" :key="img.address">
+              <h1>{{ img.address }}</h1>
+              <img
+                :src="`http://k3b108.p.ssafy.io${img.address}`"
+                class="all-capture-img"
+              />
+            </div>
           </v-card-text>
           <v-card-actions>
             <v-spacer></v-spacer>
             <v-btn color="green darken-1" text @click="dialog = false">
               취소
             </v-btn>
-            <v-btn color="green darken-1" text @click="dialog = false">
+            <v-btn color="green darken-1" text @click="imageCaptureAll">
               적용
             </v-btn>
           </v-card-actions>
@@ -65,10 +54,11 @@
 </template>
 
 <script lang="ts">
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import h2c from "html2canvas";
 import { jsPDF } from "jspdf";
 import { namespace } from "vuex-class";
+import { CaptureImages, Lecture } from "../../store/Lectures.interface";
 
 const LecturesModule = namespace("LecturesModule");
 
@@ -76,33 +66,37 @@ const LecturesModule = namespace("LecturesModule");
 export default class ImageCaptureChip extends Vue {
   @Prop(Object) readonly player: any;
   @Prop(String) readonly videoId!: string;
+  @LecturesModule.State lecture!: Lecture;
   @LecturesModule.Action FETCH_CAPTURE_IMAGE: any;
+  @LecturesModule.State allCaptureImgs!: CaptureImages[];
 
   ticksLabels = ["하", "중", "상"];
+  sensitivity = 2;
+  selectedCaptures: CaptureImages[] = [];
 
   dialog = false;
   $vuetify: any;
 
-  addCapture(img: string) {
-    this.$emit("addCapture", img);
-  }
-  async capture() {
-    h2c(document.querySelector(".editor__content") as HTMLElement)
-      .then(canvas => this.addCapture(canvas.toDataURL("image/jpeg")))
-      .catch(err => console.error(err));
+  addCapture({ url, time }: { url: string; time: number }) {
+    this.$emit("addCapture", { url, time });
   }
   async imageCapture() {
-    // this.capture();
     const getVideoTime = await this.player.getCurrentTime();
-    this.FETCH_CAPTURE_IMAGE({ id: this.videoId, time: getVideoTime });
-    console.log(getVideoTime);
+    const videoUrl = await this.FETCH_CAPTURE_IMAGE({
+      id: this.lecture.video_id,
+      time: getVideoTime
+    });
+    this.addCapture({ url: videoUrl, time: getVideoTime });
   }
   imageCaptureAll() {
-    console.log("all");
+    this.selectedCaptures.forEach(img =>
+      this.$emit("addCapture", { url: img.address, time: img.time })
+    );
+    this.dialog = false;
   }
   async toPdf() {
     await this.$vuetify.goTo(0);
-    h2c((await document.querySelector(".ProseMirror")) as HTMLElement).then(
+    h2c((await document.querySelector(".editor__content")) as HTMLElement).then(
       canvas => {
         const imgData = canvas.toDataURL("image/jpeg");
         const margin = 10;
@@ -124,6 +118,24 @@ export default class ImageCaptureChip extends Vue {
         doc.save("저장.pdf");
       }
     );
+  }
+  @Watch("allCaptureImgs", { immediate: true })
+  setAllImgs() {
+    this.selectedCaptures = this.allCaptureImgs;
+  }
+  @Watch("sensitivity")
+  imgsFilter() {
+    if (this.sensitivity === 0) {
+      this.selectedCaptures = this.allCaptureImgs.filter(
+        img => img.diff >= 10000
+      );
+    } else if (this.sensitivity === 1) {
+      this.selectedCaptures = this.allCaptureImgs.filter(
+        img => img.diff >= 6000
+      );
+    } else {
+      this.selectedCaptures = this.allCaptureImgs;
+    }
   }
 }
 </script>
@@ -148,5 +160,8 @@ export default class ImageCaptureChip extends Vue {
 }
 .v-slider__tick-label {
   color: #ef9a9a !important;
+}
+.all-capture-img {
+  width: 100%;
 }
 </style>

@@ -9,5 +9,5 @@ export interface User {
   userPassword: string | null;
   userType: number | null;
   userName: string | null;
-  userArtist: number | null;
+  channelId: string | null;
 }

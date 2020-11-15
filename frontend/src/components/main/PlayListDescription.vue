@@ -1,72 +1,106 @@
 <template>
-  <div>
+  <div id="playListDescription" v-if="PlayList">
+    <div class="buyBtn">
+      <v-btn
+        v-if="!isBuy"
+        class="mx-2"
+        dark
+        color="#d72632"
+        @click="buyPlayList"
+      >
+        <v-icon dark>
+          mdi-playlist-plus
+        </v-icon>
+        재생목록 추가
+      </v-btn>
+    </div>
     <div class="banner">
       <v-row>
-        <v-col>
-          <div class="videoBx">
-            <video
-              src="@/assets/mainVideo.mp4"
-              muted
-              autoplay
-              loop
-              type="mp4"
-            ></video>
+        <v-col cols="2" lg="2" md="2" sm="12" style="align-self: center">
+          <div class="imgBx">
+            <img :src="PlayList.playlistImg" />
           </div>
         </v-col>
 
-        <v-col>
+        <v-col cols="5" lg="5" md="5" sm="12" style="align-self: center">
           <div class="textBox">
-            <h2>{{ playList.playListName }}</h2>
-            <p>{{ playList.playListDescription }}</p>
+            <h2>
+              {{ PlayList.playlistTitle }}
+            </h2>
+            <p>{{ PlayList.playlistDescription }} Lorem ipsum dolor sit amet</p>
           </div>
         </v-col>
-        <v-col>
-          <div class="tableBox">
-            <v-simple-table dense max-height="400px" width="400px">
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th class="text-left">
-                      재생번호
-                    </th>
-                    <th class="text-left">
-                      제목
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr
-                    v-for="item in play"
-                    :key="item.id"
-                    @click="moveScroll(item.id)"
-                  >
-                    <td class="text-center" style="cursor: pointer;">
-                      {{ item.id }}
-                    </td>
-                    <td style="cursor: pointer">{{ item.playName }}</td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
-          </div>
+        <v-col cols="5" lg="5" md="5" sm="12" style="align-self: center">
+          <v-simple-table
+            dense
+            max-height="100px"
+            width="100px"
+            class="tableBox"
+          >
+            <template v-slot:default>
+              <thead>
+                <tr>
+                  <th class="text-left">
+                    재생번호
+                  </th>
+                  <th class="text-left">
+                    제목
+                  </th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr
+                  v-for="(video, video_index) in PlayListVideos"
+                  :key="video.play_id"
+                  @click="moveScroll(String(video.play_id))"
+                >
+                  <td class="text-center" style="cursor: pointer;">
+                    {{ video_index + 1 }}
+                  </td>
+                  <td style="cursor: pointer">{{ video.video_title }}</td>
+                </tr>
+              </tbody>
+            </template>
+          </v-simple-table>
         </v-col>
       </v-row>
     </div>
+
+    <v-snackbar v-model="snackbar" timeout="1500">
+      성공적으로 재생목록에 추가되었습니다!
+
+      <template v-slot:action="{ attrs }">
+        <v-btn color="blue" text v-bind="attrs" @click="snackbar = false">
+          Close
+        </v-btn>
+      </template>
+    </v-snackbar>
   </div>
 </template>
 
 <script lang="ts">
-import { Component, Vue } from "vue-property-decorator";
+import { Component, Vue, Watch } from "vue-property-decorator";
+import { namespace } from "vuex-class";
+import { PlayList } from "../../store/PlayList.interface";
+
+const PlayListModule = namespace("PlayListModule");
+const AccountsModule = namespace("AccountsModule");
 
 @Component
-export default class IntroMain extends Vue {
-  $vuetify: any;
+export default class PlayListDescription extends Vue {
+  @PlayListModule.State PlayList!: PlayList;
+  @PlayListModule.State PlayListVideos!: [];
+  @PlayListModule.Action FETCH_PLAYLIST_VIDEOS: any;
+  @PlayListModule.Action FETCH_PLAYLIST: any;
+  @PlayListModule.Action BUY_PLAYLIST: any;
+  @AccountsModule.Getter isLoggedIn!: boolean;
+  @AccountsModule.Action GOOGLE_LOGIN: any;
 
-  playList = {
-    playListName: "슬기로운 싸피 생활",
-    playListDescription:
-      "Lorem ipsum, dolor sit amet consectetur adipisicing elit. Obcaecatieum voluptate est eius, voluptatibus earum ipsum asperiores modi odit numquam alias. Reiciendis saepe ex, eius animi maxime non debitis! Recusandae!"
-  };
+  $vuetify: any;
+  $gAuth: any;
+  isBuy = false;
+  snackbar = false;
+
   headers = [
     {
       text: "커리큘럼",
@@ -76,22 +110,47 @@ export default class IntroMain extends Vue {
     }
   ];
 
-  play = [
-    { id: 1, playName: "머신러닝" },
-    { id: 2, playName: "인공지능 개론" },
-    { id: 3, playName: "인공신경망 최적화" },
-    { id: 4, playName: "IOT 접목하기" },
-    { id: 5, playName: "텐서플로우와 코드" },
-    { id: 6, playName: "KERAS와 코드" },
-    { id: 7, playName: "CNN과 RNN" }
-  ];
+  @Watch("$route", { immediate: true })
+  fetchPlayList() {
+    this.FETCH_PLAYLIST({ playlistId: Number(this.$route.params.playListId) });
+  }
+
+  @Watch("$route", { immediate: true })
+  fetchPlayListVideos() {
+    this.FETCH_PLAYLIST_VIDEOS({
+      playlistId: Number(this.$route.params.playListId)
+    });
+  }
 
   moveScroll(scrollId: string) {
     const target: HTMLElement = document.getElementById(
       scrollId
     ) as HTMLElement;
     const scrollLocation: number = target.offsetTop;
-    this.$vuetify.goTo(scrollLocation + 500);
+    const playListDescription: HTMLElement = document.getElementById(
+      "playListDescription"
+    ) as HTMLElement;
+    const heightOfPlayListDescription: number =
+      playListDescription.offsetHeight;
+    this.$vuetify.goTo(scrollLocation + heightOfPlayListDescription);
+  }
+
+  buyPlayList() {
+    if (this.isLoggedIn) {
+      this.BUY_PLAYLIST({
+        playlistId: Number(this.$route.params.playListId)
+      });
+      this.isBuy = true;
+      this.snackbar = true;
+    } else {
+      if (
+        confirm("로그인이 필요합니다.\n구글 로그인을 하시겠습니까??") === true
+      ) {
+        this.$gAuth
+          .getAuthCode()
+          .then((authToken: string) => this.GOOGLE_LOGIN(authToken));
+      }
+    }
   }
 }
 </script>
@@ -100,28 +159,22 @@ export default class IntroMain extends Vue {
 .banner {
   position: relative;
   width: 100%;
-  padding: 0 100px;
   display: flex;
-  min-height: 500px;
-  justify-content: flex-start;
+  justify-content: center;
   align-items: center;
+  padding: 0 50px 0 50px;
 }
 
-.banner video {
-  position: relative;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  opacity: 0.1;
-  pointer-events: none;
+.buyBtn {
+  margin: 20px 50px 0 0;
+  text-align: end;
 }
 
 .banner .textBox {
   position: relative;
   max-width: 500px;
   z-index: 2;
+  overflow: hidden;
 }
 
 .banner .textBox:before {
@@ -145,7 +198,6 @@ export default class IntroMain extends Vue {
 }
 
 .tableBox {
-  margin-left: 50px;
   opacity: 0;
   animation: fadeInBottom 0.5s linear forwards;
   animation-delay: 1.5s;
@@ -161,25 +213,25 @@ export default class IntroMain extends Vue {
   }
 }
 .banner .textBox h2 {
+  margin: 10px 0 0 0;
   font-size: 3em;
 }
 
 .banner .textBox p {
   font-size: 1.1em;
-  margin: 5px 0 0 0;
+  margin: 20px 0 0 0;
 }
 
-.banner .videoBx {
+.banner .imgBx {
   position: relative;
-  background: #fff;
-  margin-top: 30px;
-  margin-right: 50px;
-  width: 300px;
-  height: 200px;
+  display: contents;
+  width: 128px;
+  height: 72px;
   z-index: 1;
 }
 
-.banner .videoBx video {
-  opacity: 1;
+.banner .imgBx img {
+  width: 100%;
+  max-height: 200px;
 }
 </style>

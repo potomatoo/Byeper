@@ -10,6 +10,7 @@
 import { Component, Vue, Watch } from "vue-property-decorator";
 import AppNavbar from "@/components/app/AppNavbar.vue";
 import AppMain from "@/components/app/AppMain.vue";
+import { User } from "./store/Accounts.interface";
 import GoTop from "@/components/GoTop.vue";
 import { namespace } from "vuex-class";
 const AccountsModule = namespace("AccountsModule");
@@ -22,11 +23,21 @@ const AccountsModule = namespace("AccountsModule");
   }
 })
 export default class App extends Vue {
+  @AccountsModule.State user!: User | null;
   @AccountsModule.Mutation FALSE_SIDEBAR: any;
+  @AccountsModule.Getter isLoggedIn!: boolean;
+  @AccountsModule.Action FETCH_USER_INFO: any;
 
   @Watch("$route", { immediate: true })
   falseSidebar() {
     this.FALSE_SIDEBAR();
+  }
+
+  @Watch("$route", { immediate: true })
+  fetchUserInfo() {
+    if (this.isLoggedIn && !this.user) {
+      this.FETCH_USER_INFO();
+    }
   }
 }
 </script>

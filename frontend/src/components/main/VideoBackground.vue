@@ -9,7 +9,7 @@
         type="mp4"
       ></video>
       <div class="textBox">
-        <h2>VPT</h2>
+        <h2>Byeper</h2>
         <p>
           Video Summary 서비스를 이용하여 동영상을 학습하고 자동으로 PPT를
           추출해보세요!
@@ -49,7 +49,7 @@ export default class IntroMain extends Vue {
   padding: 0 100px;
   display: flex;
   min-height: 500px;
-  justify-content: flex-start;
+  justify-content: space-around;
   align-items: center;
 }
 .banner:before {
@@ -98,6 +98,7 @@ export default class IntroMain extends Vue {
   text-transform: uppercase;
   letter-spacing: 1px;
   font-weight: bold;
+  border-radius: 10px;
 }
 .banner .videoBx {
   position: relative;

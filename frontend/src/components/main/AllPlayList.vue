@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div v-if="AllPlayList">
     <v-row style="margin: 20px 10%">
       <v-row>
         <v-col
@@ -18,15 +18,15 @@
               max-width="100px"
               style="border: 0px; cursor: pointer;"
             >
-              <v-img :aspect-ratio="16 / 9" src="@/assets/jun.png">
+              <v-img :aspect-ratio="16 / 9" :src="playList.playlistImg">
                 <div
                   class="d-flex transition-fast-in-fast-out black darken-2 v-card--reveal display-3 "
-                  style="height: 100%; width: 33%; padding: 0px"
+                  style="height: 100%; width: 33%; padding: 0px; "
                 >
-                  <div style="color: white; font-size: 20px;">
-                    13+
-                    <div class="mdi mdi-play-pause text-center"></div>
-                  </div>
+                  <div
+                    class="mdi mdi-play-pause text-center"
+                    style="font-size: 30px;"
+                  ></div>
                 </div>
 
                 <v-expand-transition>
@@ -84,12 +84,17 @@ import { namespace } from "vuex-class";
 import { PlayList } from "../../store/PlayList.interface";
 
 const PlayListModule = namespace("PlayListModule");
+const AccountsModule = namespace("AccountsModule");
 
 @Component
 export default class AllPlayList extends Vue {
   @PlayListModule.State AllPlayList!: PlayList[] | null;
   @PlayListModule.State scrollEnd!: boolean;
+  @PlayListModule.Mutation SET_PLAYLIST_ZERO: any;
+  @PlayListModule.Mutation SET_SCROLL_END_FALSE: any;
   @PlayListModule.Action FETCH_ALL_PLAYLIST: any;
+  @AccountsModule.Getter isLoggedIn!: boolean;
+  @AccountsModule.State token!: any;
 
   scrollHeight = 0;
   start = 0;
@@ -122,19 +127,25 @@ export default class AllPlayList extends Vue {
     this.scrollHeight = window.innerHeight;
   }
 
-  pushPlayList(playListName: string) {
+  pushPlayList(playListId: string) {
     this.$router.push({
       name: "PlayList",
-      params: { playListName: playListName }
+      params: { playListId: playListId }
     });
   }
 
-  @Watch("$route", { immediate: true })
-  fetchAllPlayList() {
+  @Watch("isLoggedIn", { immediate: true })
+  async fetchAllPlayList() {
+    await this.SET_PLAYLIST_ZERO();
     this.start = 0;
     this.FETCH_ALL_PLAYLIST({
       start: this.start
     });
+  }
+
+  destroyed() {
+    this.SET_PLAYLIST_ZERO();
+    this.SET_SCROLL_END_FALSE();
   }
 }
 </script>

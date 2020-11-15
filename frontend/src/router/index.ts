@@ -25,12 +25,12 @@ const routes: Array<RouteConfig> = [
     component: StudentPage
   },
   {
-    path: "/course/:courseName",
+    path: "/course/:playlistTitle/:playlistId",
     name: "LectureListPage",
     component: LectureListPage
   },
   {
-    path: "/course/:courseName/lecture",
+    path: "/course/:playlistTitle/:playlistId/lecture/:playId",
     name: "LecturePage",
     component: LecturePage
   },

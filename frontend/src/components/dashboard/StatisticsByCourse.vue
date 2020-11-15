@@ -35,7 +35,7 @@
 import { Component, Vue } from "vue-property-decorator";
 
 @Component
-export default class StatisticsByCource extends Vue {
+export default class StatisticsByCourse extends Vue {
   value = 0;
   queryAndIndeterminate() {
     setTimeout(() => {

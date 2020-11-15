@@ -21,7 +21,12 @@
 
       <v-stepper-items>
         <v-stepper-content step="1">
-          <v-card dark flat class="mb-12" style="margin: 10px 20%">
+          <v-card
+            dark
+            flat
+            class="mb-12"
+            style="margin: 10px 20%; padding: 20px"
+          >
             <h3 class="mb-0">강의 제목</h3>
             <v-text-field
               class="classdesc mb-0"
@@ -76,7 +81,10 @@
             >
               다음 단계로
             </v-btn>
-            <v-btn class="mt-12">
+            <v-btn
+              @click="$router.push({ name: 'InstructorDashboard' })"
+              class="mt-12"
+            >
               취소하기
             </v-btn>
           </v-card>
@@ -97,18 +105,21 @@
                         v-for="video in UserVideos"
                         :data="video"
                         class="item my-0"
-                        :key="video"
+                        :key="video.videoId"
                       >
                         <v-list-item>
                           <v-avatar size="82" class="mr-5" tile>
-                            <img :src="video.thumbnailurl" :alt="video.title" />
+                            <img
+                              :src="video.videoImg"
+                              :alt="video.videoTitle"
+                            />
                           </v-avatar>
                           <v-list-item-content>
                             <v-list-item-title
-                              ><b>{{ video.title }}</b></v-list-item-title
+                              ><b>{{ video.videoTitle }}</b></v-list-item-title
                             >
                             <v-list-item-content>{{
-                              video.description
+                              video.videoDescription
                             }}</v-list-item-content>
                           </v-list-item-content>
                         </v-list-item>
@@ -121,9 +132,7 @@
                   <!--                    ><v-icon left>mdi-plus-box-outline</v-icon>섹션-->
                   <!--                    추가하기</v-btn-->
                   <!--                  >-->
-                  <v-card
-                    style="height: 65vh; overflow-y: scroll; overflow-x: hidden"
-                  >
+                  <v-card style="height: 65vh;  overflow-x: hidden">
                     <!--                    <v-card v-for="(Section, idx) in SelectedVideos" :key="idx">-->
                     <!--                      <v-row align="center">-->
                     <!--                        <v-col cols="7">-->
@@ -188,35 +197,35 @@
                       class="list"
                       @insert="onInsert"
                       @reorder="$event.apply(SelectedVideos)"
-                      style="height: 50vh; overflow-x: hidden; overflow-y: hidden"
+                      style="height: 50vh; overflow-x: hidden; overflow-y: scroll"
                     >
                       <template v-slot:item="{ item }">
-                        <drag class="item" :key="item">
+                        <drag class="item" :key="item.videoId">
                           <v-list-item>
                             <v-list-item-content>
                               <v-list-item-title
                                 ><strong>{{
-                                  item.title
+                                  item.videoTitle
                                 }}</strong></v-list-item-title
                               >
                               <v-list-item-content>{{
-                                item.description
+                                item.videoDescription
                               }}</v-list-item-content>
                             </v-list-item-content>
                           </v-list-item>
                         </drag>
                       </template>
                       <template v-slot:feedback="{ data }">
-                        <div class="item feedback" :key="data">
+                        <div class="item feedback" :key="data.videoId">
                           <v-list-item>
                             <v-list-item-content>
                               <v-list-item-title
                                 ><strong>{{
-                                  data.title
+                                  data.videoTitle
                                 }}</strong></v-list-item-title
                               >
                               <v-list-item-content>{{
-                                data.description
+                                data.videoDescription
                               }}</v-list-item-content>
                             </v-list-item-content>
                           </v-list-item>
@@ -231,8 +240,8 @@
                       다음 단계로
                     </v-btn>
 
-                    <v-btn text>
-                      취소하기
+                    <v-btn @click="CreateLectureStep = 1">
+                      이전 단계로
                     </v-btn>
                   </v-card>
                 </v-col>
@@ -264,7 +273,7 @@
               <!--              </v-card>-->
               <v-card
                 class="mb-12"
-                style="max-height: 80vh; overflow-y: scroll"
+                style="max-height: 80vh; overflow-y: scroll; padding: 20px"
               >
                 <h2>강의 목록</h2>
                 <v-list-item
@@ -272,39 +281,35 @@
                   :key="Video.videoId"
                 >
                   <v-avatar size="82" class="mr-5" tile>
-                    <img :src="Video.thumbnailurl" :alt="Video.title" />
+                    <img :src="Video.videoImg" :alt="Video.videoTitle" />
                   </v-avatar>
                   <v-list-item-content>
                     <v-list-item-title
-                      ><strong>{{ Video.title }}</strong></v-list-item-title
+                      ><strong>{{
+                        Video.videoTitle
+                      }}</strong></v-list-item-title
                     >
                     <v-list-item-content>{{
-                      Video.description
+                      Video.videoDescription
                     }}</v-list-item-content>
                   </v-list-item-content>
                 </v-list-item>
               </v-card>
             </v-col>
             <v-col cols="6">
-              <v-card>
+              <v-card style="padding: 20px">
                 <h2 class="mb-5">커버 이미지</h2>
                 <v-row>
-                  <v-col cols="6">
+                  <v-col
+                    cols="6"
+                    style="align-self: center; justify-self: center"
+                  >
                     <v-img
                       v-if="LectureThumbnailURL"
-                      class="ml-15"
-                      width="320"
-                      height="200"
                       :src="LectureThumbnailURL"
                       alt="강의 썸네일 이미지"
                     ></v-img>
-                    <v-img
-                      v-else
-                      class="ml-15"
-                      width="320"
-                      height="200"
-                      src="@/assets/jun.png"
-                    ></v-img>
+                    <v-img v-else src="@/assets/Byeper.png"></v-img>
                   </v-col>
                   <v-col cols="6">
                     <h5 class="mt-10 mb-3">강의를 대표하는 이미지</h5>
@@ -316,8 +321,7 @@
                       placeholder="Select your files"
                       prepend-icon="mdi-paperclip"
                       outlined
-                      :show-size="500"
-                      @change="Thumbnail"
+                      @change="thumbnail"
                     >
                       <template v-slot:selection="{ index, text }">
                         <v-chip color="deep-purple accent-4" dark label small>
@@ -338,13 +342,13 @@
                 <v-checkbox
                   class="mt-0"
                   label="내용을 충분히 이해하였으며, 이에 동의합니다."
-                  value="1"
+                  v-model="CopyrightAgreement"
                 ></v-checkbox>
-                <v-btn color="primary" @click="CreatePlayList">
+                <v-btn color="primary" @click="createLecture">
                   강의 생성
                 </v-btn>
 
-                <v-btn text>
+                <v-btn @click="CreateLectureStep = 2">
                   이전 단계로
                 </v-btn>
               </v-card>
@@ -357,8 +361,10 @@
 </template>
 
 <script>
-import { Vue, Component } from "vue-property-decorator";
+import { Vue, Component, Watch } from "vue-property-decorator";
 import { Drag, DropList } from "vue-easy-dnd";
+import { Axios } from "../../service/axios.service";
+//import { PlayList } from "@/store/Instructor.interface";
 import axios from "axios";
 
 @Component({
@@ -368,69 +374,9 @@ import axios from "axios";
   }
 })
 export default class CreateLecture extends Vue {
-  UserVideos = [
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/lddJ3kKhfXo/sddefault.jpg",
-      title: "내게 거짓을 고해요: Sasha Sloan - Lie (2020) [가사해석]",
-      description:
-        "오른쪽 상단의 i를 눌러 뮤직비디오를 보고 오시는 것을 추천드립니다",
-      videoId: "lddJ3kKhfXo"
-    },
-    {
-      thumbnailurl: "https://i.ytimg.com/vi/To1GnIBlDAg/sddefault.jpg",
-      title:
-        "[직키픽🔥] 네 갈 길 가: Astrid S - Marilyn Monroe (2020) [가사해석]",
-      description:
-        "이 뮤직비디오는 재편집되었습니다.\n오른쪽 상단의 i를 누르시면 원본 뮤직비디오를 감상하실 수 있습니다.",
-      videoId: "To1GnIBlDAg"
-    }
-  ];
+  UserVideos = [];
   CreateLectureStep = 1;
+  user = this.$store.state.AccountsModule.user;
 
   SelectedVideos = [];
   LectureTitle = "";
@@ -442,6 +388,8 @@ export default class CreateLecture extends Vue {
   LectureThumbnail = null;
   LectureThumbnailURL = null;
   LectureThumbnailLink = null;
+  LectureTrackId = null;
+  CopyrightAgreement = false;
 
   onInsert(event) {
     this.SelectedVideos.splice(event.index, 0, event.data);
@@ -459,37 +407,35 @@ export default class CreateLecture extends Vue {
   //   this.SelectedVideos.splice(idx, 1);
   // }
 
-  async Thumbnail() {
-    this.LectureThumbnailURL = URL.createObjectURL(this.LectureThumbnail);
+  async thumbnail() {
     if (this.LectureThumbnail) {
+      this.LectureThumbnailURL = URL.createObjectURL(this.LectureThumbnail);
       try {
-        const formData = new FormData();
-        formData.append("file", this.LectureThumbnail);
-        const res = await axios.post(
-          "http://k3b108.p.ssafy.io:8080/api/public/playlist/imgupload",
-          {
-            formData
-          },
+        const file = new FormData();
+        file.append("file", this.LectureThumbnail);
+        const res = await Axios.instance.post(
+          "/api/public/playlist/imgupload",
+          file,
           {
             headers: {
-              "Content-Type": "multipart/form-data",
-              Authorization:
-                "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+              "Content-Type": "multipart/form-data"
             }
           }
         );
-        console.log(res);
-        this.LectureThumbnailLink = res;
+        if (res) {
+          const link = "http://k3b108.p.ssafy.io/file/playlist/";
+          this.LectureThumbnailLink = link + res.data.data;
+        }
       } catch (e) {
         console.error(e);
       }
     }
   }
 
-  async CreatePlayList() {
+  async createPlayList() {
     try {
-      const res = await axios.post(
-        "http://k3b108.p.ssafy.io:8080/api/private/playlist/save",
+      const res = await Axios.instance.post(
+        "/api/private/playlist/save",
         {
           playlistCategory: this.LectureCategory,
           playlistDescription: this.LectureDescription,
@@ -497,23 +443,95 @@ export default class CreateLecture extends Vue {
           playlistImg: this.LectureThumbnailLink,
           playlistLevel: 0,
           playlistTitle: this.LectureTitle,
-          playlistType: 1,
-          userId: ""
+          playlistType: 0,
+          userId: this.user.userId
         },
         {
           headers: {
-            "Content-Type": "application/json",
-            Authorization:
-              "Bearer eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzUxMiJ9.eyJzdWIiOiJkYnNlaGRndXMwNTIwQGdtYWlsLmNvbSIsImV4cCI6MTYwNTg1NDM4Mn0.AYDJX_HkcRcHyfDa3TfVHcIrF3Zw62SRYl1M1e4vNXMIDOwIhE4hz7mGXBEI_ximxwFWEzY1lFWVIbB50cpHIw"
+            "Content-Type": "application/json"
           }
         }
       );
+      console.log(res);
+      if (res.data.data) this.LectureTrackId = res.data.data.playlistId;
     } catch (e) {
       console.error(e);
     }
   }
 
-  // async GetPlayList() {}
+  async getVideoList() {
+    try {
+      if (this.user.userId === "ssafy3dj1085@gmail.com") {
+        const res = await axios.get(
+          "http://k3b108.p.ssafy.io/file/data/youtubemin.json"
+        );
+        if (res.data.data != null) this.UserVideos = res.data.data;
+      } else {
+        const res = await Axios.instance.get("/api/public/videos");
+        if (res.data.data != null) {
+          this.UserVideos = res.data.data;
+        } else {
+          alert("유튜브 계정이 없습니다!");
+          this.$router.push({ name: "Home" });
+        }
+      }
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async addVideo() {
+    try {
+      const res = await Axios.instance.post(
+        "/api/pirvate/playlist/addvideo",
+        this.SelectedVideos,
+        {
+          params: {
+            playlistId: this.LectureTrackId
+          },
+          headers: {
+            "Content-Type": "application/json"
+          }
+        }
+      );
+      console.log(res);
+    } catch (e) {
+      console.error(e);
+    }
+  }
+
+  async djangoVideoAnalysis() {
+    try {
+      const videoIDs = [];
+      this.SelectedVideos.map(elem => videoIDs.push(elem.videoId));
+      const res = await Axios.instanceDjango
+        .post("api/django/summary/extract/", videoIDs, {
+          headers: {
+            "Content-Type": "application/json"
+          }
+        })
+        .then(({ data }) => console.log(data.data))
+        .catch(err => console.error(err));
+    } catch (e) {
+      console.log("어쨋든 요청은 보냄");
+    }
+  }
+
+  async createLecture() {
+    if (!this.CopyrightAgreement) {
+      alert("저작권 활용 동의가 필요합니다.");
+    } else {
+      await this.thumbnail();
+      await this.createPlayList();
+      await this.addVideo();
+      await this.djangoVideoAnalysis();
+      alert("강의가 생성되었습니다");
+      await this.$router.push({ name: "InstructorDashboard" });
+    }
+  }
+  created() {
+    this.getVideoList();
+  }
 }
 </script>
 

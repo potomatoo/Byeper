@@ -35,7 +35,5 @@ export default class Home extends Vue {
 <style scoped>
 .full-height {
   height: 100%;
-  margin: 0px;
-  padding: 0px;
 }
 </style>

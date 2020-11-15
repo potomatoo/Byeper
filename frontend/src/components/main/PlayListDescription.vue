@@ -16,13 +16,13 @@
     </div>
     <div class="banner">
       <v-row>
-        <v-col cols="2" lg="2" md="2" sm="12" justify="center" align="center">
+        <v-col cols="2" lg="2" md="2" sm="12" style="align-self: center">
           <div class="imgBx">
             <img :src="PlayList.playlistImg" />
           </div>
         </v-col>
 
-        <v-col cols="5" lg="5" md="5" sm="12">
+        <v-col cols="5" lg="5" md="5" sm="12" style="align-self: center">
           <div class="textBox">
             <h2>
               {{ PlayList.playlistTitle }}

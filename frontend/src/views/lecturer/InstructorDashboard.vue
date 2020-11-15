@@ -13,7 +13,7 @@
         >강의 만들기</v-btn
       >
       <vue-slick-carousel
-        v-if="Lectures.length"
+        v-if="Lectures && Lectures.length"
         class="slick mt-12"
         v-bind="settings"
       >
@@ -30,7 +30,7 @@
     <v-row style="margin: 10px 10%">
       <v-col cols="5">
         <v-card
-          v-if="SelectedPlayLists !== []"
+          v-if="SelectedPlayLists"
           class="mt-12"
           style="height: 50vh; overflow-y: scroll; overflow-x: hidden"
         >
@@ -64,7 +64,7 @@
       <v-col cols="7">
         <v-card class="mt-12" style="height: 50vh;">
           <h2 class="ml-3">수강 통계</h2>
-          <div
+          <!-- <div
             v-if="!totalLectureStatistics"
             class="align-center justify-center"
           >
@@ -101,7 +101,7 @@
                 >
               </v-col>
             </v-row>
-          </div>
+          </div> -->
         </v-card>
       </v-col>
     </v-row>
@@ -237,23 +237,26 @@ export default class InstructorDashboard extends Vue {
     };
 
     const getLecture = async Lectures => {
-      const req = Lectures.map(Lecture => {
-        return getLectureInfo(Lecture.playlistId).then(res => {
-          return res;
+      if (Lectures && Lectures.length) {
+        const req = Lectures.map(Lecture => {
+          return getLectureInfo(Lecture.playlistId).then(res => {
+            return res;
+          });
         });
-      });
-      return Promise.all(req);
+        return Promise.all(req);
+      }
     };
 
     getLecture(Lectures).then(res => {
       this.LecturePlayLists = res;
       this.SelectedPlayLists.push(this.LecturePlayLists[0]);
       // 해당 강의 학습률 저장
-      this.lectureProgress = Math.round(
-        (this.lectureStatistics[this.LecturePlayLists[0].playlistId].complete /
-          this.lectureStatistics[this.LecturePlayLists[0].playlistId].total) *
-          100
-      );
+      // console.log("이건 에러 체크:", this.lectureStatistics[[0].playlistId]);
+      // this.lectureProgress = Math.round(
+      //   (this.lectureStatistics[this.LecturePlayLists[0].playlistId].complete /
+      //     this.lectureStatistics[this.LecturePlayLists[0].playlistId].total) *
+      //     100
+      // );
     });
   }
 
@@ -273,30 +276,32 @@ export default class InstructorDashboard extends Vue {
     this.SelectedPlayLists = this.LecturePlayLists.filter(
       playlist => playlist.playlistId === playlistId
     );
+
     //해당 강의 학습률 확인
-    this.lectureProgress = Math.round(
-      (this.lectureStatistics[playlistId].complete /
-        this.lectureStatistics[playlistId].total) *
-        100
-    );
+    // this.lectureProgress = Math.round(
+    //   (this.lectureStatistics[playlistId].complete /
+    //     this.lectureStatistics[playlistId].total) *
+    //     100
+    // );
   }
 
   async getProblems(video) {
-    console.log(video);
     this.problemPopup = true;
     try {
-      const res = await Axios.instanceDjango.post(
-        "api/django/summary/qna/",
-        {
-          video_id: video.video_id
-        },
-        {
-          headers: {
-            "Content-Type": "application/json"
+      const res = await Axios.instanceDjango
+        .post(
+          "/api/django/summary/qna/",
+          {
+            video_id: video.video_id
+          },
+          {
+            headers: {
+              "Content-Type": "application/json"
+            }
           }
-        }
-      );
-      if (res.data.data) this.problemCandidate = res.data.data;
+        )
+        .then(({ data }) => (this.problemCandidate = data.data))
+        .catch(err => console.error(err));
     } catch (e) {
       console.error(e);
     }
@@ -304,14 +309,13 @@ export default class InstructorDashboard extends Vue {
 
   selectProblem(problem) {
     this.selectedproblem = problem;
-    console.log(this.selectedproblem);
     this.problem = problem.problem;
     this.answer = problem.answer;
   }
 
   addProblem() {
     if (this.problem && this.answer) {
-      this.problemList.push({
+      this.problemList?.push({
         problemCharfield: this.answer,
         problemId: 0,
         problemOrigin: this.selectedproblem.origin,
@@ -319,6 +323,7 @@ export default class InstructorDashboard extends Vue {
         videoId: this.selectedproblem.video
       });
     }
+    console.log(this.problemList);
     this.problem = "";
     this.answer = "";
     this.selectedproblem = "";
@@ -350,40 +355,40 @@ export default class InstructorDashboard extends Vue {
     }
   }
 
-  async getStatistics() {
-    try {
-      const res = await Axios.instance.get("/api/public/playlist/progress", {});
-      // res.data.data = {
-      //   "0": {
-      //     "total": 7,
-      //     "complete" : 2
-      //   },
-      //   "66": {
-      //     "total": 5,
-      //     "complete": 1
-      //   },
-      //   "84": {
-      //     "total": 2,
-      //     "complete": 1
-      //   }
-      // }
+  // async getStatistics() {
+  //   try {
+  //     const res = await Axios.instance.get("/api/public/playlist/progress", {});
+  // res.data.data = {
+  //   "0": {
+  //     "total": 7,
+  //     "complete" : 2
+  //   },
+  //   "66": {
+  //     "total": 5,
+  //     "complete": 1
+  //   },
+  //   "84": {
+  //     "total": 2,
+  //     "complete": 1
+  //   }
+  // }
 
-      if (res.data.data["0"].total !== 0) {
-        this.totalLectureStatistics = res.data.data["0"];
-        this.totalProgress = Math.round(
-          (this.totalLectureStatistics.complete /
-            this.totalLectureStatistics.total) *
-            100
-        );
-        this.lectureStatistics = res.data.data;
-      }
-    } catch (e) {
-      console.error(e);
-    }
-  }
+  //     if (res.data.data["0"].total !== 0) {
+  //       this.totalLectureStatistics = res.data.data["0"];
+  //       this.totalProgress = Math.round(
+  //         (this.totalLectureStatistics.complete /
+  //           this.totalLectureStatistics.total) *
+  //           100
+  //       );
+  //       this.lectureStatistics = res.data.data;
+  //     }
+  //   } catch (e) {
+  //     console.error(e);
+  //   }
+  // }
 
   async created() {
-    await this.getStatistics();
+    // await this.getStatistics();
     await this.getTotalLecture();
   }
 }

@@ -5,6 +5,7 @@ export interface LecturesModule {
   lecture: Lecture | null;
   totalLectureProgress: Progress | null;
   courseProgress: Progress[];
+  ProblemList: ProblemList[] | null;
 }
 
 export interface Lecture {
@@ -41,4 +42,12 @@ export interface Progress {
   id: string;
   total: number;
   complete: number;
+}
+
+export interface ProblemList {
+  problemId: number | null;
+  probelmOrigin: string | null;
+  problemQustion: string | null;
+  problemCharfield: string | null;
+  videoId: string | null;
 }

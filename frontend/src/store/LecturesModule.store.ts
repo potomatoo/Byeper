@@ -1,6 +1,6 @@
 import { Module } from "vuex";
 import { RootState } from "./index";
-import { LecturesModule, Progress } from "./Lectures.interface";
+import { LecturesModule, Progress, ProblemList } from "./Lectures.interface";
 import { Axios } from "@/service/axios.service";
 
 const module: Module<LecturesModule, RootState> = {
@@ -11,7 +11,8 @@ const module: Module<LecturesModule, RootState> = {
     courses: [],
     lecture: null,
     totalLectureProgress: null,
-    courseProgress: []
+    courseProgress: [],
+    ProblemList: []
   },
 
   getters: {
@@ -46,6 +47,9 @@ const module: Module<LecturesModule, RootState> = {
         el === "0" ? (state.totalLectureProgress = obj) : arrProgress.push(obj);
       });
       state.courseProgress = arrProgress;
+    },
+    SET_PROBLEM_LIST(state, ProblemList: ProblemList[]) {
+      state.ProblemList = ProblemList;
     }
   },
 
@@ -93,6 +97,12 @@ const module: Module<LecturesModule, RootState> = {
       Axios.instance
         .get("/api/public/playlist/progress")
         .then(({ data }) => commit("SET_PLAYLIST_PROGRESS", data.data))
+        .catch(err => console.error(err));
+    },
+    FETCH_PROBLEM_LIST({ commit }, videoId) {
+      Axios.instance
+        .get("/api/public/problem/list", { params: { videoId } })
+        .then(({ data }) => commit("SET_PROBLEM_LIST", data.data))
         .catch(err => console.error(err));
     }
   }

@@ -363,7 +363,7 @@
 <script>
 import { Vue, Component, Watch } from "vue-property-decorator";
 import { Drag, DropList } from "vue-easy-dnd";
-import { Axios } from "@/service/axios.service";
+import { Axios } from "../../service/axios.service";
 //import { PlayList } from "@/store/Instructor.interface";
 import axios from "axios";
 
@@ -467,10 +467,13 @@ export default class CreateLecture extends Vue {
         );
         if (res.data.data != null) this.UserVideos = res.data.data;
       } else {
-        const res = await Axios.get(
-          "http://k3b108.p.ssafy.io/api/public/videos"
-        );
-        if (res.data.data != null) this.UserVideos = res.data.data;
+        const res = await Axios.instance.get("/api/public/videos");
+        if (res.data.data != null) {
+          this.UserVideos = res.data.data;
+        } else {
+          alert("유튜브 계정이 없습니다!");
+          this.$router.push({ name: "Home" });
+        }
       }
     } catch (e) {
       console.error(e);
@@ -501,16 +504,14 @@ export default class CreateLecture extends Vue {
     try {
       const videoIDs = [];
       this.SelectedVideos.map(elem => videoIDs.push(elem.videoId));
-      const res = await Axios.instanceDjango.post(
-        "api/django/summary/extract/",
-        videoIDs,
-        {
+      const res = await Axios.instanceDjango
+        .post("api/django/summary/extract/", videoIDs, {
           headers: {
             "Content-Type": "application/json"
           }
-        }
-      );
-      console.log(res);
+        })
+        .then(({ data }) => console.log(data.data))
+        .catch(err => console.error(err));
     } catch (e) {
       console.log("어쨋든 요청은 보냄");
     }

@@ -66,6 +66,7 @@ export default class LecturePage extends Vue {
   @LecturesModule.State lecture!: Lecture;
   @LecturesModule.Action FETCH_ALL_CAPTURE_IMAGES: any;
   @LecturesModule.Action FETCH_LECTURE_DETAIL: any;
+  @LecturesModule.Action FETCH_PROBLEM_LIST: any;
 
   player: { seekTo: (n: number) => {} } | null = null;
   start = 0;
@@ -102,6 +103,7 @@ export default class LecturePage extends Vue {
   fetchAllCapture() {
     if (this.lecture) {
       console.log("hihi", this.lecture.video_id);
+      this.FETCH_PROBLEM_LIST(this.lecture.video_id);
       // this.FETCH_ALL_CAPTURE_IMAGES(this.videoURL);
       this.FETCH_ALL_CAPTURE_IMAGES(this.lecture.video_id);
     }

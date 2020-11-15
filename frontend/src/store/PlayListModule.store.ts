@@ -32,6 +32,9 @@ const module: Module<PlayListModule, RootState> = {
     },
     SET_PLAYLIST_ZERO(state) {
       state.AllPlayList = null;
+    },
+    SET_SCROLL_END_FALSE(state) {
+      state.scrollEnd = false;
     }
   },
 

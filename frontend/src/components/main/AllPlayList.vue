@@ -91,6 +91,7 @@ export default class AllPlayList extends Vue {
   @PlayListModule.State AllPlayList!: PlayList[] | null;
   @PlayListModule.State scrollEnd!: boolean;
   @PlayListModule.Mutation SET_PLAYLIST_ZERO: any;
+  @PlayListModule.Mutation SET_SCROLL_END_FALSE: any;
   @PlayListModule.Action FETCH_ALL_PLAYLIST: any;
   @AccountsModule.Getter isLoggedIn!: boolean;
   @AccountsModule.State token!: any;
@@ -144,6 +145,7 @@ export default class AllPlayList extends Vue {
 
   destroyed() {
     this.SET_PLAYLIST_ZERO();
+    this.SET_SCROLL_END_FALSE();
   }
 }
 </script>

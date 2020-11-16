@@ -15,21 +15,22 @@
             <template>
               <v-list-item-icon>
                 <v-icon v-if="item.play_complete === 0" color="grey lighten-1">
-                  mdi-star-outline
+                  mdi-checkbox-marked-circle-outline
                 </v-icon>
 
                 <v-icon v-else color="yellow darken-3">
-                  mdi-star
+                  mdi-checkbox-marked-circle
                 </v-icon>
               </v-list-item-icon>
 
               <v-list-item-content>
                 <v-list-item-title
+                  class="text-h6"
                   v-text="item.video_title"
                 ></v-list-item-title>
 
                 <v-list-item-subtitle
-                  class="text--primary"
+                  class="text--secondary"
                   v-text="
                     `진행률 : ${
                       item.play_complete === 1 ? 100 : item.play_log

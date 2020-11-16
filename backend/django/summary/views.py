@@ -19,6 +19,7 @@ check_eng = re.compile('[a-zA-Z]+')
 check_num = re.compile('[0-9]+')
 check_bracket = re.compile('\([^)]*\)')
 
+komoran = Komoran()
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -213,7 +214,6 @@ def make_answer(urls):
         else:
             result += ' '
 
-    komoran = Komoran()
     stopwords = set(open('stopwords.txt', 'r', encoding='utf-8').read().split('\n'))
     answers = set()
     for sen in result.split('\n'):

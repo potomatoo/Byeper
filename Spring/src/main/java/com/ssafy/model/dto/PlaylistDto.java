@@ -2,6 +2,8 @@ package com.ssafy.model.dto;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.Table;
 
@@ -10,6 +12,7 @@ import javax.persistence.Table;
 public class PlaylistDto {
 	@Id
 	@Column(name = "playlist_id")
+	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private int playlistId;
 	@Column(name = "playlist_title")
 	private String playlistTitle;

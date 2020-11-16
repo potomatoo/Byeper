@@ -149,9 +149,12 @@ public class UserController {
 		headers.setContentType(new MediaType("application", "json", Charset.forName("UTF-8"))); // Response Header to
 																								// UTF-8
 		UriComponents builder = UriComponentsBuilder.fromHttpUrl(url).queryParam("part", "id")
-				.queryParam("forUsername", user.getUserId().split("@")[0])
-				.queryParam("key", YOUTUBE_API).build(false); // 자동으로 encode해주는 것을 막기 위해
-																							// false
+				.queryParam("forUsername", user.getUserId().split("@")[0]).queryParam("key", YOUTUBE_API).build(false); // 자동으로
+																														// encode해주는
+																														// 것을
+																														// 막기
+																														// 위해
+																														// false
 
 		String youtubeResult = restTemplate
 				.exchange(builder.toUriString(), HttpMethod.GET, new HttpEntity<String>(headers), String.class)
@@ -168,7 +171,7 @@ public class UserController {
 		}
 
 		response.data = userService.RegistTeacher(user.getUserId(),
-				items.get(0).getAsJsonObject().get("id").toString());
+				items.get(0).getAsJsonObject().get("id").getAsString());
 		response.status = (response.data != null) ? true : false;
 
 		if (response.status) {

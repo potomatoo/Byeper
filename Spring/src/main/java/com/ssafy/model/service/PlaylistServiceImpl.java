@@ -8,6 +8,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import com.ssafy.model.dto.PlaylistDto;
+import com.ssafy.model.dto.PlaylistProgressDto;
 import com.ssafy.model.repository.PlaylistRepository;
 
 @Service
@@ -16,11 +17,11 @@ public class PlaylistServiceImpl implements PlaylistService {
 	private PlaylistRepository playlistRepository;
 
 	@Override
-	public List<PlaylistDto> findAllPlaylistTeacher(int start) {
+	public List<PlaylistDto> findAllPlaylistTeacher(String userId, int start) {
 		// TODO Auto-generated method stub
-		int index = start * 10;
+		int index = start * 9;
 
-		return playlistRepository.findPlaylistTeacher(1, index);
+		return playlistRepository.findPlaylistTeacher(userId, index);
 	}
 
 	@Override
@@ -60,6 +61,32 @@ public class PlaylistServiceImpl implements PlaylistService {
 		// TODO Auto-generated method stub
 
 		return playlistRepository.save(update);
+	}
+
+	@Override
+	public List<PlaylistDto> findAllPlaylistManangement(String userId) {
+		// TODO Auto-generated method stub
+		return playlistRepository.findByManagement(userId);
+	}
+
+	@Override
+	public List<PlaylistProgressDto> getPlaylistProgress(String userId) {
+		// TODO Auto-generated method stub
+		return playlistRepository.findProgressInfo(userId);
+	}
+
+	@Override
+	public List<PlaylistProgressDto> getPlaylistProgressManage(String userId) {
+		// TODO Auto-generated method stub
+		return playlistRepository.findProgressManage(userId);
+	}
+
+	@Override
+	public List<PlaylistDto> SearchPlaylist(String playlistTitle) {
+		// TODO Auto-generated method stub
+
+		String query = "%" + playlistTitle + "%";
+		return playlistRepository.SearchPlaylist(query);
 	}
 
 }

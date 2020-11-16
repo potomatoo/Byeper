@@ -177,8 +177,6 @@ def problem_create_list(request):
             return -1  # --> video dir check
 
         sentence, answers = make_answer(video_pk)
-
-        sentence, answers = make_answer(video_pk)
         sentence = str(sentence)
         QnA = []
         for sen in sentence.split('\n'):
@@ -210,35 +208,40 @@ def make_answer(urls):
             result += ' '
 
     komoran = Komoran()
-
     stopwords = set(open('stopwords.txt', 'r', encoding='utf-8').read().split('\n'))
     answers = set()
     for sen in result.split('\n'):
         Nouns = set([ w for w, t in set(komoran.pos(sen)) if (t == 'NNP' or t == 'NNG') and len(w) > 1 and not set(w) & set('0123456789') and not {w} & stopwords])
         stack = []
         for word in sen.split():
-            if len(word) < 3:
-                if stack:
-                    answers.add(' '.join(stack))
-                    stack = []
-            elif check_eng.search(word):
+            if check_eng.search(word):
                 if check_kor.search(word) or check_bracket.search(word):
-                    engs = re.sub('[^a-zA-Z]+', '', word)
+                    engs = re.sub('[가-힣]+', '', word)
+                    # engs = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', engs)
                     engs = re.sub('\([^)]*\)', '', engs)
-                    if stack and check_eng.search(stack[-1]):
-                        stack.append(engs)
-                        answers.add(' '.join(stack))
-                        stack = []
+                    if stack:
+                        if check_eng.search(stack[-1]):
+                            stack.append(engs)
+                        else:
+                            answers.add(' '.join(stack))
+                            stack = [engs]
                     else:
-                        answers.add(' '.join(stack))
-                        answers.add(engs)
-                        stack = []
+                        stack = [engs]
                 else:
                     stack.append(word)
             else:
+                if stack and check_eng.search(stack[-1]):
+
+                    answers.add(' '.join(stack))
+                    stack = []
+                
+                if len(word) < 3:
+                    if stack: answers.add(' '.join(stack)); stack = []
+                    continue
                 for target in komoran.nouns(word):
+    
                     if target in Nouns:
-                        if len(target) < 3: continue
+                         
                         if target != word:
                             stack.append(target)
                             answers.add(' '.join(stack))
@@ -252,4 +255,4 @@ def make_answer(urls):
 
     if stack: answers.add(' '.join(stack))
 
-    return result, sorted(list(answers), key=lambda x:len(x), reverse=True)[:10]
+    return result, sorted([ w for w in answers if len(w) > 2], key=lambda x:len(x), reverse=True)[:12]

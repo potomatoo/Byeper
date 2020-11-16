@@ -28,11 +28,11 @@
           <v-divider class="slider-divide"></v-divider>
           <v-card-text>
             <div v-for="img in selectedCaptures" :key="img.address">
-              <h1>{{ img.address }}</h1>
               <img
                 :src="`http://k3b108.p.ssafy.io${img.address}`"
-                class="all-capture-img"
+                class="all-capture-img my-10"
               />
+              <v-divider style="background-color: white"></v-divider>
             </div>
           </v-card-text>
           <v-card-actions>

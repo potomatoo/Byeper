@@ -182,16 +182,12 @@
 
     <editor-content class="editor__content" :editor="editor" />
     <div id="focus-position"></div>
-    <image-capture-chip
-      :player="player"
-      :videoId="videoId"
-      @addCapture="addCapture"
-    />
+    <image-capture-chip :player="player" @addCapture="addCapture" />
   </div>
 </template>
 
 <script>
-import { Component, Vue, Prop } from "vue-property-decorator";
+import { Component, Vue, Prop, Watch } from "vue-property-decorator";
 import { Editor, EditorContent, EditorMenuBar } from "tiptap";
 import {
   Blockquote,
@@ -213,6 +209,9 @@ import {
   Image
 } from "tiptap-extensions";
 import ImageCaptureChip from "@/components/lecture/ImageCaptureChip.vue";
+import { namespace } from "vuex-class";
+
+const LecturesModue = namespace("LecturesModule");
 
 @Component({
   components: {
@@ -222,8 +221,11 @@ import ImageCaptureChip from "@/components/lecture/ImageCaptureChip.vue";
   }
 })
 export default class TextEditor extends Vue {
+  @LecturesModue.State lecture;
+  @LecturesModue.Action UPDATE_LECTURE_INFO;
+
   @Prop(Object) player;
-  @Prop(String) videoId;
+
   editor = new Editor({
     extensions: [
       new Blockquote(),
@@ -275,8 +277,20 @@ export default class TextEditor extends Vue {
       }
     }
   });
+
+  async saveNote() {
+    const currentTime = await this.player.getCurrentTime();
+    const runningTime = await this.player.getDuration();
+    const progress = Number(((currentTime / runningTime) * 100).toFixed(1));
+    const playInfo = { ...this.lecture };
+    playInfo.play_log = progress;
+    playInfo.play_note = this.editor.getHTML();
+    this.UPDATE_LECTURE_INFO(playInfo);
+  }
+
   beforeDestroy() {
     this.editor.destroy();
+    this.saveNote();
   }
 
   async addCapture({ url, time }) {
@@ -289,6 +303,13 @@ export default class TextEditor extends Vue {
   }
   startVideo(time) {
     this.player.seekTo(time);
+  }
+
+  @Watch("lecture", { immediate: true })
+  setNote() {
+    if (this.lecture) {
+      this.editor.setContent(this.lecture.play_note);
+    }
   }
 
   mounted() {

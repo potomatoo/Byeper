@@ -2,7 +2,7 @@
   <v-card class="mx-auto" min-width="344" width="100%" height="250" outlined>
     <v-card-title>학습통계</v-card-title>
     <v-list-item>
-      <v-row>
+      <v-row class="text-center">
         <v-col>
           <v-progress-circular
             v-if="totalLectureProgress"

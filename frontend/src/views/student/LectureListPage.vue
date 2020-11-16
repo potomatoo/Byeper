@@ -24,9 +24,11 @@ const LecturesModule = namespace("LecturesModule");
 })
 export default class LectureListPage extends Vue {
   @LecturesModule.Action FETCH_LECTURE_BY_COURSE: any;
+  @LecturesModule.Action FETCH_PLAYLIST_PROGRESS: any;
 
   created() {
     this.FETCH_LECTURE_BY_COURSE(this.$route.params.playlistId);
+    this.FETCH_PLAYLIST_PROGRESS();
   }
 }
 </script>

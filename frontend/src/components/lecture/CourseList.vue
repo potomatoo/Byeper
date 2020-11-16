@@ -26,18 +26,18 @@
               </v-btn>
             </v-col>
           </v-row>
-
-          <div class="mx-2">
+          <div class="mt-4">
             <v-progress-linear
               color="deep-orange"
-              height="10"
-              value="30"
+              height="15"
+              :value="computedProgressByCourse[course.playlistId]"
               striped
-            ></v-progress-linear>
+            >
+              <div class="text-caption">
+                {{ computedProgressByCourse[course.playlistId] + "%" }}
+              </div>
+            </v-progress-linear>
           </div>
-          <v-card-subtitle>
-            진행률
-          </v-card-subtitle>
         </v-card>
       </v-col>
     </v-row>
@@ -53,6 +53,8 @@ const LecturesModule = namespace("LecturesModule");
 @Component
 export default class CourseList extends Vue {
   @LecturesModule.State courses!: Course[];
+  @LecturesModule.State lectureProgress!: {};
+  @LecturesModule.Getter computedProgressByCourse!: {};
 
   routingToCourse(playlistId: number, playlistTitle: string) {
     this.$router.push({

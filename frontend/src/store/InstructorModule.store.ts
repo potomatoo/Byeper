@@ -6,12 +6,19 @@ import { Axios } from "@/service/axios.service";
 const module: Module<InstructorModule, RootState> = {
   namespaced: true,
   state: {
-    playListId: null
+    playListId: null,
+    isLoading: false
   },
 
   mutations: {
     SET_PLAYLIST_ID(state, payload: number) {
       state.playListId = payload;
+    },
+    SET_LOADING_TRUE(state) {
+      state.isLoading = true;
+    },
+    SET_LOADING_FALSE(state) {
+      state.isLoading = false;
     }
   },
 
@@ -24,7 +31,6 @@ const module: Module<InstructorModule, RootState> = {
           }
         })
         .then(({ data }) => {
-          console.log(data);
           commit("SET_PLAYLIST_ID", data.data.playlistId);
         })
         .catch(e => console.error(e));

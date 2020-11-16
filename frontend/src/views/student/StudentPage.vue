@@ -6,11 +6,11 @@
     <v-row>
       <v-col>
         <profile />
-        <statistics-by-all />
       </v-col>
       <v-col>
-        <finished-lecture />
-        <learning-video />
+        <statistics-by-all />
+        <!-- <finished-lecture /> -->
+        <!-- <learning-video /> -->
       </v-col>
     </v-row>
     <div class="text-h5 my-5">

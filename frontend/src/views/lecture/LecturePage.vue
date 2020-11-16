@@ -3,8 +3,13 @@
     <v-col class="video-container">
       <div class="lecture-video">
         <lecture-video @player="getPlayer" />
+        <!-- <youtube
+          v-if="lecture"
+          fitParent
+          :video-id="lecture.video_id"
+          ref="youtube"
+        ></youtube> -->
       </div>
-      <!-- <youtube :video-id="videoURL" ref="youtube"></youtube> -->
       <!-- <iframe
         class="lecture-video"
         width="100%"
@@ -29,16 +34,10 @@
       </v-row>
       <text-editor
         :player="player"
-        :videoId="videoURL"
-        v-if="$route.query.tab === 'note' || !$route.query.tab"
+        v-if="!$route.query.tab || $route.query.tab === 'note'"
       />
       <quiz v-else-if="$route.query.tab === 'quiz'" />
       <curriculum v-else-if="$route.query.tab === 'list'" />
-      <v-btn
-        v-if="$route.query.tab === 'note' || !$route.query.tab"
-        @click="startVideo"
-        >{{ $route.query.tab }}</v-btn
-      >
     </v-col>
   </v-row>
 </template>
@@ -68,15 +67,12 @@ export default class LecturePage extends Vue {
   @LecturesModule.Action FETCH_LECTURE_DETAIL: any;
   @LecturesModule.Action FETCH_PROBLEM_LIST: any;
 
-  player: { seekTo: (n: number) => {} } | null = null;
-  start = 0;
+  player: { [key: string]: any } = {};
 
-  videoURL = "6AnnvVrth4w";
+  playerVars = {
+    start: 15
+  };
 
-  startVideo() {
-    this.start += 10;
-    this.player?.seekTo(this.start);
-  }
   toNoteTab() {
     this.$router.replace({ name: "LecturePage", query: { tab: "note" } });
   }
@@ -86,7 +82,7 @@ export default class LecturePage extends Vue {
   toListTab() {
     this.$router.replace({ name: "LecturePage", query: { tab: "list" } });
   }
-  getPlayer(v: { seekTo: (n: number) => {} }) {
+  getPlayer(v: { [key: string]: any }) {
     this.player = v;
   }
   scroll(event: Event) {
@@ -99,10 +95,9 @@ export default class LecturePage extends Vue {
     video?.addEventListener("mousewheel", this.scroll);
   }
 
-  @Watch("lecture")
+  @Watch("lecture", { immediate: true, deep: true })
   fetchAllCapture() {
     if (this.lecture) {
-      console.log("hihi", this.lecture.video_id);
       this.FETCH_PROBLEM_LIST(this.lecture.video_id);
       // this.FETCH_ALL_CAPTURE_IMAGES(this.videoURL);
       this.FETCH_ALL_CAPTURE_IMAGES(this.lecture.video_id);
@@ -112,8 +107,8 @@ export default class LecturePage extends Vue {
   mounted() {
     this.preventScroll();
   }
-
-  created() {
+  @Watch("$route", { immediate: true })
+  fetchLectureDetail() {
     this.FETCH_LECTURE_DETAIL(this.$route.params.playId);
   }
 }

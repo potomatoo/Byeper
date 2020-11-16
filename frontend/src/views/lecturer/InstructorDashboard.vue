@@ -132,7 +132,7 @@
               <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title
-                    ><strong>{{ idx + 1 }}</strong>
+                    ><strong>{{ idx + 1 }}. </strong>
                     {{ problem.problemQuestion }}</v-list-item-title
                   >
                 </v-list-item-content>
@@ -145,7 +145,41 @@
           <v-btn class="mr-5" @click="clearProblem">닫기</v-btn>
         </v-row>
       </v-row>
+      <v-overlay :value="isLoading">
+        <v-progress-circular
+          indeterminate
+          size="80"
+          width="10"
+          color="rgb(236, 193, 156)"
+        ></v-progress-circular>
+      </v-overlay>
     </v-dialog>
+    <div class="text-center">
+      <v-snackbar v-model="CreateQuizSnackbar" timeout="2000" absolute centered>
+        <div class="text-center" style="color: #2196F3; font-size: 30px;">
+          <v-icon style="color: #2196F3; font-size: 30px;"
+            >mdi-checkbox-marked-circle-outline</v-icon
+          >
+          퀴즈가 생성되었습니다!
+        </div>
+      </v-snackbar>
+    </div>
+
+    <div class="text-center">
+      <v-snackbar
+        v-model="YetAnalysisSnackbar"
+        timeout="2000"
+        absolute
+        centered
+      >
+        <div class="text-center" style="color: #E91E63; font-size: 30px;">
+          <v-icon style="color: #E91E63; font-size: 30px;"
+            >mdi-alert-circle-check-outline</v-icon
+          >
+          분석을 진행중입니다!
+        </div>
+      </v-snackbar>
+    </div>
   </div>
 </template>
 
@@ -153,13 +187,13 @@
 import { Vue, Component } from "vue-property-decorator";
 import { Axios } from "@/service/axios.service";
 
-// import { namespace } from "vuex-class";
+import { namespace } from "vuex-class";
 // carousel 관련 import
 import VueSlickCarousel from "vue-slick-carousel";
 import "vue-slick-carousel/dist/vue-slick-carousel.css";
 import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
 
-// const InstructorModule = namespace("InstructorModule");
+const InstructorModule = namespace("InstructorModule");
 // import PieChart from "@/components/Charts/PieChart.vue";
 
 @Component({
@@ -168,15 +202,20 @@ import "vue-slick-carousel/dist/vue-slick-carousel-theme.css";
   }
 })
 export default class InstructorDashboard extends Vue {
+  @InstructorModule.State isLoading;
+  @InstructorModule.Mutation SET_LOADING_TRUE;
+  @InstructorModule.Mutation SET_LOADING_FALSE;
   LecturePlayLists = [];
   SelectedPlayLists = [];
   Lectures = [];
+  CreateQuizSnackbar = false;
+  YetAnalysisSnackbar = false;
   settings = {
     arrows: true,
     dots: false,
     infinite: true,
     slidesToShow: 5,
-    slidesToScroll: 1,
+    slidesToScroll: 3,
     autoplay: true,
     speed: 2000,
     autoplaySpeed: 3000,
@@ -285,9 +324,27 @@ export default class InstructorDashboard extends Vue {
     // );
   }
 
+  checkNotYet(videoId) {
+    return Axios.instance
+      .get("/api/public/video/detail/", { params: { videoId } })
+      .then(({ data }) => {
+        if (data.data.videoMaxImg === 0) {
+          this.YetAnalysisSnackbar = true;
+          return true;
+        } else {
+          this.problemPopup = true;
+          this.SET_LOADING_TRUE();
+          return false;
+        }
+      })
+      .catch(err => console.error(err));
+  }
+
   async getProblems(video) {
-    this.problemPopup = true;
-    try {
+    const nowId = video.video_id;
+    if ((await this.checkNotYet(nowId)) === true) {
+      return;
+    } else {
       const res = await Axios.instanceDjango
         .post(
           "/api/django/summary/qna/",
@@ -300,10 +357,11 @@ export default class InstructorDashboard extends Vue {
             }
           }
         )
-        .then(({ data }) => (this.problemCandidate = data.data))
+        .then(({ data }) => {
+          this.problemCandidate = data.data;
+          this.SET_LOADING_FALSE();
+        })
         .catch(err => console.error(err));
-    } catch (e) {
-      console.error(e);
     }
   }
 
@@ -314,8 +372,13 @@ export default class InstructorDashboard extends Vue {
   }
 
   addProblem() {
-    if (this.problem && this.answer) {
-      this.problemList?.push({
+    if (
+      this.problem &&
+      this.problem.length &&
+      this.answer &&
+      this.answer.length
+    ) {
+      this.problemList = this.problemList?.concat({
         problemCharfield: this.answer,
         problemId: 0,
         problemOrigin: this.selectedproblem.origin,
@@ -323,7 +386,7 @@ export default class InstructorDashboard extends Vue {
         videoId: this.selectedproblem.video
       });
     }
-    console.log(this.problemList);
+
     this.problem = "";
     this.answer = "";
     this.selectedproblem = "";
@@ -335,21 +398,23 @@ export default class InstructorDashboard extends Vue {
     this.selectedproblem = "";
     this.problemCandidate = null;
     this.problemPopup = false;
-    this.problemList = "";
+    this.problemList = [];
+  }
+
+  async checkCreateQuiz() {
+    await this.clearProblem();
+    this.CreateQuizSnackbar = true;
   }
 
   async submitProblems() {
     try {
-      const res = await Axios.instance.post(
-        "/api/public/problem/save",
-        this.problemList,
-        {
+      const res = await Axios.instance
+        .post("/api/public/problem/save", this.problemList, {
           headers: {
             "Content-Type": "application/json"
           }
-        }
-      );
-      console.log(res);
+        })
+        .then(this.checkCreateQuiz());
     } catch (e) {
       console.error(e);
     }

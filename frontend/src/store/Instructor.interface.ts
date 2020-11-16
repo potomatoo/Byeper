@@ -1,5 +1,6 @@
 export interface InstructorModule {
   playListId: number | null;
+  isLoading: boolean;
 }
 
 export interface Lecture {

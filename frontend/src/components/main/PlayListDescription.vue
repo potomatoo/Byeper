@@ -15,19 +15,13 @@
       </v-btn>
     </div>
     <div class="banner">
-      <v-row>
-        <v-col cols="2" lg="2" md="2" sm="12" style="align-self: center">
-          <div class="imgBx">
-            <img :src="PlayList.playlistImg" />
-          </div>
-        </v-col>
-
+      <v-row justify="space-around">
         <v-col cols="5" lg="5" md="5" sm="12" style="align-self: center">
           <div class="textBox">
             <h2>
               {{ PlayList.playlistTitle }}
             </h2>
-            <p>{{ PlayList.playlistDescription }} Lorem ipsum dolor sit amet</p>
+            <p>{{ PlayList.playlistDescription }}</p>
           </div>
         </v-col>
         <v-col cols="5" lg="5" md="5" sm="12" style="align-self: center">
@@ -172,9 +166,9 @@ export default class PlayListDescription extends Vue {
 
 .banner .textBox {
   position: relative;
-  max-width: 500px;
   z-index: 2;
   overflow: hidden;
+  text-overflow: ellipsis;
 }
 
 .banner .textBox:before {

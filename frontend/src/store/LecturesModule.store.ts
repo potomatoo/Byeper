@@ -21,6 +21,15 @@ const module: Module<LecturesModule, RootState> = {
         course => course.total === course.complete
       ).length;
       return { total: state.courseProgress.length, complete };
+    },
+    computedProgressByCourse(state) {
+      const progress: any = {};
+      state.courseProgress.forEach(course => {
+        progress[course.id] = Number(
+          ((course.complete / course.total) * 100).toFixed(1)
+        );
+      });
+      return progress;
     }
   },
 
@@ -97,6 +106,12 @@ const module: Module<LecturesModule, RootState> = {
       Axios.instance
         .get("/api/public/playlist/progress")
         .then(({ data }) => commit("SET_PLAYLIST_PROGRESS", data.data))
+        .catch(err => console.error(err));
+    },
+    UPDATE_LECTURE_INFO({ dispatch }, playinfo) {
+      Axios.instance
+        .put("/api/private/play/update", playinfo)
+        .then(({ data }) => dispatch("FETCH_LECTURE_DETAIL", data.data.playId))
         .catch(err => console.error(err));
     },
     FETCH_PROBLEM_LIST({ commit }, videoId) {

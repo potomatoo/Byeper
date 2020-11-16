@@ -25,10 +25,12 @@
                   <v-progress-linear
                     color="deep-orange"
                     height="18"
-                    :value="video.play_log"
+                    :value="video.play_complete === 1 ? 100 : video.play_log"
                     striped
                     ><strong style="font-size: 0.8em"
-                      >{{ video.play_log }}%</strong
+                      >{{
+                        video.play_complete === 1 ? 100 : video.play_log
+                      }}%</strong
                     ></v-progress-linear
                   >
                 </div>

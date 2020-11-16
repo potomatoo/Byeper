@@ -65,7 +65,6 @@ const LecturesModule = namespace("LecturesModule");
 @Component
 export default class ImageCaptureChip extends Vue {
   @Prop(Object) readonly player: any;
-  @Prop(String) readonly videoId!: string;
   @LecturesModule.State lecture!: Lecture;
   @LecturesModule.Action FETCH_CAPTURE_IMAGE: any;
   @LecturesModule.State allCaptureImgs!: CaptureImages[];

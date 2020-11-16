@@ -13,7 +13,7 @@
         >
       </v-col>
       <v-col cols="6" style="padding: 0">
-        <v-text-field
+        <!-- <v-text-field
           solo
           color="white"
           outlined
@@ -23,7 +23,7 @@
           hide-details="true"
           v-model="inputText"
         >
-        </v-text-field>
+        </v-text-field> -->
       </v-col>
       <v-col cols="1" style="margin-left: 30px"></v-col>
       <v-col cols="1">

@@ -323,7 +323,7 @@
                       outlined
                       @change="thumbnail"
                     >
-                      <template v-slot:selection="{ index, text }">
+                      <template v-slot:selection="{ text }">
                         <v-chip color="deep-purple accent-4" dark label small>
                           {{ text }}
                         </v-chip>
@@ -357,6 +357,28 @@
         </v-stepper-content>
       </v-stepper-items>
     </v-stepper>
+    <v-alert class="createLectureAlert" v-model="lectureCreateAlert" text>
+      <v-row align="center" justify="center" style="font-size: 20px">
+        <v-icon style="color: white; font-size: 23px;"
+          >mdi-checkbox-marked-circle-outline</v-icon
+        >
+        <strong style="margin-left: 10px">강의 생성</strong>을 거의
+        <strong style="margin-left: 8px">완료</strong>하였습니다!
+        <strong style="margin-left: 8px">대시보드</strong>에서 확인해보세요
+
+        <v-btn @click="goDashBoard" style="margin-left: 50px; text-color: #fff"
+          >확인</v-btn
+        >
+      </v-row>
+    </v-alert>
+    <v-overlay :value="isLoading">
+      <v-progress-circular
+        indeterminate
+        size="80"
+        width="10"
+        color="rgb(236, 193, 156)"
+      ></v-progress-circular>
+    </v-overlay>
   </div>
 </template>
 
@@ -366,6 +388,9 @@ import { Drag, DropList } from "vue-easy-dnd";
 import { Axios } from "../../service/axios.service";
 //import { PlayList } from "@/store/Instructor.interface";
 import axios from "axios";
+import { namespace } from "vuex-class";
+
+const InstructorModule = namespace("InstructorModule");
 
 @Component({
   components: {
@@ -374,6 +399,10 @@ import axios from "axios";
   }
 })
 export default class CreateLecture extends Vue {
+  @InstructorModule.State isLoading;
+  @InstructorModule.Mutation SET_LOADING_TRUE;
+  @InstructorModule.Mutation SET_LOADING_FALSE;
+
   UserVideos = [];
   CreateLectureStep = 1;
   user = this.$store.state.AccountsModule.user;
@@ -390,6 +419,7 @@ export default class CreateLecture extends Vue {
   LectureThumbnailLink = null;
   LectureTrackId = null;
   CopyrightAgreement = false;
+  lectureCreateAlert = false;
 
   onInsert(event) {
     this.SelectedVideos.splice(event.index, 0, event.data);
@@ -452,7 +482,6 @@ export default class CreateLecture extends Vue {
           }
         }
       );
-      console.log(res);
       if (res.data.data) this.LectureTrackId = res.data.data.playlistId;
     } catch (e) {
       console.error(e);
@@ -494,40 +523,40 @@ export default class CreateLecture extends Vue {
           }
         }
       );
-      console.log(res);
     } catch (e) {
       console.error(e);
     }
   }
 
   async djangoVideoAnalysis() {
-    try {
-      const videoIDs = [];
-      this.SelectedVideos.map(elem => videoIDs.push(elem.videoId));
-      const res = await Axios.instanceDjango
-        .post("api/django/summary/extract/", videoIDs, {
-          headers: {
-            "Content-Type": "application/json"
-          }
-        })
-        .then(({ data }) => console.log(data.data))
-        .catch(err => console.error(err));
-    } catch (e) {
-      console.log("어쨋든 요청은 보냄");
-    }
+    const videoIDs = [];
+    this.SelectedVideos.map(elem => videoIDs.push(elem.videoId));
+    const res = await Axios.instanceDjango
+      .post("api/django/summary/extract/", videoIDs, {
+        headers: {
+          "Content-Type": "application/json"
+        }
+      })
+      .then(({ data }) => console.log(data))
+      .catch(err => console.error(err));
   }
 
   async createLecture() {
     if (!this.CopyrightAgreement) {
       alert("저작권 활용 동의가 필요합니다.");
     } else {
+      this.SET_LOADING_TRUE();
       await this.thumbnail();
       await this.createPlayList();
       await this.addVideo();
       await this.djangoVideoAnalysis();
-      alert("강의가 생성되었습니다");
-      await this.$router.push({ name: "InstructorDashboard" });
+      this.lectureCreateAlert = true;
+      this.SET_LOADING_FALSE();
+      // await this.$router.push({ name: "InstructorDashboard" });
     }
+  }
+  goDashBoard() {
+    this.$router.push({ name: "InstructorDashboard" });
   }
   created() {
     this.getVideoList();
@@ -577,5 +606,11 @@ body,
       }
     }
   }
+}
+.createLectureAlert {
+  position: absolute;
+  background-color: green !important;
+  top: 100px;
+  width: 100%;
 }
 </style>

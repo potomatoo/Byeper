@@ -191,7 +191,13 @@ def problem_create_list(request):
 
 def make_answer(urls):
     video_url = 'https://www.youtube.com/watch?v=' + urls
-    yt = YouTube(video_url)
+    cnt = 0
+    while cnt < 10:
+        try:
+            yt = YouTube(video_url)
+            break
+        except:
+            cnt += 1
 
     caption = yt.captions.get_by_language_code('ko')
     if caption == None: 

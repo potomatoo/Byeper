@@ -499,3 +499,30 @@ Because I have to save money, I will organize it to this level and talk about th
 /home/ubuntu/s03p31b108/backend/django/speech2text.py:16: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
   caption = yt.captions.get_by_language_code('a.ko')
 [13/Nov/2020 23:47:58] "POST /api/django/summary/qna/ HTTP/1.0" 200 7081
+Watching for file changes with StatReloader
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:202: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:204: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+[16/Nov/2020 10:45:22] "POST /api/django/summary/qna/ HTTP/1.0" 200 4049
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:202: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:204: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('a.ko')
+[16/Nov/2020 10:45:53] "POST /api/django/summary/qna/ HTTP/1.0" 200 7116
+/home/ubuntu/s03p31b108/backend/django/summary/views.py changed, reloading.
+Performing system checks...
+
+System check identified no issues (0 silenced).
+November 16, 2020 - 10:40:33
+Django version 2.2, using settings 'API.settings'
+Starting development server at http://127.0.0.1:8000/
+Quit the server with CONTROL-C.
+ERROR: n1wvs7xuUYk: YouTube said: Unable to extract video data
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:202: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  caption = yt.captions.get_by_language_code('ko')
+[16/Nov/2020 10:50:40] "POST /api/django/summary/qna/ HTTP/1.0" 200 7197
+/home/ubuntu/s03p31b108/backend/django/summary/views.py:202: DeprecationWarning: Call to deprecated function get_by_language_code (This object can be treated as a dictionary, i.e. captions['en']).
+  
+[16/Nov/2020 10:51:29] "POST /api/django/summary/qna/ HTTP/1.0" 200 7197
+Watching for file changes with StatReloader

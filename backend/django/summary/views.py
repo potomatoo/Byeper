@@ -11,7 +11,15 @@ import cv2, os, io, re
 import numpy as np
 import pafy, json
 
-from speech2text import make_answer
+from pytube import YouTube
+from konlpy.tag import Komoran
+os.environ['JAVA_HOME'] = '/usr/lib/jvm/java-11-openjdk-amd64/bin'
+check_kor = re.compile('[가-힣]+')
+check_eng = re.compile('[a-zA-Z]+')
+check_num = re.compile('[0-9]+')
+check_bracket = re.compile('\([^)]*\)')
+
+komoran = Komoran()
 
 save_frames = []
 def imwrite(filename, img, params=None): 
@@ -158,6 +166,7 @@ def extract_time(request):
     imwrite("/var/file/{}/{}.jpg".format(id, id + str(frame)), image)
     return Response("/file/{}/{}.jpg".format(id, id + str(frame)))
 
+
 @api_view(['POST'])
 def problem_create_list(request):
     if request.method == 'POST':
@@ -178,5 +187,78 @@ def problem_create_list(request):
                     DATA = {'problem':problem, 'answer': answer, 'video':video_pk, 'origin':sen}
                     QnA.append(DATA)
 
-
         return Response({ 'data':QnA })
+
+
+def make_answer(urls):
+    video_url = 'https://www.youtube.com/watch?v=' + urls
+    cnt = 0
+    while cnt < 10:
+        try:
+            yt = YouTube(video_url)
+            break
+        except:
+            cnt += 1
+
+    caption = yt.captions.get_by_language_code('ko')
+    if caption == None: 
+        caption = yt.captions.get_by_language_code('a.ko')
+
+    caption = caption.generate_srt_captions()
+    result = ''
+    for sen in caption.split('\n'):
+        if not check_kor.search(sen): continue
+        result += sen
+        if sen[-1] in ('다', '?', '요', '죠', '.'):
+            result += '\n'
+        else:
+            result += ' '
+
+    stopwords = set(open('stopwords.txt', 'r', encoding='utf-8').read().split('\n'))
+    answers = set()
+    for sen in result.split('\n'):
+        Nouns = set([ w for w, t in set(komoran.pos(sen)) if (t == 'NNP' or t == 'NNG') and len(w) > 1 and not set(w) & set('0123456789') and not {w} & stopwords])
+        stack = []
+        for word in sen.split():
+            if check_eng.search(word):
+                if check_kor.search(word) or check_bracket.search(word):
+                    engs = re.sub('[가-힣]+', '', word)
+                    # engs = re.sub('[-=+,#/\?:^$.@*\"※~&%ㆍ!』\\‘|\(\)\[\]\<\>`\'…》]', '', engs)
+                    engs = re.sub('\([^)]*\)', '', engs)
+                    if stack:
+                        if check_eng.search(stack[-1]):
+                            stack.append(engs)
+                        else:
+                            answers.add(' '.join(stack))
+                            stack = [engs]
+                    else:
+                        stack = [engs]
+                else:
+                    stack.append(word)
+            else:
+                if stack and check_eng.search(stack[-1]):
+
+                    answers.add(' '.join(stack))
+                    stack = []
+                
+                if len(word) < 3:
+                    if stack: answers.add(' '.join(stack)); stack = []
+                    continue
+                for target in komoran.nouns(word):
+    
+                    if target in Nouns:
+                         
+                        if target != word:
+                            stack.append(target)
+                            answers.add(' '.join(stack))
+                            stack = []
+                        else:
+                            stack.append(target)
+                    else:
+                        if stack:
+                            answers.add(' '.join(stack))
+                            stack = []
+
+    if stack: answers.add(' '.join(stack))
+
+    return result, sorted([ w for w in answers if len(w) > 2], key=lambda x:len(x), reverse=True)[:12]

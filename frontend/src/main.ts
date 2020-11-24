@@ -10,7 +10,7 @@ import VueYoutube from "vue-youtube";
 
 const gauthOption = {
   clientId:
-    "354609671084-gq057289qgkq7bjjhn0t2ertcot4prak.apps.googleusercontent.com",
+    `${process.env.VUE_APP_CLIENT_ID}.apps.googleusercontent.com`,
   scope: "profile email",
   prompt: "select_account"
 };
